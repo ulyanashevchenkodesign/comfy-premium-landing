@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%232abd13'/%3E%3Ccircle cx='22' cy='16' r='5' fill='%23fc5e0f'/%3E%3C/svg%3E">
 <!--
-  Comfy Premium — лендінг підписки. Чекпоінт 6: + «Як це працює», «Питання», футер. Херо і сервіси — за макетом Figma (ztnqBrswwn8uvmLHKlj100),
+  Comfy Premium — лендінг підписки. Чекпоінт 7: правки з макета Figma — CTA у херо й калькуляторі, нові пушики, темний фінальний блок, футер COMFY. Херо і сервіси — за макетом Figma (ztnqBrswwn8uvmLHKlj100),
   Укрнафта у брендовому #5C91B9, калькулятор в один екран.
   TODO копірайт: цифри й умови підписки (199 ₴/міс, 1 ₴ перший місяць, ремонт до 10 000 ₴, −4 грн/л, 35 000+ ₴, 10%, 5 сервісів)
   взяті з поточного лендінгу comfy-premium.vercel.app і макета. Перевірити і виправити перед релізом.
@@ -114,10 +114,13 @@ a{color:inherit}
 .hero-title .wi{display:inline-block;will-change:transform}
 .hero-sub{margin:16px 0 0;max-width:36em;font-size:17px;line-height:1.4;font-weight:700;color:var(--text)}
 .hero-sub .br-d{display:none}
-html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .hero-sub,html.intro-pending .scene,html.intro-pending .pillstat{visibility:hidden}
+.hero-cta{margin-top:24px}
+@media (max-width:699px){.hero-cta .btn{width:100%}}
+html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .hero-sub,html.intro-pending .hero-cta,html.intro-pending .scene,html.intro-pending .pillstat{visibility:hidden}
 
 /* Сцена = рамка фургона (1015×627 у макеті). Правий обріз картинки завжди на краю або за краєм екрана */
-.scene{position:relative;z-index:2;width:108vw;margin:20px 0 7vw 4vw;aspect-ratio:1015/627}
+.scene{position:relative;z-index:2;width:108vw;margin:calc(24px + 12vw) 0 calc(24px + 14vw) 4vw;aspect-ratio:1015/627}
+@media (max-width:699px){.hero-main{padding-top:calc(env(safe-area-inset-top,0px) + 90px)}}
 @media (min-width:700px){.scene{width:min(86vw,max(420px,calc((100svh - 400px) * 1.619)));margin:8px 0 4vw auto}}
 @media (min-width:1180px){
   .hero-main{height:clamp(560px,calc(39.7vw + 64px),calc(100svh - 86px));padding-top:56px;display:flex;align-items:center;container-type:size}
@@ -202,7 +205,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   transform:translateX(calc((var(--sx) - var(--ox)) * 1px - 50%)) skewX(-18deg)}
 
 @media (max-width:699px){
-  .sticker--1{left:1%;top:46%}.sticker--2{left:2%;top:0}.sticker--3{display:none}
+  .sticker--1{left:1%;right:auto;top:-6%}.sticker--2{left:47%;top:-18%}.sticker--3{left:-1%;right:auto;top:61%}
   .glass{gap:7px;padding:6px 11px 6px 6px;border-radius:14px}
   .chips .glass{font-size:11px;padding:5px 9px;border-radius:10px}
   .pushik .cue-tip{font-size:12px;padding:6px 10px 6px 8px;border-radius:12px}
@@ -239,7 +242,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .card--fuel{grid-column:1 / -1;min-height:340px;color:#fff;background:radial-gradient(46% 42% at 76% 84%,rgba(255,255,255,.3),rgba(255,255,255,0) 70%),radial-gradient(90% 60% at 18% 0%,rgba(255,255,255,.1),rgba(255,255,255,0) 70%),linear-gradient(162deg,#44789f 0%,#5c91b9 52%,#71a4ca 100%)}
 .card.card--fuel .card-eyebrow{color:rgba(255,255,255,.8)}.card.card--fuel p{color:#fff}
 .glass--white{--tint:255,255,255;--tint-2:255,255,255;background:linear-gradient(145deg,rgba(255,255,255,.26),rgba(255,255,255,.12));box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 0 0 1px rgba(255,255,255,.3),0 18px 36px -18px rgba(0,0,0,.35)}
-.glass--light{--ink:#1c1600;background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,255,255,.38));box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 0 0 1px rgba(255,255,255,.5),0 18px 36px -18px rgba(150,110,0,.55);text-shadow:none}
+.glass--light{--ink:#1c1600;background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,255,255,.38));box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 0 0 1px rgba(255,255,255,.5),0 18px 36px -18px rgba(150,110,0,.55),0 2px 6px -2px rgba(10,10,10,.12);text-shadow:none}
 .card-img{filter:drop-shadow(0 28px 34px rgba(0,0,0,.22))}
 .card-copy{position:relative;z-index:4;max-width:22em}
 .card--delivery .card-copy{max-width:17em}
@@ -340,7 +343,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 
 /* ---------- Масштаб, ритм, bento з вигодою, умови ---------- */
 
-.sec{padding:clamp(112px,12vw,192px) var(--edge)}
+.sec{padding:clamp(48px,9vw,144px) var(--edge)}
 .h2{font-size:var(--h-size);line-height:1.2;font-weight:800;letter-spacing:-.01em}
 .sec-head--split{max-width:none;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:end;gap:20px 64px;text-align:left;margin-bottom:clamp(40px,5vw,72px)}
 .sec-head--split .h2{max-width:11em}
@@ -400,7 +403,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .sec-head--stack{max-width:none;text-align:left;margin:0 0 clamp(28px,3vw,40px)}
 .sec-head--stack .h2{white-space:normal}
 .sec-head--stack .lead{margin:12px 0 0;max-width:40em;font-size:17px}
-#benefits{padding-block:clamp(96px,9vw,144px)}
+
 .bento{grid-template-columns:minmax(0,4.4fr) minmax(0,3.8fr) minmax(0,3.8fr);gap:16px}
 .card,.card--fuel{grid-column:auto;min-height:0;height:clamp(400px,calc(100vh - 320px),560px);padding:28px;container-type:inline-size}
 @supports (height:100svh){.card,.card--fuel{height:clamp(400px,calc(100svh - 320px),560px)}}
@@ -425,12 +428,12 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 }
 
 /* ---------- Калькулятор-«чек»: заголовок і повзунки ліворуч, чек праворуч — усе в один екран ---------- */
-#calc{padding-block:clamp(96px,9vw,144px)}
 .calc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);align-items:start;gap:clamp(32px,6vw,112px)}
 .calc-head .h2{margin-top:8px}
 .calc-head .lead{margin:12px 0 0;max-width:30em;font-size:17px;text-wrap:pretty}
 .calc-controls{display:grid;gap:clamp(18px,3.2vh,32px);margin-top:clamp(24px,4.4vh,44px)}
 .field-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:10px}
+.calc-cta{margin-top:clamp(24px,4vh,40px)}
 .field-row label{font-size:16px;font-weight:500;color:var(--text)}
 .field-row output{font-size:16px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
 /* ❖ Comfy UI / Slider: трек 4 px #e5e5e5, прогрес brand, ручка 24 px біла з обводкою 2 px brand, тултип Label=Top tooltip */
@@ -477,10 +480,11 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 /* Мобільний: результат закріплений унизу екрана, поки рухаєш повзунки */
 .calc-bar{display:none}
 @media (max-width:900px){
-  #calc{padding-block:72px}
   .calc-grid{grid-template-columns:1fr;gap:28px}
   .calc-head .lead{font-size:15px;margin-top:8px}
   .calc-controls{gap:18px;margin-top:20px}
+  .calc-cta{margin-top:24px}
+  .calc-cta .btn{width:100%}
   .field-row{margin-bottom:4px}
   .field-row label,.field-row output{font-size:15px;line-height:20px}
   .range-tip{display:none}
@@ -500,15 +504,16 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 }
 
 /* ---------- Фінальний CTA ---------- */
-.final{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:radial-gradient(40% 70% at 78% 85%,rgba(255,255,255,.28),rgba(255,255,255,0) 70%),radial-gradient(70% 60% at 10% 0%,rgba(255,255,255,.12),rgba(255,255,255,0) 70%),linear-gradient(160deg,#3bcd21 0%,#25ac10 52%,#168708 100%)}
-.final-inner{max-width:calc(1600px + 2 * var(--edge));margin:0 auto;padding:clamp(96px,11vw,160px) var(--edge) 0;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:end;gap:32px;min-height:clamp(520px,70vh,680px)}
+.final{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:radial-gradient(70% 60% at 10% 0%,rgba(255,255,255,.12),rgba(255,255,255,0) 70%),linear-gradient(155deg,#171717 0%,#000 52%,#2b2b2b 100%)}
+.final-inner{max-width:calc(1600px + 2 * var(--edge));margin:0 auto;padding:clamp(48px,11vw,160px) var(--edge) 0;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:end;gap:32px;min-height:clamp(520px,70vh,680px)}
 .final-copy{align-self:center;padding-bottom:clamp(96px,11vw,160px)}
-.final-title{margin:0;font-size:clamp(40px,5.6vw,80px);line-height:1.05;font-weight:800;letter-spacing:-.03em;max-width:9.5em}
+.final-title{margin:0;font-size:clamp(40px,3.75vw,72px);line-height:1.05;font-weight:800;letter-spacing:-.03em;max-width:9.5em}
 .final-sub{margin:20px 0 0;font-size:18px;line-height:1.5;color:rgba(255,255,255,.86);max-width:28em}
 .final-cta{margin-top:32px}
 .final-art{position:relative;align-self:end;height:100%;min-height:420px}
-.final-glow{position:absolute;left:50%;bottom:-20%;width:120%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.35),rgba(255,255,255,0))}
-.final-pushik{position:absolute;right:-2%;bottom:-6%;height:90%;width:auto;max-width:none;transform-origin:50% 100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.25))}
+.final-glow{position:absolute;left:40%;top:44%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.35),rgba(255,255,255,0))}
+/* картинка обрізана знизу — тримаємо запас під краєм секції, щоб погойдування не показувало зріз */
+.final-pushik{position:absolute;right:14%;bottom:-3%;width:105%;height:auto;max-width:none;transform-origin:50% 120%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))}
 .final-copy{position:relative;z-index:2}
 .js-magnet{will-change:transform}
 
@@ -516,7 +521,8 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   .final-inner{grid-template-columns:1fr;min-height:0}
   .final-copy{padding-bottom:0}
   .final-art{min-height:340px;height:340px}
-  .final-pushik{height:100%;bottom:-8%;right:auto;left:50%}
+  .final-glow{left:50%;top:60%}
+  .final-pushik{width:min(90vw,440px);bottom:-3%;right:auto;left:50%}
 }
 @media (max-width:640px){
   .final .btn{width:100%}
@@ -559,15 +565,16 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 
 .how-stage{position:sticky;top:max(96px,calc(50vh - var(--stage-h) / 2 + 30px));--stage-h:min(600px,calc(100vh - 150px))}
 @supports (height:100svh){.how-stage{--stage-h:min(600px,calc(100svh - 150px))}}
-.how-card{position:relative;isolation:isolate;overflow:hidden;height:var(--stage-h);border-radius:40px;background:#f4f5f3;box-shadow:inset 0 0 0 1px rgba(10,10,10,.04)}
+.how-card{position:relative;isolation:isolate;overflow:hidden;height:var(--stage-h);border-radius:40px;background:#d7fbb2;box-shadow:inset 0 0 0 1px rgba(10,10,10,.04)}
 .how-inline{display:none}
 .hs{position:absolute;inset:0;display:flex;align-items:center;padding:0 7%;visibility:hidden;opacity:0}
 .hs.is-on{visibility:visible;opacity:1}
 .hs::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(62% 58% at 84% 96%,rgba(var(--glow),.3),rgba(var(--glow),0) 70%),radial-gradient(50% 50% at 8% 0%,rgba(255,255,255,.9),rgba(255,255,255,0) 70%)}
-.hs--1{--glow:42,189,19}.hs--2{--glow:252,94,15}.hs--3{--glow:92,145,185}
-.hs-push{position:absolute;right:3%;bottom:-2%;height:50%;width:auto;max-width:none;pointer-events:none;filter:drop-shadow(0 24px 30px rgba(0,0,0,.18))}
-.hs--2 .hs-push{height:52%}
-.hs--3 .hs-push{right:4%;bottom:0;height:50%}
+.hs--1{--glow:42,189,19}.hs--2{--glow:252,94,15}.hs--3{--glow:236,196,52}
+/* пушики за макетом (картка 820×600): ширина обмежена, щоб на вужчих екранах не закривати віджет */
+.hs-push{position:absolute;right:4%;bottom:0;height:auto;width:min(44%,calc(var(--stage-h,600px) * .6));max-width:none;pointer-events:none;filter:drop-shadow(0 24px 30px rgba(0,0,0,.18))}
+.hs--2 .hs-push{right:3%;bottom:auto;top:36%;width:min(52%,calc(var(--stage-h,600px) * .71))}
+.hs--3 .hs-push{right:3%;bottom:auto;top:41%;width:min(67%,calc(var(--stage-h,600px) * .91))}
 
 /* ілюстрація-віджет: біла картка з компонентів DS */
 .hw{position:relative;z-index:1;width:min(348px,60%);padding:20px;border-radius:24px;background:#fff;color:var(--text);box-shadow:0 0 0 1px rgba(10,10,10,.04),0 30px 60px -28px rgba(10,10,10,.35),0 2px 6px -2px rgba(10,10,10,.08)}
@@ -635,8 +642,9 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   .how-inline .hw-title{font-size:16px;line-height:22px}
   .how-inline .hw-set{font-size:14px;line-height:20px;gap:10px}
   .how-inline .hw-row{font-size:14px}
-  .how-inline .hs-push{height:42%;right:0}
-  .how-inline .hs--3 .hs-push{right:-3%}
+  /* мобільний макет: пушик лише в першій сцені, поверх віджета */
+  .how-inline .hs-push{z-index:2;width:34%;right:4%;bottom:0;top:auto}
+  .how-inline .hs--2 .hs-push,.how-inline .hs--3 .hs-push{display:none}
   .how-inline .hs-chip--1{left:auto;right:4%;top:5%}
   .how-inline .hs-chip--2{top:5%}
   .how-inline .hs-chip--3{bottom:5%}
@@ -683,16 +691,79 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   .faq-a p{padding:0 20px 20px;font-size:16px}
 }
 
-/* ---------- Футер ---------- */
-.foot{background:#0a0a0a;color:rgba(255,255,255,.64);padding:40px var(--edge) calc(40px + env(safe-area-inset-bottom,0px))}
-.foot-inner{max-width:1600px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 48px}
-.foot .nav-logo{box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
-.foot-links{list-style:none;display:flex;flex-wrap:wrap;gap:12px 28px;margin:0;padding:0}
-.foot-links a{font:600 15px/22px var(--font);color:#fff;text-decoration:none;border-radius:4px}
-.foot-links a:hover{color:var(--brand)}
-.foot-links a:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
-.foot-copy{flex-basis:100%;margin:0;padding-top:24px;border-top:1px solid rgba(255,255,255,.12);font-size:13px;line-height:1.5}
-.foot-copy a{color:inherit}
+/* ---------- Футер COMFY (❖ Comfy UI / Footer: Size=Web і мобільний) ----------
+   Готовий компонент comfy.ua — у проді його підключать як є. Тут візуальна копія з макета: без посилань і без відправки форми. */
+.cf{--cf-line:rgba(10,10,10,.1);--cf-bd:rgba(10,10,10,.18);background:#fff;color:var(--text);padding:24px max(0px,calc(var(--edge) - 32px)) calc(24px + env(safe-area-inset-bottom,0px));font-size:14px;line-height:20px}
+.cf p,.cf ul{margin:0}
+.cf ul{list-style:none;padding:0}
+.cf-row{max-width:1600px;margin-inline:auto;padding:24px 32px}
+.cf-div{height:1px;margin:12px calc(-1 * max(0px,calc(var(--edge) - 32px)));background:var(--cf-line)}
+.cf-h{font-size:16px;line-height:22px;font-weight:700;color:var(--text)}
+.cf-muted{color:var(--text-2)}
+.cf-perks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.cf-perk{display:flex;gap:8px;align-items:flex-start}
+.cf-perk img{flex-shrink:0}
+.cf-perk p+p{margin-top:4px;color:var(--text-2)}
+.cf-main{display:grid;grid-template-columns:minmax(240px,320px) repeat(4,minmax(0,256px));justify-content:space-between;gap:clamp(24px,2.5vw,48px);padding-block:0}
+.cf-sub{padding:8px 0}
+.cf-sub-card{display:flex;flex-direction:column;gap:8px;padding:16px 16px 0;border-radius:12px;background:#f5f5f5;overflow:hidden}
+.cf-sub-card .cf-muted{margin-top:-8px}
+.cf-input{display:flex;align-items:center;height:44px;margin-top:4px;padding:0 12px;border-radius:8px;background:#fff;box-shadow:inset 0 0 0 1px #d4d4d4;font-size:16px;line-height:22px;color:rgba(10,10,10,.37)}
+.cf-send{width:100%;cursor:default}
+.cf-sub-img{display:block;width:100%;height:auto;margin-top:4px}
+.cf-col,.cf-contact{display:flex;flex-direction:column;gap:12px;padding:24px 0}
+.cf-acc{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:0;border:0;background:none;font:inherit;text-align:left;color:inherit;pointer-events:none}
+.cf-chev{display:none}
+.cf-list{display:grid;gap:12px;font-weight:500;color:var(--text-2)}
+.cf-phones{display:flex;flex-direction:column;font-size:24px;line-height:32px;font-weight:700;color:var(--brand);white-space:nowrap}
+.cf-hours{margin-top:-4px}
+.cf-mail{display:flex;align-items:center;gap:4px;font-weight:500;color:var(--text-2)}
+.cf-ch{display:grid;gap:12px;font-weight:500;color:var(--text-2)}
+.cf-ch li{display:flex;align-items:center;gap:4px}
+.cf-cats{display:flex;flex-wrap:wrap;gap:8px}
+.cf-chip{display:inline-flex;align-items:center;height:44px;padding:0 16px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px var(--cf-bd);font-size:16px;line-height:22px;font-weight:500;color:var(--text-2);white-space:nowrap}
+.cf-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap}
+.cf-rights{display:flex;align-items:center;flex-wrap:wrap;gap:12px 24px}
+.cf-copy{font-size:12px;line-height:16px;color:rgba(10,10,10,.37)}
+.cf-pay{display:flex;align-items:center;gap:16px}
+.cf-social{display:flex;gap:16px}
+.cf-soc{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--cf-bd)}
+.cf-soc img{width:20px;height:20px}
+@media (max-width:1099px){
+  .cf-main{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));justify-content:stretch}
+}
+/* мобільний варіант компонента: сірий фон, білі картки, розділи — акордеони */
+@media (max-width:760px){
+  .cf{padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));background:#f5f5f5}
+  .cf-perks,.cf-cats,.cf-div{display:none}
+  .cf-row{padding:0}
+  .cf-main{display:flex;flex-direction:column;gap:16px}
+  .cf-sub{padding:0;order:1}
+  .cf-sub-card{background:#fff;gap:12px}
+  .cf-sub-card .cf-muted{margin-top:-12px}
+  .cf-input{margin-top:0}
+  .cf-send{margin-top:-4px}
+  .cf-col--svc{order:2}.cf-col--comfy{order:3}.cf-col--help{order:4}.cf-contact{order:5}
+  .cf-col,.cf-contact{gap:0;padding:16px;border-radius:12px;background:#fff}
+  .cf-acc{pointer-events:auto;cursor:pointer;min-height:24px}
+  .cf-acc:focus-visible{outline:2px solid var(--focus);outline-offset:4px;border-radius:6px}
+  .cf-chev{display:grid;place-items:center;flex-shrink:0;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--cf-bd);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .cf-chev svg{width:16px;height:16px}
+  .cf-col.is-open .cf-chev{transform:rotate(180deg)}
+  .cf-list{margin-top:16px}
+  .cf-col:not(.is-open) .cf-list{display:none}
+  .cf-contact .cf-phones{margin-top:16px}
+  .cf-contact .cf-hours{margin-top:8px}
+  .cf-contact .cf-mail{margin-top:8px}
+  .cf-ch{gap:2px;margin-top:24px}
+  .cf-ch li{min-height:40px}
+  .cf-ch img{width:20px;height:20px}
+  .cf-bottom{flex-direction:column;align-items:center;gap:16px;margin-top:16px;text-align:center}
+  .cf-social{order:-1}
+  .cf-soc{width:48px;height:48px}
+  .cf-soc img{width:24px;height:24px}
+  .cf-rights{flex-direction:column;gap:16px}
+}
 
 @media (prefers-reduced-motion:reduce){.btn,.btn svg,.nav-pill{transition:none}}
 </style>
@@ -724,6 +795,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
           <span class="line"><span class="w"><span class="wi">та</span></span> <span class="w"><span class="wi">підвищені</span></span> <span class="w"><span class="wi">бонуси</span></span></span>
         </h1>
         <p class="hero-sub">Перший місяць коштує 1&nbsp;₴, далі 199&nbsp;₴ на місяць.<br class="br-d"> Скасувати можна будь-коли в особистому кабінеті.</p>
+        <div class="hero-cta"><a class="btn btn--primary btn--56" href="#try">Спробувати за 1&nbsp;₴</a></div>
       </div>
 
       <!-- Сцена: фургон заїжджає справа і зупиняється як у макеті; з-за правого краю виходить пушик із посилкою.
@@ -924,6 +996,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
             <div class="range"><input type="range" id="c-shop" min="0" max="100000" step="1000" value="20000"><span class="range-tip" aria-hidden="true">20 000 ₴</span></div>
           </div>
         </form>
+        <div class="calc-cta js-reveal"><a class="btn btn--primary btn--56" href="#try">Спробувати за 1&nbsp;₴</a></div>
         <div class="calc-bar" aria-hidden="true">
           <span><small class="js-net-label">Твій плюс за рік</small><b data-k="net2">+9 290 ₴</b></span>
           <span class="calc-bar-sub">Вигода <b data-k="total2">11 480 ₴</b><br>мінус підписка 2 190 ₴</span>
@@ -1010,7 +1083,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
                 <span class="btn btn--primary btn--48 hw-btn"><span class="hw-btn-txt">Оплатити 1 ₴</span></span>
               </div>
               <span class="hw-toast"><span><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Підписку активовано</span>
-              <img class="hs-push" src="assets/pushik-step.webp" alt="" width="465" height="600" loading="lazy">
+              <img class="hs-push" src="assets/pushik-phone.webp" alt="" width="358" height="359" loading="lazy">
             </div>
             <!-- 2. Вигоди застосовуються в кошику автоматично -->
             <div class="hs hs--2">
@@ -1025,7 +1098,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
               <span class="hs-chip hs-chip--1 hs-pill"><i class="hs-dot hs-dot--green"><svg viewBox="0 0 24 24" fill="none"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7" cy="17" r="1.8" fill="currentColor"/><circle cx="17" cy="17" r="1.8" fill="currentColor"/></svg></i>Доставка 0 ₴</span>
               <span class="hs-chip hs-chip--2 hs-pill"><i class="hs-dot hs-dot--blue"><svg viewBox="0 0 24 24" fill="none"><path d="M5 20V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v14M4 20h12M5 10h10m0 0 3 3v4a1.5 1.5 0 0 0 3 0V9l-3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i>−4 грн/л на АЗС</span>
               <span class="hs-chip hs-chip--3 hs-apps"><span><img src="assets/ic-sweettv.png" alt="" width="52" height="52"><img src="assets/ic-vpn.png" alt="" width="52" height="52"><img src="assets/ic-librarius.png" alt="" width="52" height="52"></span>+ 8 сервісів</span>
-              <img class="hs-push" src="assets/pushik-box.webp" alt="" width="387" height="479" loading="lazy">
+              <img class="hs-push" src="assets/pushik-box2.webp" alt="" width="426" height="530" loading="lazy">
             </div>
             <!-- 3. Керування в особистому кабінеті -->
             <div class="hs hs--3">
@@ -1039,7 +1112,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
                 <div class="hw-pay"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="currentColor" opacity=".14"/><path d="m8 12.2 2.7 2.6L16 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Місяць 1<b>1 ₴</b></div>
                 <span class="btn btn--tertiary-gray btn--40 hw-cancel">Скасувати підписку</span>
               </div>
-              <img class="hs-push" src="assets/pushik-wave.webp" alt="" width="494" height="532" loading="lazy">
+              <img class="hs-push" src="assets/pushik-hi.webp" alt="" width="548" height="591" loading="lazy">
             </div>
           </div>
         </div>
@@ -1091,30 +1164,65 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
       <div class="final-copy">
         <h2 class="final-title js-lines" id="final-title">Почни економити вже сьогодні</h2>
         <p class="final-sub js-reveal">Перший місяць — 1 ₴, далі 199 ₴ на місяць. Скасувати можна будь-коли.</p>
-        <div class="final-cta js-reveal"><a class="btn btn--secondary-gray btn--56 js-magnet" href="#try">Спробувати за 1 ₴<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="final-cta js-reveal"><a class="btn btn--primary btn--56 js-size js-magnet" href="#try">Спробувати за 1 ₴<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
       </div>
       <div class="final-art" aria-hidden="true">
         <span class="final-glow"></span>
-        <img class="final-pushik" src="assets/pushik-wave.webp" alt="" width="494" height="532" loading="lazy">
+        <picture><source media="(max-width: 900px)" srcset="assets/pushik-dab.webp" width="698" height="644"><img class="final-pushik" src="assets/pushik-cool.webp" alt="" width="740" height="558" loading="lazy"></picture>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="foot">
-  <div class="foot-inner">
-    <a class="nav-logo" href="#top" aria-label="Comfy Premium, на початок сторінки">
-      <svg viewBox="0 0 130 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M114.064 0H15.0269C6.72843 0 0 6.71639 0 15C0 23.2836 6.72843 30 15.0269 30H114.064C122.362 30 129.091 23.2836 129.091 15C129.091 6.71639 122.362 0 114.064 0Z" fill="#2ABD13"/><path d="M122.194 15C122.194 19.5711 118.482 23.2767 113.903 23.2767C109.324 23.2767 105.611 19.5711 105.611 15C105.611 10.429 109.324 6.72339 113.903 6.72339C118.482 6.72339 122.194 10.429 122.194 15Z" fill="#FC5E0F"/><path d="M35.2916 5.41211C29.9954 5.41211 25.6865 9.71325 25.6865 15C25.6865 20.2867 29.9954 24.5879 35.2916 24.5879C40.5878 24.5879 44.8966 20.2867 44.8966 15C44.8966 9.71325 40.5878 5.41211 35.2916 5.41211ZM35.2916 19.6285C32.7342 19.6285 30.6548 17.5528 30.6548 15C30.6548 12.4472 32.7342 10.3715 35.2916 10.3715C37.849 10.3715 39.9284 12.4472 39.9284 15C39.9284 17.5528 37.849 19.6285 35.2916 19.6285Z" fill="white"/><path d="M64.5119 5.58985C63.5838 5.20675 62.5144 5.4192 61.8044 6.12793L56.1925 11.7316L50.5997 6.14883C49.8897 5.4401 48.8203 5.22765 47.8923 5.61075C46.9642 5.99385 46.3589 6.89935 46.3589 7.90063V22.117C46.3589 23.4857 47.4719 24.5967 48.843 24.5967C50.2142 24.5967 51.3271 23.4857 51.3271 22.117V13.8874L54.4358 16.9905C55.4057 17.9587 56.9792 17.9587 57.9492 16.9905L61.077 13.8682V22.1188C61.077 23.4875 62.19 24.5984 63.5611 24.5984C64.9323 24.5984 66.0453 23.4875 66.0453 22.1188V7.88147C66.0453 6.87845 65.4399 5.97469 64.5119 5.58985Z" fill="white"/><path d="M80.6286 5.41211H70.5369C69.1657 5.41211 68.0527 6.52309 68.0527 7.89179V22.1082C68.0527 23.4769 69.1657 24.5879 70.5369 24.5879C71.908 24.5879 73.021 23.4769 73.021 22.1082V18.3939H79.8105C81.1816 18.3939 82.2946 17.2829 82.2946 15.9142C82.2946 14.5455 81.1816 13.4345 79.8105 13.4345H73.021V10.3715H80.6286C81.9998 10.3715 83.1128 9.2605 83.1128 7.89179C83.1128 6.52309 81.9998 5.41211 80.6286 5.41211Z" fill="white"/><path d="M101.964 6.13999C100.994 5.1718 99.4201 5.1718 98.4502 6.13999L93.4837 11.0976L88.5172 6.13999C87.5473 5.1718 85.9737 5.1718 85.0038 6.13999C84.0339 7.10818 84.0339 8.67888 85.0038 9.64707L90.9996 15.6321V22.1064C90.9996 23.4751 92.1125 24.5861 93.4837 24.5861C94.8548 24.5861 95.9678 23.4751 95.9678 22.1064V15.6321L101.964 9.64707C102.933 8.67888 102.933 7.10818 101.964 6.13999Z" fill="white"/><path d="M16.5038 10.3715C18.0354 10.3715 19.4676 11.1272 20.3346 12.3914C21.1092 13.5216 22.6548 13.8106 23.7869 13.0375C24.9191 12.2643 25.2087 10.7215 24.4341 9.59135C22.6408 6.9741 19.6752 5.41211 16.502 5.41211C11.2058 5.41211 6.89697 9.71325 6.89697 15C6.89697 20.2867 11.2058 24.5879 16.502 24.5879C19.5444 24.5879 22.3408 23.1965 24.1742 20.7691C25.0011 19.6755 24.7813 18.1205 23.6858 17.2968C22.5902 16.4732 21.0324 16.6908 20.2073 17.7844C19.3211 18.9563 17.9709 19.6302 16.502 19.6302C13.9446 19.6302 11.8652 17.5546 11.8652 15.0017C11.8652 12.4489 13.9446 10.3732 16.502 10.3732" fill="white"/></svg>
-      <span>Premium</span>
-    </a>
-    <ul class="foot-links">
-      <li><a href="#benefits">Переваги</a></li>
-      <li><a href="#services">Сервіси</a></li>
-      <li><a href="#how">Як це працює</a></li>
-      <li><a href="#faq">Питання</a></li>
-    </ul>
-    <!-- TODO: посилання на умови підписки -->
-    <p class="foot-copy">© COMFY, 2026 · <a href="#terms">Умови підписки</a> · Ціни й умови на сторінці орієнтовні.</p>
+<!-- Футер — готовий компонент comfy.ua (❖ Comfy UI / Footer). У проді його підключать як є,
+     тому тут лише візуальна копія з макета: посилання не реалізовані, форма підписки нічого не надсилає. -->
+<footer class="cf" aria-label="Футер COMFY">
+  <div class="cf-row cf-perks">
+    <div class="cf-perk"><img src="assets/ft-truck.svg" alt="" width="24" height="24"><div><p class="cf-h">Доставка</p><p>Самовивіз із магазину "Comfy", доставка за адресою або у відділення "Нова Пошта" і "Meest"</p></div></div>
+    <div class="cf-perk"><img src="assets/ft-shield.svg" alt="" width="24" height="24"><div><p class="cf-h">Гарантія</p><p>Сертифікована техніка з офіційною гарантією від виробника.</p></div></div>
+    <div class="cf-perk"><img src="assets/ft-wallet.svg" alt="" width="24" height="24"><div><p class="cf-h">Оплата</p><p>Оплатити покупку можливо готівкою, картою чи безготівковим розрахунком.</p></div></div>
+    <div class="cf-perk"><img src="assets/ft-box.svg" alt="" width="24" height="24"><div><p class="cf-h">Повернення</p><p>Повернення товару відбувається протягом 14 днів після покупки, у відповідності із діючим законом.</p></div></div>
+  </div>
+  <div class="cf-div"></div>
+  <div class="cf-row cf-main">
+    <div class="cf-sub">
+      <div class="cf-sub-card">
+        <p class="cf-h">Підписуйтесь на знижки!</p>
+        <p class="cf-muted">Не турбуйтесь, ми не спамимо 😍</p>
+        <div class="cf-input" aria-hidden="true">Ваша електронна адреса</div>
+        <span class="btn btn--primary btn--40 cf-send" aria-hidden="true">Відправити</span>
+        <img class="cf-sub-img" src="assets/footer-pushik.webp" alt="" width="440" height="284" loading="lazy">
+      </div>
+    </div>
+    <div class="cf-col cf-col--comfy is-open">
+      <button class="cf-acc" type="button" aria-expanded="true"><span class="cf-h">Comfy</span><i class="cf-chev" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M11.52 5.52a.67.67 0 0 1 .95.95l-4 4a.67.67 0 0 1-.95 0l-4-4a.67.67 0 0 1 .95-.95L8 9.05l3.52-3.53Z" fill="currentColor" fill-opacity=".71"/></svg></i></button>
+      <ul class="cf-list"><li>Про компанію</li><li>Магазини</li><li>Контакти</li><li>Прес-центр</li><li>Робота в Comfy</li><li>Політика конфіденційності</li><li>Тендер</li><li>Партнерам</li><li>Каталог товарів</li><li>COMFY допомагає</li></ul>
+    </div>
+    <div class="cf-col cf-col--svc">
+      <button class="cf-acc" type="button" aria-expanded="false"><span class="cf-h">Послуги і сервіси</span><i class="cf-chev" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M11.52 5.52a.67.67 0 0 1 .95.95l-4 4a.67.67 0 0 1-.95 0l-4-4a.67.67 0 0 1 .95-.95L8 9.05l3.52-3.53Z" fill="currentColor" fill-opacity=".71"/></svg></i></button>
+      <ul class="cf-list"><li>Бонусна програма</li><li>Подарункові картки</li><li>Кредит і оплата частинами</li><li>Сервісні договори</li><li>Безготівковий рахунок</li><li>Оплата</li></ul>
+    </div>
+    <div class="cf-col cf-col--help">
+      <button class="cf-acc" type="button" aria-expanded="false"><span class="cf-h">Допомога покупцеві</span><i class="cf-chev" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M11.52 5.52a.67.67 0 0 1 .95.95l-4 4a.67.67 0 0 1-.95 0l-4-4a.67.67 0 0 1 .95-.95L8 9.05l3.52-3.53Z" fill="currentColor" fill-opacity=".71"/></svg></i></button>
+      <ul class="cf-list"><li>Знайти замовлення</li><li>Умови доставки</li><li>Обмін і повернення товару</li><li>Гарантія</li><li>Статус товару в ремонті</li><li>Часто задавані питання</li><li>Правила користування сайтом</li><li>Правила участі в акціях</li></ul>
+    </div>
+    <div class="cf-contact">
+      <p class="cf-h">Консультація</p>
+      <p class="cf-phones"><span>0-800-303-505</span><span>0-800-303-506</span></p>
+      <p class="cf-muted cf-hours">Безкоштовно по Україні<br>08:00-21:00 Пн-Нд</p>
+      <p class="cf-mail"><img src="assets/ft-mail.svg" alt="" width="16" height="16">info@comfy.ua</p>
+      <ul class="cf-ch"><li><img src="assets/ch-help.svg" alt="" width="24" height="24">Центр допомоги</li><li><img src="assets/ch-chat.svg" alt="" width="24" height="24">Чат на сайті</li><li><img src="assets/ch-telegram.svg" alt="" width="24" height="24">Telegram</li><li><img src="assets/ch-viber.svg" alt="" width="24" height="24">Viber</li><li><img src="assets/ch-messenger.svg" alt="" width="24" height="24">Messenger</li><li><img src="assets/ch-apple.svg" alt="" width="24" height="24">Apple Messages</li></ul>
+    </div>
+  </div>
+  <div class="cf-div"></div>
+  <div class="cf-row cf-cats"><span class="cf-chip">Смартфони</span><span class="cf-chip">Планшети</span><span class="cf-chip">Настільні комп'ютери</span><span class="cf-chip">Витратні матеріали</span><span class="cf-chip">Аксесуари для комп'ютерів</span><span class="cf-chip">Ігрові консолі</span><span class="cf-chip">Смарт-годинники</span><span class="cf-chip">Фітнес-трекери</span><span class="cf-chip">Телевізори</span><span class="cf-chip">Аудіосистеми</span><span class="cf-chip">Фотоапарати</span><span class="cf-chip">Відеокамери</span><span class="cf-chip">Проектори</span><span class="cf-chip">Навушники</span><span class="cf-chip">Мікрофони</span><span class="cf-chip">Зовнішні жорсткі диски</span><span class="cf-chip">USB флешки</span><span class="cf-chip">Клавіатури</span><span class="cf-chip">Миші</span><span class="cf-chip">Сканери</span><span class="cf-chip">Принтери</span><span class="cf-chip">Мобільні аксесуари</span><span class="cf-chip">Розумні будинки</span><span class="cf-chip">Дрони</span><span class="cf-chip">Техніка для кухні</span><span class="cf-chip">Ноутбуки</span></div>
+  <div class="cf-div"></div>
+  <div class="cf-row cf-bottom">
+    <div class="cf-rights">
+      <p class="cf-copy">© Всі права захищені ООО «КОМФІ ТРЕЙД», 2010–2026</p>
+      <span class="cf-pay"><img src="assets/visa.svg" alt="Verified by Visa" width="50" height="29"><img src="assets/mastercard.svg" alt="Mastercard SecureCode" width="60" height="21"></span>
+    </div>
+    <div class="cf-social"><span class="cf-soc" title="Instagram"><img src="assets/so-instagram.svg" alt="Instagram" width="20" height="20"></span><span class="cf-soc" title="Facebook"><img src="assets/so-facebook.svg" alt="Facebook" width="20" height="20"></span><span class="cf-soc" title="Viber"><img src="assets/so-viber.svg" alt="Viber" width="20" height="20"></span><span class="cf-soc" title="Telegram"><img src="assets/so-telegram.svg" alt="Telegram" width="20" height="20"></span><span class="cf-soc" title="YouTube"><img src="assets/so-youtube.svg" alt="YouTube" width="20" height="20"></span></div>
   </div>
 </footer>
 
@@ -1253,6 +1361,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
     .fromTo('.hero-tag',{y:10,autoAlpha:0},{y:0,autoAlpha:1,duration:.7},0)
     .fromTo('.hero-title .wi',{yPercent:115},{yPercent:0,duration:1,stagger:.05,ease:'power4.out'},.05)
     .fromTo('.hero-sub',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.8},.45)
+    .fromTo('.hero-cta',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.8},.55)
     .fromTo('.pillstat',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.7,stagger:.08},.55)
     .call(function(){startSweep()},null,1.7)
     .fromTo(scene,{autoAlpha:0},{autoAlpha:1,duration:.01},T0)
@@ -1854,14 +1963,21 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
     ScrollTrigger.batch(faqItems,{start:'top 92%',once:true,onEnter:function(b){gsap.to(b,{y:0,autoAlpha:1,duration:.7,stagger:.07,ease:'power3.out'})}});
   }
 
-  /* ---------- Фінальний CTA: пушик махає, кнопки-магніти ---------- */
+  /* ---------- Футер: на мобільному розділи — акордеони ---------- */
+  $$('.cf-acc').forEach(function(b){
+    b.addEventListener('click',function(){
+      var col=b.closest('.cf-col'), open=!col.classList.contains('is-open');
+      col.classList.toggle('is-open',open); b.setAttribute('aria-expanded',open);
+      ScrollTrigger.refresh();
+    });
+  });
+
+  /* ---------- Фінальний CTA: пушик пританцьовує, кнопки-магніти ---------- */
   var fp=$('.final-pushik');
   if(window.matchMedia('(max-width: 900px)').matches) gsap.set(fp,{xPercent:-50});
   if(!reduce){
-    gsap.fromTo(fp,{rotation:-3},{rotation:4,duration:1.1,repeat:-1,yoyo:true,ease:'sine.inOut'});
-    gsap.timeline({repeat:-1,repeatDelay:2.2,delay:1})
-      .to(fp,{y:-18,duration:.22,ease:'power2.out'})
-      .to(fp,{y:0,duration:.5,ease:'bounce.out'});
+    gsap.fromTo(fp,{rotation:-1.5},{rotation:1.5,duration:.9,repeat:-1,yoyo:true,ease:'sine.inOut'});
+    gsap.fromTo(fp,{y:0},{y:7,duration:.45,repeat:-1,yoyo:true,ease:'sine.inOut'});
     gsap.fromTo(fp,{yPercent:28},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.final',start:'top bottom',end:'top 30%',scrub:.6}});
   }
   if(fine&&!reduce){
