@@ -1,0 +1,1882 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Comfy Premium</title>
+<meta name="description" content="Comfy Premium: безкоштовна доставка, підвищені бонуси, ремонт техніки, знижка на пальне і цифрові сервіси в одній підписці. Перший місяць — 1 ₴.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Comfy Premium — безкоштовна доставка та підвищені бонуси">
+<meta property="og:description" content="Концепт преміального лендінгу підписки Comfy Premium з анімаціями та інтерактивами.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%232abd13'/%3E%3Ccircle cx='22' cy='16' r='5' fill='%23fc5e0f'/%3E%3C/svg%3E">
+<!--
+  Comfy Premium — лендінг підписки. Чекпоінт 6: + «Як це працює», «Питання», футер. Херо і сервіси — за макетом Figma (ztnqBrswwn8uvmLHKlj100),
+  Укрнафта у брендовому #5C91B9, калькулятор в один екран.
+  TODO копірайт: цифри й умови підписки (199 ₴/міс, 1 ₴ перший місяць, ремонт до 10 000 ₴, −4 грн/л, 35 000+ ₴, 10%, 5 сервісів)
+  взяті з поточного лендінгу comfy-premium.vercel.app і макета. Перевірити і виправити перед релізом.
+  Кнопки — ❖ Comfy UI / Button: Primary і Secondary gray (Full corner radius=True), розміри 32 / 40 / 48 / 56 px.
+  «Сіяшки» на картках сервісів — шейдер Light rays з макета, перенесений на WebGL з тими самими параметрами; без WebGL — CSS-градієнт.
+-->
+<script>document.documentElement.classList.add('intro-pending');setTimeout(function(){document.documentElement.classList.remove('intro-pending')},3500);</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap">
+<style>
+/* Layout: центрована колонка тексту (кікер, заголовок у 2 рядки, CTA), під нею сцена на всю ширину екрана —
+   «нескінченна» біла студія: м'яке світло й підлога розчиняються в білому фоні сторінки, без рамки.
+   Токени — з ❖ Comfy UI v1.1.0. Навмисно одна світла тема: у DS немає темної. */
+:root{
+  --brand:#2abd13; --brand-hover:#24a210; --brand-700:#1c7d0d; --brand-50:#effdec; --focus:#43b02a;
+  --orange:#fc5e0f;
+  --text:rgba(10,10,10,.94); --text-2:rgba(10,10,10,.71); --text-3:#737373;
+  --line:rgba(10,10,10,.18); --line-hover:rgba(10,10,10,.57); --fill-hover:rgba(10,10,10,.04);
+  --gray-50:#fafafa; --gray-300:#d4d4d4;
+  --bg:#ffffff; --white:#ffffff;
+  --floor:228,235,224; --dust:rgba(120,130,105,.28);
+  --radius-full:999px;
+  --font:"Inter","Inter Variable",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --gutter:max(16px,3vw);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* ---------- ❖ Comfy UI / Button ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;cursor:pointer;text-decoration:none;white-space:nowrap;font-family:var(--font);font-weight:500;border-radius:var(--radius-full);transition:background-color .15s,box-shadow .15s,color .15s}
+.btn svg{flex-shrink:0}
+/* Focused у DS: кільце 2 px #2abd13 без відступу */
+.btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--brand)}
+/* Size */
+.btn--40{height:40px;padding:10px 14px;gap:4px;font-size:14px;line-height:20px}
+.btn--40 svg{width:20px;height:20px}
+.btn--48{height:48px;padding:12px 20px;gap:6px;font-size:16px;line-height:22px}
+.btn--48 svg{width:24px;height:24px}
+.btn--56{height:56px;padding:16px 24px;gap:8px;font-size:18px;line-height:24px}
+.btn--56 svg{width:24px;height:24px}
+/* Type */
+.btn--primary{background:var(--brand);color:var(--white)}
+.btn--primary:hover{background:var(--brand-hover)}
+.btn--secondary-gray{background:var(--white);color:var(--text-2);box-shadow:inset 0 0 0 1px var(--line)}
+/* Hover у DS: заливка 4% чорного + обводка 57% + текст 94%. Заливку кладемо поверх білої основи кнопки, щоб на зеленому/синьому фоні кнопка не просвічувала */
+.btn--secondary-gray:hover{background:linear-gradient(var(--fill-hover),var(--fill-hover)),var(--white);color:var(--text);box-shadow:inset 0 0 0 1px var(--line-hover)}
+.btn--secondary-gray:focus-visible{box-shadow:inset 0 0 0 1px var(--line),0 0 0 2px var(--brand)}
+.btn--tertiary-gray{background:transparent;color:var(--text-2)}
+.btn--tertiary-gray:hover{background:var(--fill-hover);color:var(--text)}
+.btn--tertiary-gray:focus-visible{color:var(--text)}
+
+/* ---------- Сітка сторінки: поля як у макеті (160 px на 1920 = 8,333vw), контент до 1600 px ---------- */
+:root{--edge:max(16px,3vw)}
+@media (min-width:1180px){:root{--edge:8.333vw}}
+/* один розмір для H1 херо і H2 секцій (60 px на 1920, як у макеті) */
+:root{--h-size:clamp(36px,calc(1.6vw + 30px),60px)}
+
+/* ---------- ❖ Comfy UI / Button: розміри з макета ---------- */
+.btn--32{height:32px;padding:6px 12px;gap:4px;font-size:14px;line-height:20px}
+.btn--icon{width:40px;padding:0}
+.btn--icon svg{width:20px;height:20px}
+.btn--secondary-gray:disabled{cursor:default;background:var(--white);color:rgba(10,10,10,.37);box-shadow:inset 0 0 0 1px var(--gray-300)}
+
+/* ---------- Мітка-пілюля з макета («Підписка Comfy Premium», «Входить у підписку») ---------- */
+.tag{display:inline-flex;align-items:center;margin:0;padding:4px 12px;border-radius:var(--radius-full);border:1px solid #9a9a9a;background:linear-gradient(-16.6deg,#373737 33.5%,#000 128.8%);color:#fff;font:700 18px/24px var(--font);white-space:nowrap}
+@media (max-width:640px){.tag{padding:3px 10px;font-size:15px;line-height:20px}}
+
+/* ---------- Nav (макет): прозора скляна плашка, лого в темній пілюлі, жирні посилання ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 14px) var(--gutter) 0;pointer-events:none}
+.nav-pill{pointer-events:auto;display:flex;align-items:center;gap:clamp(24px,3.6vw,70px);min-width:0;padding:8px 24px;border-radius:var(--radius-full);background:rgba(255,255,255,.2);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);transition:background-color .4s,box-shadow .4s}
+.nav.is-scrolled .nav-pill{background:rgba(255,255,255,.86);box-shadow:0 0 0 1px rgba(10,10,10,.06),0 16px 40px -20px rgba(10,10,10,.35)}
+.nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0;padding-right:12px;border-radius:var(--radius-full);background:#0a0a0a;text-decoration:none}
+.nav-logo:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.nav-logo svg{display:block;width:142px;height:33px}
+.nav-logo span{font:700 16px/22px var(--font);color:#fff}
+.nav-links{list-style:none;display:flex;gap:25px;margin:0;padding:0}
+.nav-links a{position:relative;display:block;font:700 16px/22px var(--font);color:var(--text);text-decoration:none;border-radius:4px}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:2px;border-radius:2px;background:var(--brand);transform:scaleX(0);transform-origin:0 50%;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.nav-links a:hover::after,.nav-links a.is-active::after{transform:scaleX(1)}
+.nav-links a:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+@media (max-width:999px){.nav-links{display:none}.nav-pill{gap:12px;padding:6px}}
+@media (max-width:420px){.nav-logo{gap:6px;padding-right:10px}.nav-logo svg{width:112px;height:26px}.nav-logo span{font-size:14px}}
+@media (max-width:389px){.nav-logo svg{width:96px;height:22px}.nav-logo span{font-size:13px}.nav .btn--32{padding:6px 10px;font-size:13px}}
+@media (max-width:339px){.nav-logo span{display:none}.nav-logo{padding-right:0}}
+
+/* ---------- Hero (Figma 2:2 / 12:4116): текст ліворуч, фургон праворуч, обрізаний краєм екрана ---------- */
+.hero{position:relative;overflow:clip;background:var(--white)}
+.hero-main{position:relative;padding-top:calc(env(safe-area-inset-top,0px) + 100px)}
+.hero-copy{position:relative;z-index:6;padding-inline:var(--edge)}
+.hero-title{margin:8px 0 0;font-size:var(--h-size);line-height:1.2;font-weight:800;letter-spacing:-.01em;color:var(--text);text-wrap:balance}
+.hero-title .line{display:inline}
+.hero-title .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.hero-title .wi{display:inline-block;will-change:transform}
+.hero-sub{margin:16px 0 0;max-width:36em;font-size:17px;line-height:1.4;font-weight:700;color:var(--text)}
+.hero-sub .br-d{display:none}
+html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .hero-sub,html.intro-pending .scene,html.intro-pending .pillstat{visibility:hidden}
+
+/* Сцена = рамка фургона (1015×627 у макеті). Правий обріз картинки завжди на краю або за краєм екрана */
+.scene{position:relative;z-index:2;width:108vw;margin:20px 0 7vw 4vw;aspect-ratio:1015/627}
+@media (min-width:700px){.scene{width:min(86vw,max(420px,calc((100svh - 400px) * 1.619)));margin:8px 0 4vw auto}}
+@media (min-width:1180px){
+  .hero-main{height:clamp(560px,calc(39.7vw + 64px),calc(100svh - 86px));padding-top:56px;display:flex;align-items:center;container-type:size}
+  .hero-copy{padding-right:0}
+  .hero-title{text-wrap:nowrap}
+  .hero-title .line{display:block;white-space:nowrap}
+  .hero-sub{margin-top:24px;max-width:none;font-size:clamp(18px,1.25vw,24px);line-height:1.34}
+  .hero-sub .br-d{display:inline}
+  .scene{position:absolute;right:0;bottom:clamp(18px,2.66vw,56px);margin:0;width:min(52.9vw,calc((100cqh - clamp(18px,2.66vw,56px) - 12px) * 1.619),calc(100cqw - var(--edge) - var(--h-size) * var(--title-em,11.9) - 24px))}
+}
+
+.hit{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}
+.hit:focus-visible{outline:2px solid var(--focus);outline-offset:6px;border-radius:24px}
+
+.truck{position:absolute;inset:0;z-index:1}
+.truck span{display:block}
+.truck-move,.truck-body,.truck-idle,.truck-honk{position:absolute;inset:0}
+.truck-move{will-change:transform}
+.truck-body{transform-origin:26% 99%}
+.truck-idle,.truck-honk{transform-origin:50% 100%}
+.truck-img{width:100%;height:100%;pointer-events:none;user-select:none;-webkit-user-drag:none}
+/* тіні з макета: велика під фургоном і дві щільніші під колесами */
+.truck-shadow{position:absolute;left:1.5%;top:85.2%;width:136.7%;height:15.8%;border-radius:50%;background:radial-gradient(closest-side,rgba(10,10,10,.13),rgba(10,10,10,.07) 55%,rgba(10,10,10,0))}
+.wshadow{position:absolute;top:88.5%;width:30.3%;height:11.3%;border-radius:50%;background:radial-gradient(closest-side,rgba(10,10,10,.32),rgba(10,10,10,.1) 55%,rgba(10,10,10,0))}
+.wshadow--front{left:13.5%}.wshadow--rear{left:69%}
+.puffs{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.puffs b{position:absolute;width:6%;aspect-ratio:1;margin:-3% 0 0 -3%;border-radius:50%;background:radial-gradient(closest-side,rgba(100,106,98,.42),rgba(100,106,98,0))}
+.bubble{position:absolute;left:5%;top:25%;padding:8px 14px;border-radius:16px 16px 16px 4px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 0 0 1px rgba(10,10,10,.05),0 12px 28px -14px rgba(10,10,10,.35);font-weight:700;font-size:clamp(12px,1.1vw,15px);white-space:nowrap;opacity:0;visibility:hidden;pointer-events:none}
+
+.pushik{position:absolute;left:41.1%;top:41.1%;width:31.9%;aspect-ratio:379/472;z-index:3}
+.pushik>span:not(.cue-pos),.pushik-tilt span{display:block}
+.pushik-tilt,.pushik-look,.pushik-squash,.pushik-breathe{position:absolute;inset:0;transform-origin:50% 100%}
+.pushik img{width:100%;height:100%;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.pushik-shadow{position:absolute;left:12%;right:4%;bottom:-3%;height:9%;border-radius:50%;background:radial-gradient(closest-side,rgba(60,30,8,.3),rgba(60,30,8,0));filter:blur(2px)}
+
+/* Заклик натиснути: кільця під ногами і підказка ліворуч від пушика */
+.pushik .cue{position:absolute;left:52%;bottom:-5%;width:150%;aspect-ratio:4/1;transform:translateX(-50%);pointer-events:none;z-index:-1}
+.pushik .cue i{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(42,189,19,.6);box-shadow:0 0 18px rgba(42,189,19,.25);opacity:0}
+/* бабл «Натисни на мене» над головою кур'єра, хвостик дивиться вниз на нього */
+.pushik .cue-pos{position:absolute;z-index:2;left:66%;bottom:calc(100% + 12px);transform:translateX(-50%);pointer-events:none}
+.pushik .cue-tip{position:relative;display:inline-flex;align-items:center;gap:6px;padding:8px 13px 8px 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px rgba(10,10,10,.06),0 14px 30px -14px rgba(10,10,10,.4);font:600 14px/1.1 var(--font);color:var(--text);white-space:nowrap;opacity:0;visibility:hidden;transform-origin:50% 130%}
+.pushik .cue-tip::after{content:"";position:absolute;left:50%;top:100%;width:12px;height:12px;margin:-7px 0 0 -6px;background:#fff;border-radius:0 0 3px 0;transform:rotate(45deg);box-shadow:1px 1px 0 rgba(10,10,10,.06)}
+.pushik .cue-tip svg{width:17px;height:17px;color:var(--brand)}
+
+/* ---------- Кольорове скло ---------- */
+.sticker{position:absolute;z-index:4;pointer-events:none}
+.sticker-par,.sticker-pop,.sticker-in{display:block}
+.sticker--1{right:4%;top:7%}.sticker--2{left:1%;top:2%}.sticker--3{right:1%;top:48%}
+.sticker--1 .glass{transform:rotate(2deg)}.sticker--2 .glass{transform:rotate(-3deg)}.sticker--3 .glass{transform:rotate(-2deg)}
+.glass{--tint:42,189,19;--tint-2:24,140,10;--ink:#fff;position:relative;display:inline-flex;align-items:center;gap:10px;padding:9px 16px 9px 9px;border-radius:20px;color:var(--ink);text-align:left;white-space:nowrap;
+  background:linear-gradient(145deg,rgba(var(--tint),.74),rgba(var(--tint-2),.56));
+  -webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 0 0 1px rgba(255,255,255,.28),inset 0 -10px 20px rgba(0,0,0,.05),0 18px 36px -18px rgba(var(--tint-2),.75),0 2px 6px -2px rgba(10,10,10,.12)}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0) 48%)}
+.glass--orange{--tint:252,110,30;--tint-2:215,70,5}
+.glass--amber{--tint:255,221,60;--tint-2:245,176,0;--ink:#352400}
+/* Укрнафта: брендовий #5C91B9 */
+.glass--blue{--tint:92,145,185;--tint-2:52,100,142}
+.glass--green,.glass--orange,.glass--blue{text-shadow:0 1px 1px rgba(0,0,0,.12)}
+.glass-ico{position:relative;flex-shrink:0;width:clamp(26px,2.4vw,34px);height:clamp(26px,2.4vw,34px);border-radius:clamp(9px,.8vw,12px);display:grid;place-items:center;background:rgba(255,255,255,.24);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.glass-ico svg{width:55%;height:55%}
+.glass-txt{position:relative;display:flex;flex-direction:column;gap:1px;line-height:1.15}
+.glass-txt small{font-size:clamp(10.5px,.85vw,12px);font-weight:500;opacity:.86}
+.glass-txt b{font-size:clamp(13px,1.1vw,16px);font-weight:650;letter-spacing:-.015em}
+.chips{position:absolute;inset:0;z-index:5;pointer-events:none}
+.chips .glass{position:absolute;left:0;top:0;padding:6px 12px;border-radius:14px;font-size:13px;font-weight:600;gap:0}
+
+/* ---------- Смуга з цифрами під херо ---------- */
+.hero-strip{position:relative;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 48px;padding:20px var(--gutter);background:#0a0a0a}
+.pillstat{display:inline-flex;align-items:center;gap:8px;margin:0;padding:4px 20px;border-radius:var(--radius-full);border:1px solid #fff;background:linear-gradient(111deg,#fff 45%,#e6e6e6 100%);color:#000;white-space:nowrap}
+.pillstat b{font-size:28px;line-height:36px;font-weight:800;font-variant-numeric:tabular-nums}
+.pillstat>span{font-size:18px;line-height:24px}
+/* Світлова хвиля по смузі — як shimmer під час завантаження: м'яка смуга світла йде по чорному,
+   пілюлі під нею спалахують відблиском і світінням. --sx (позиція хвилі) і --g (сила спалаху) задає скрипт */
+.hero-strip{overflow:hidden;isolation:isolate;--sx:-9999}
+.hero-strip::before{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:420px;z-index:-1;pointer-events:none;
+  background:linear-gradient(100deg,rgba(255,255,255,0) 16%,rgba(255,255,255,.07) 33%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.07) 67%,rgba(255,255,255,0) 84%);
+  transform:translateX(calc(var(--sx) * 1px - 50%))}
+.pillstat{position:relative;overflow:hidden;isolation:isolate;--ox:0;--g:0;box-shadow:0 0 calc(var(--g) * 26px) calc(var(--g) * 1px) rgba(255,255,255,calc(var(--g) * .45))}
+.pillstat::after{content:"";position:absolute;top:-10%;bottom:-10%;left:0;width:150px;z-index:-1;pointer-events:none;
+  background:linear-gradient(100deg,rgba(200,200,200,0) 6%,rgba(160,160,160,.34) 30%,#fff 50%,rgba(160,160,160,.34) 70%,rgba(200,200,200,0) 94%);
+  transform:translateX(calc((var(--sx) - var(--ox)) * 1px - 50%)) skewX(-18deg)}
+
+@media (max-width:699px){
+  .sticker--1{left:1%;top:46%}.sticker--2{left:2%;top:0}.sticker--3{display:none}
+  .glass{gap:7px;padding:6px 11px 6px 6px;border-radius:14px}
+  .chips .glass{font-size:11px;padding:5px 9px;border-radius:10px}
+  .pushik .cue-tip{font-size:12px;padding:6px 10px 6px 8px;border-radius:12px}
+  .pushik .cue-pos{bottom:calc(100% + 9px)}
+  .bubble{font-size:12px}
+  .hero-strip{gap:8px;padding:14px var(--gutter)}
+  .pillstat{gap:6px;padding:3px 14px}
+  .pillstat b{font-size:20px;line-height:28px}
+  .pillstat>span{font-size:14px;line-height:20px}
+}
+@media (max-width:420px){.pillstat b{font-size:18px;line-height:24px}.pillstat>span{font-size:13px;line-height:18px}.pillstat{padding:3px 12px}}
+
+/* ---------- Секції ---------- */
+.sec{padding:clamp(88px,10vw,144px) var(--edge)}
+.sec-inner{max-width:1600px;margin:0 auto}
+.sec-head{max-width:760px;margin:0 auto clamp(36px,4vw,56px);text-align:center}
+.eyebrow{margin:0;font-size:15px;font-weight:500;color:var(--text-2)}
+.h2{margin:12px 0 0;font-size:clamp(32px,4vw,52px);line-height:1.06;font-weight:700;letter-spacing:-.04em;text-wrap:balance;font-variation-settings:"opsz" 32}
+.lead{margin:16px auto 0;max-width:34em;font-size:18px;line-height:1.5;color:var(--text-2);text-wrap:balance}
+.grain::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.4;mix-blend-mode:soft-light;border-radius:inherit;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+
+/* Bento-переваги */
+.bento{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:16px}
+.card{position:relative;overflow:hidden;border-radius:40px;min-height:540px;padding:clamp(28px,3vw,40px);display:flex;flex-direction:column;align-items:flex-start;isolation:isolate;box-shadow:inset 0 0 0 1px rgba(10,10,10,.04);will-change:transform}
+.card::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;opacity:0;transition:opacity .4s;background:radial-gradient(460px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.26),rgba(255,255,255,0) 60%)}
+.card:hover::before{opacity:1}
+.card--repair{color:#fff;background:radial-gradient(48% 58% at 74% 64%,rgba(255,255,255,.34),rgba(255,255,255,0) 70%),radial-gradient(90% 60% at 20% 0%,rgba(255,255,255,.12),rgba(255,255,255,0) 70%),linear-gradient(160deg,#3bcd21 0%,#25ac10 52%,#168708 100%)}
+.card.card--repair .card-eyebrow{color:rgba(255,255,255,.78)}.card.card--repair p{color:rgba(255,255,255,.88)}
+.card--delivery{color:#fff;background:radial-gradient(55% 45% at 66% 26%,rgba(255,255,255,.13),rgba(255,255,255,0) 70%),radial-gradient(55% 34% at 62% 100%,rgba(252,94,15,.42),rgba(252,94,15,0) 72%),linear-gradient(180deg,#1d201c,#0d0f0c)}
+.card.card--delivery .card-eyebrow{color:rgba(255,255,255,.6)}.card.card--delivery p{color:rgba(255,255,255,.72)}
+/* Укрнафта: брендовий #5C91B9 (темніший угорі під текстом — для контрасту білого тексту) */
+.card--fuel{grid-column:1 / -1;min-height:340px;color:#fff;background:radial-gradient(46% 42% at 76% 84%,rgba(255,255,255,.3),rgba(255,255,255,0) 70%),radial-gradient(90% 60% at 18% 0%,rgba(255,255,255,.1),rgba(255,255,255,0) 70%),linear-gradient(162deg,#44789f 0%,#5c91b9 52%,#71a4ca 100%)}
+.card.card--fuel .card-eyebrow{color:rgba(255,255,255,.8)}.card.card--fuel p{color:#fff}
+.glass--white{--tint:255,255,255;--tint-2:255,255,255;background:linear-gradient(145deg,rgba(255,255,255,.26),rgba(255,255,255,.12));box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 0 0 1px rgba(255,255,255,.3),0 18px 36px -18px rgba(0,0,0,.35)}
+.glass--light{--ink:#1c1600;background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,255,255,.38));box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 0 0 1px rgba(255,255,255,.5),0 18px 36px -18px rgba(150,110,0,.55);text-shadow:none}
+.card-img{filter:drop-shadow(0 28px 34px rgba(0,0,0,.22))}
+.card-copy{position:relative;z-index:4;max-width:22em}
+.card--delivery .card-copy{max-width:17em}
+.card--fuel .card-copy{max-width:30em}
+.card-eyebrow{margin:0;font-size:14px;font-weight:500;color:var(--text-2)}
+.card h3{margin:10px 0 0;font-size:clamp(26px,2.4vw,34px);line-height:1.1;font-weight:700;letter-spacing:-.035em;text-wrap:balance}
+.card p{margin:12px 0 0;font-size:16px;line-height:1.5;color:var(--text-2)}
+.card .glass{position:relative;z-index:4;margin-top:auto}
+.card .glass-txt b{font-size:20px}
+.card-img{position:absolute;z-index:1;pointer-events:none;width:auto;max-width:none;user-select:none}
+.card--repair .card-img{right:5%;bottom:-2%;height:80%}
+.card--delivery .card-img{right:-3%;bottom:-3%;height:57%}
+.card--fuel .card-img{right:9%;bottom:-6%;height:92%}
+
+/* ---------- Цифрові сервіси (Figma 8:3004): темний контейнер, DS-таби, карусель карток із «сіяшками» ---------- */
+.sec--services{background:var(--white)}
+.svc-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,568px);align-items:end;gap:24px 48px;margin-bottom:24px}
+.svc-head .h2{margin-top:8px}
+/* лід-картка: той самий шейдер Light rays, 2 проходи (параметри з макета); фолбек без WebGL — пастельний градієнт */
+.svc-lead{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;min-height:144px;margin:0;padding:24px 32px;border-radius:32px;background:linear-gradient(115deg,#fdf1dc,#f6e9fb 45%,#e8f8e6)}
+.svc-lead canvas{position:absolute;inset:0;z-index:-1;width:100%;height:100%}
+.svc-lead p{margin:0;font:700 clamp(18px,1.25vw,24px)/1.34 var(--font);color:var(--text);text-wrap:balance}
+
+.svc-box{position:relative;overflow:hidden;padding:40px 0;border-radius:40px;background:linear-gradient(109.7deg,#0a0a0a 10.5%,#323232 56.7%,#161616 141.4%)}
+.svc-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 48px}
+/* ❖ Comfy UI / Horizontal tabs: Full corner radius=True, Color=Brand */
+/* компонент не ріжемо: якщо таби не влазять, гортається вся пілюля цілком */
+.htabs-wrap{position:relative;min-width:0;margin:-2px;padding:2px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+.htabs-wrap::-webkit-scrollbar{display:none}
+.htabs{display:flex;width:max-content;gap:2px;padding:4px;border-radius:var(--radius-full);background:var(--gray-50)}
+.htab{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border:0;border-radius:var(--radius-full);background:transparent;font:500 16px/22px var(--font);color:var(--text-2);cursor:pointer;white-space:nowrap;transition:background-color .15s,color .15s,box-shadow .15s}
+.htab:not(.is-active):hover{background:var(--fill-hover);color:var(--text)}
+.htab.is-active{background:var(--white);color:var(--brand);box-shadow:0 0 .5px rgba(10,10,10,.1),0 1px 3px rgba(10,10,10,.1)}
+.htab:focus-visible{outline:none;box-shadow:0 0 0 2px var(--brand)}
+.htab.is-active:focus-visible{box-shadow:0 0 .5px rgba(10,10,10,.1),0 1px 3px rgba(10,10,10,.1),0 0 0 2px var(--brand)}
+/* ❖ Comfy UI / Counter (label-small), Size=20 px: Grey і Brand */
+.count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 4px;border:1px solid #e5e5e5;border-radius:var(--radius-full);background:var(--gray-50);font:700 12px/16px var(--font);color:var(--text-2);font-variant-numeric:tabular-nums}
+.htab.is-active .count{border-color:var(--brand);background:var(--brand);color:#fff}
+.svc-arrows{display:flex;gap:12px;flex-shrink:0}
+
+.svc-scroller{margin-top:32px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:48px;scrollbar-width:none;outline:none}
+.svc-scroller::-webkit-scrollbar{display:none}
+.svc-scroller:focus-visible{box-shadow:inset 0 0 0 2px var(--brand)}
+@media (hover:hover) and (pointer:fine){.svc-scroller{cursor:grab}}
+.svc-scroller.is-drag{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.svc img{-webkit-user-drag:none;user-select:none}
+.svc-progress{display:none}
+.svc-track{display:flex;gap:12px;width:max-content;margin:0;padding:0 48px;list-style:none}
+.svc{position:relative;isolation:isolate;overflow:hidden;flex:0 0 224px;height:194px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:16px;border-radius:24px;background:#000;scroll-snap-align:start;transition:translate .45s cubic-bezier(.2,.8,.2,1)}
+.svc canvas{position:absolute;inset:0;z-index:-1;width:100%;height:100%}
+.svc.no-gl{background:radial-gradient(130% 110% at 4% -10%,rgba(255,255,255,.85),rgb(var(--c1)) 20%,rgba(var(--c2),.6) 46%,#000 86%)}
+.svc.is-off{display:none}
+@media (hover:hover){.svc:hover{translate:0 -4px}}
+.svc-ico{flex-shrink:0;width:52px;height:52px;border-radius:12px}
+/* TODO: монограми — тимчасово, доки немає офіційних іконок цих сервісів */
+.svc-mono{display:grid;place-items:center;background:linear-gradient(145deg,var(--m1),var(--m2));color:#fff;font:800 17px/1 var(--font);letter-spacing:-.02em;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.svc-txt{align-self:stretch;margin:0 -8px;padding:8px;border-radius:16px;background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--text)}
+.svc-txt b{display:block;font:700 16px/22px var(--font)}
+.svc-txt span{display:block;font:400 14px/20px var(--font)}
+
+.svc-cta{display:flex;align-items:center;justify-content:space-between;gap:16px 32px;width:min(1064px,calc(100% - 96px));margin:32px auto 0;padding:12px clamp(20px,3.2vw,48px);border-radius:var(--radius-full);background:linear-gradient(99.8deg,rgba(36,163,16,.8) 14%,rgba(72,235,46,.8) 46.8%,rgba(42,189,19,.8) 110%)}
+.svc-cta-copy{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0}
+.svc-cta-copy b{font:700 24px/32px var(--font);color:#fff}
+.svc-price{display:inline-flex;align-items:center;min-height:32px;padding:4px 12px;border-radius:var(--radius-full);background:#0a0a0a;font:700 18px/24px var(--font);color:#fff}
+.svc-cta .btn{flex-shrink:0}
+
+@media (max-width:1024px){.svc-head{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){
+  .svc-head{grid-template-columns:1fr;gap:20px}
+  .svc-lead{min-height:0;padding:20px;border-radius:24px}
+  .svc-box{padding:20px 0;border-radius:28px}
+  .svc-bar{padding:0}
+  .htabs-wrap{margin:0;padding:2px 16px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 40px),transparent)}
+  .htab{height:36px;padding:0 10px;font-size:15px}
+  .svc-arrows{display:none}
+  .svc-scroller{margin-top:16px;scroll-padding-inline:16px}
+  .svc-track{padding:0 16px}
+  .svc{flex-basis:min(76vw,300px);height:auto;min-height:200px}
+  /* індикатор прокрутки замість стрілок */
+  .svc-progress{display:block;position:relative;height:4px;margin:16px 16px 0;border-radius:999px;background:rgba(255,255,255,.16);overflow:hidden}
+  .svc-progress i{position:absolute;left:0;top:0;bottom:0;width:30%;border-radius:inherit;background:#fff}
+  .svc-cta{flex-direction:column;align-items:stretch;width:auto;margin:20px 16px 0;padding:20px;border-radius:24px}
+  .svc-cta-copy b{font-size:20px;line-height:26px}
+  .svc-price{font-size:15px;line-height:20px;border-radius:12px}
+}
+
+/* Bento — мобільні правила */
+@media (max-width:760px){
+  .bento{grid-template-columns:1fr}
+  .card{min-height:470px;border-radius:32px}
+  .card--fuel{min-height:440px}
+  .card--repair .card-img{height:58%;right:2%}
+  .card--delivery .card-img{height:56%}
+  .card-copy,.card--delivery .card-copy{max-width:none}
+  .lead{font-size:16px}
+}
+
+
+/* ---------- Масштаб, ритм, bento з вигодою, умови ---------- */
+
+.sec{padding:clamp(112px,12vw,192px) var(--edge)}
+.h2{font-size:var(--h-size);line-height:1.2;font-weight:800;letter-spacing:-.01em}
+.sec-head--split{max-width:none;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:end;gap:20px 64px;text-align:left;margin-bottom:clamp(40px,5vw,72px)}
+.sec-head--split .h2{max-width:11em}
+.sec-head--split .lead{margin:0;max-width:26em;text-wrap:pretty}
+.ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.lni{display:inline-block;will-change:transform}
+.filters--left{justify-content:flex-start}
+
+
+/* Bento: вигода — головний текст картки */
+.card{overflow:visible;min-height:580px}
+.card .card-value{position:relative;margin:14px 0 0;font-size:clamp(52px,5.6vw,84px);line-height:.95;font-weight:700;letter-spacing:-.055em;white-space:nowrap}
+.card h3{margin:18px 0 0;font-size:22px;line-height:1.2;letter-spacing:-.02em}
+.card .card-desc{margin-top:8px;max-width:22em}
+.card--delivery .card-copy{max-width:16em}
+.card-more{position:relative;z-index:4;margin-top:auto}
+.card--repair .card-img{right:1%;bottom:0;height:74%}
+.card--delivery .card-img{right:0;bottom:0;height:52%}
+.card--fuel{min-height:380px}
+.card--fuel .card-img{right:8%;bottom:0;height:96%}
+
+/* Умови вигоди (з попапів поточного лендінгу) */
+.sheet{--sheet-bg:linear-gradient(160deg,#3bcd21,#168708);--sheet-ink:#fff;width:min(560px,calc(100vw - 32px));max-width:none;max-height:none;margin:auto;padding:0;border:0;background:transparent;color:var(--text);overflow:visible}
+.sheet-card{border-radius:32px;background:var(--white);box-shadow:0 40px 120px -30px rgba(0,0,0,.55);max-height:calc(100dvh - 48px);overflow:auto;overscroll-behavior:contain}
+.sheet-top{border-radius:32px 32px 0 0}
+.sheet::backdrop{background:rgba(10,12,9,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.sheet[data-t="delivery"]{--sheet-bg:radial-gradient(60% 90% at 70% 110%,rgba(252,94,15,.45),rgba(252,94,15,0) 70%),linear-gradient(180deg,#1d201c,#0d0f0c)}
+.sheet[data-t="fuel"]{--sheet-bg:radial-gradient(60% 90% at 80% 110%,rgba(255,255,255,.26),rgba(255,255,255,0) 70%),linear-gradient(160deg,#44789f,#5c91b9 60%,#71a4ca)}
+.sheet-top{position:relative;padding:32px 72px 28px 32px;color:var(--sheet-ink);background:var(--sheet-bg)}
+.sheet-eyebrow{margin:0;font-size:14px;font-weight:500;opacity:.75}
+.sheet-value{margin:10px 0 0;font-size:clamp(44px,9vw,60px);font-weight:700;letter-spacing:-.055em;line-height:1}
+.sheet-title{margin:12px 0 0;font-size:22px;line-height:1.2;font-weight:700;letter-spacing:-.02em}
+.sheet .sheet-close{position:absolute;top:16px;right:16px}
+.sheet-body{padding:28px 32px 32px}
+.sheet-label{margin:0;font-size:14px;font-weight:500;color:var(--text-2)}
+.sheet-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:14px}
+.sheet-list li{display:flex;gap:12px;align-items:flex-start;font-size:17px;line-height:1.4;font-weight:500}
+.sheet-list svg{flex-shrink:0;width:24px;height:24px;color:var(--brand)}
+.sheet-note{margin:22px 0 0;font-size:14px;line-height:1.5;color:var(--text-3)}
+.sheet-cta{margin-top:24px;width:100%}
+
+@media (max-width:760px){
+  .sec-head--split{grid-template-columns:1fr;gap:16px}
+  .card{min-height:540px}
+  .card .card-value{font-size:clamp(44px,13vw,60px)}
+  .card--repair .card-img{height:54%;right:0}
+  .card--delivery .card-img{height:48%}
+  .card--delivery .card-copy{max-width:none}
+  .card--fuel{min-height:540px}
+  .card--fuel .card-img{height:46%;right:0}
+  .sheet-top{padding:28px 64px 24px 24px}
+  .sheet-body{padding:24px}
+}
+
+
+/* ---------- Переваги в один екран: 3 колонки, висота від вікна ---------- */
+.sec-head--stack{max-width:none;text-align:left;margin:0 0 clamp(28px,3vw,40px)}
+.sec-head--stack .h2{white-space:normal}
+.sec-head--stack .lead{margin:12px 0 0;max-width:40em;font-size:17px}
+#benefits{padding-block:clamp(96px,9vw,144px)}
+.bento{grid-template-columns:minmax(0,4.4fr) minmax(0,3.8fr) minmax(0,3.8fr);gap:16px}
+.card,.card--fuel{grid-column:auto;min-height:0;height:clamp(400px,calc(100vh - 320px),560px);padding:28px;container-type:inline-size}
+@supports (height:100svh){.card,.card--fuel{height:clamp(400px,calc(100svh - 320px),560px)}}
+.card .card-value{margin-top:12px;font-size:clamp(38px,3.35vw,56px)}
+.card h3{margin-top:14px;font-size:20px}
+.card .card-desc{font-size:15px;line-height:1.45;max-width:none}
+.card--delivery .card-copy,.card--fuel .card-copy,.card-copy{max-width:none}
+.card--repair .card-img{right:0;bottom:0;height:52%}
+.card--delivery .card-img{right:0;bottom:0;height:50%}
+.card--fuel .card-img{right:1%;bottom:0;height:42%}
+@media (max-width:1024px){
+  .bento{grid-template-columns:1fr 1fr}
+  .card--fuel{grid-column:1 / -1}
+  .card,.card--fuel{height:auto;min-height:520px}
+}
+@media (max-width:760px){
+  .bento{grid-template-columns:1fr}
+  .card .card-value{font-size:clamp(40px,12vw,56px)}
+  .card--repair .card-img{height:50%}
+  .card--delivery .card-img{height:48%}
+  .card--fuel .card-img{height:44%}
+}
+
+/* ---------- Калькулятор-«чек»: заголовок і повзунки ліворуч, чек праворуч — усе в один екран ---------- */
+#calc{padding-block:clamp(96px,9vw,144px)}
+.calc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);align-items:start;gap:clamp(32px,6vw,112px)}
+.calc-head .h2{margin-top:8px}
+.calc-head .lead{margin:12px 0 0;max-width:30em;font-size:17px;text-wrap:pretty}
+.calc-controls{display:grid;gap:clamp(18px,3.2vh,32px);margin-top:clamp(24px,4.4vh,44px)}
+.field-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:10px}
+.field-row label{font-size:16px;font-weight:500;color:var(--text)}
+.field-row output{font-size:16px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* ❖ Comfy UI / Slider: трек 4 px #e5e5e5, прогрес brand, ручка 24 px біла з обводкою 2 px brand, тултип Label=Top tooltip */
+.range{position:relative;height:24px}
+.range input{-webkit-appearance:none;appearance:none;width:100%;height:24px;margin:0;background:transparent;cursor:pointer;--p:25%}
+.range input::-webkit-slider-runnable-track{height:4px;border-radius:999px;background:linear-gradient(90deg,var(--brand) var(--p),#e5e5e5 var(--p))}
+.range input::-moz-range-track{height:4px;border-radius:999px;background:#e5e5e5}
+.range input::-moz-range-progress{height:4px;border-radius:999px;background:var(--brand)}
+.range input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-10px;border-radius:50%;background:#fff;border:2px solid var(--brand);box-shadow:0 1px 3px rgba(10,10,10,.1),0 0 .5px rgba(10,10,10,.1);transition:background-color .15s}
+.range input::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--brand);box-shadow:0 1px 3px rgba(10,10,10,.1),0 0 .5px rgba(10,10,10,.1)}
+.range input:hover::-webkit-slider-thumb,.range.is-drag input::-webkit-slider-thumb{background:#effdec}
+.range input:hover::-moz-range-thumb,.range.is-drag input::-moz-range-thumb{background:#effdec}
+.range input:focus-visible{outline:none}
+.range input:focus-visible::-webkit-slider-thumb{box-shadow:0 1px 3px rgba(10,10,10,.1),0 0 .5px rgba(10,10,10,.1),0 0 0 2px var(--brand)}
+.range-tip{position:absolute;bottom:32px;left:var(--tip,25%);transform:translateX(-50%);padding:8px 12px;border-radius:999px;background:#fff;font:700 14px/20px var(--font);color:var(--text-2);white-space:nowrap;font-variant-numeric:tabular-nums;pointer-events:none;box-shadow:0 1px 3px rgba(10,10,10,.04),0 5px 12px rgba(10,10,10,.1),0 0 .5px rgba(10,10,10,.1);opacity:0;transition:opacity .2s}
+.range:hover .range-tip,.range input:focus-visible + .range-tip,.range.is-drag .range-tip{opacity:1}
+
+.printer{position:relative}
+.printer-head{position:relative;z-index:2;height:52px;border-radius:18px;background:linear-gradient(180deg,#2a2e28,#131512);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 18px 40px -20px rgba(0,0,0,.6)}
+.printer-slot{position:absolute;left:16px;right:16px;bottom:12px;height:6px;border-radius:6px;background:#050605;box-shadow:inset 0 2px 3px rgba(0,0,0,.8),0 1px 0 rgba(255,255,255,.08)}
+.printer-led{position:absolute;right:18px;top:12px;width:7px;height:7px;border-radius:50%;background:var(--brand);box-shadow:0 0 10px 2px rgba(42,189,19,.7)}
+.receipt-clip{position:relative;z-index:1;margin:-12px 24px 0;padding:0 14px 26px;overflow:hidden}
+.receipt{position:relative;padding:clamp(16px,2.6vh,26px) 22px clamp(20px,3vh,28px);background:#fff;color:var(--text);box-shadow:0 22px 44px -22px rgba(10,10,10,.35),0 0 0 1px rgba(10,10,10,.04);
+  -webkit-mask:radial-gradient(9px at 50% 100%,#0000 97%,#000) 50% 100%/18px 100% repeat-x;mask:radial-gradient(9px at 50% 100%,#0000 97%,#000) 50% 100%/18px 100% repeat-x;
+  background-image:linear-gradient(180deg,rgba(10,10,10,.03),rgba(10,10,10,0) 40px)}
+/* шапка чека — повний логотип COMFY, а не лише зелена пілюля */
+.rc-head{display:flex;flex-direction:column;align-items:center;gap:8px;padding-bottom:clamp(10px,1.6vh,14px);border-bottom:1.5px dashed rgba(10,10,10,.16)}
+.rc-head svg{display:block;width:88px;height:auto}
+.rc-head span{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2)}
+.rc-rows{display:grid;gap:clamp(2px,.8vh,8px);padding:clamp(8px,1.5vh,14px) 0;border-bottom:1.5px dashed rgba(10,10,10,.16)}
+.rc-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:0 -6px;padding:2px 6px;border-radius:6px;font-size:14px;line-height:20px}
+.rc-row>span{min-width:0}
+.rc-row small{display:block;margin-top:1px;font-size:12px;line-height:16px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.rc-row b{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rc-free{color:var(--brand-700)}
+.rc-sum .rc-row{font-size:15px}
+.rc-net{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:clamp(10px,1.8vh,16px)}
+.rc-net span{max-width:7.5em;font-size:14px;line-height:1.25;font-weight:600;color:var(--text-2)}
+.rc-net b{display:inline-block;font-size:clamp(32px,3vw,44px);line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--brand);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rc-net.is-neg b{color:var(--text-3)}
+.rc-barcode{height:clamp(18px,2.8vh,28px);margin:clamp(10px,1.8vh,16px) 8px 0;background:repeating-linear-gradient(90deg,#141414 0 2px,transparent 2px 4px,#141414 4px 5px,transparent 5px 9px,#141414 9px 12px,transparent 12px 14px,#141414 14px 15px,transparent 15px 19px);opacity:.85}
+.rc-note{margin:8px 0 0;font-size:11px;line-height:1.4;color:var(--text-3);text-align:center}
+
+/* Мобільний: результат закріплений унизу екрана, поки рухаєш повзунки */
+.calc-bar{display:none}
+@media (max-width:900px){
+  #calc{padding-block:72px}
+  .calc-grid{grid-template-columns:1fr;gap:28px}
+  .calc-head .lead{font-size:15px;margin-top:8px}
+  .calc-controls{gap:18px;margin-top:20px}
+  .field-row{margin-bottom:4px}
+  .field-row label,.field-row output{font-size:15px;line-height:20px}
+  .range-tip{display:none}
+  .calc-bar{opacity:0;transform:translateY(16px);transition:opacity .35s,transform .45s cubic-bezier(.2,.8,.2,1);position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding:12px 16px 12px 18px;border-radius:20px;background:#0a0a0a;color:#fff;box-shadow:0 18px 40px -14px rgba(0,0,0,.5)}
+  .calc-bar small{display:block;font-size:12px;line-height:16px;color:rgba(255,255,255,.64)}
+  .calc-bar b{display:inline-block;font:800 26px/1.1 var(--font);letter-spacing:-.02em;color:var(--brand);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .calc-bar.is-shown{opacity:1;transform:none}
+  .calc-bar.is-neg b{color:rgba(255,255,255,.64)}
+  .calc-bar-sub{font-size:12px;line-height:16px;text-align:right;color:rgba(255,255,255,.64)}
+  .calc-bar-sub b{font-size:13px;line-height:16px;color:#fff;letter-spacing:0}
+  .printer{width:100%;max-width:440px;margin:0 auto}
+}
+@media (max-width:640px){
+  .field-row label,.field-row output{font-size:15px}
+  .receipt-clip{margin:-12px 12px 0;padding:0 8px 32px}
+  .receipt{padding:20px 16px 24px}
+}
+
+/* ---------- Фінальний CTA ---------- */
+.final{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:radial-gradient(40% 70% at 78% 85%,rgba(255,255,255,.28),rgba(255,255,255,0) 70%),radial-gradient(70% 60% at 10% 0%,rgba(255,255,255,.12),rgba(255,255,255,0) 70%),linear-gradient(160deg,#3bcd21 0%,#25ac10 52%,#168708 100%)}
+.final-inner{max-width:calc(1600px + 2 * var(--edge));margin:0 auto;padding:clamp(96px,11vw,160px) var(--edge) 0;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:end;gap:32px;min-height:clamp(520px,70vh,680px)}
+.final-copy{align-self:center;padding-bottom:clamp(96px,11vw,160px)}
+.final-title{margin:0;font-size:clamp(40px,5.6vw,80px);line-height:1.05;font-weight:800;letter-spacing:-.03em;max-width:9.5em}
+.final-sub{margin:20px 0 0;font-size:18px;line-height:1.5;color:rgba(255,255,255,.86);max-width:28em}
+.final-cta{margin-top:32px}
+.final-art{position:relative;align-self:end;height:100%;min-height:420px}
+.final-glow{position:absolute;left:50%;bottom:-20%;width:120%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.35),rgba(255,255,255,0))}
+.final-pushik{position:absolute;right:-2%;bottom:-6%;height:90%;width:auto;max-width:none;transform-origin:50% 100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.25))}
+.final-copy{position:relative;z-index:2}
+.js-magnet{will-change:transform}
+
+@media (max-width:900px){
+  .final-inner{grid-template-columns:1fr;min-height:0}
+  .final-copy{padding-bottom:0}
+  .final-art{min-height:340px;height:340px}
+  .final-pushik{height:100%;bottom:-8%;right:auto;left:50%}
+}
+@media (max-width:640px){
+  .final .btn{width:100%}
+}
+
+/* ---------- ❖ Comfy UI: Badge (Dot, 24 px, Success), Toggle (24 px), Input (56 px) — для ілюстрацій у «Як це працює» ---------- */
+.badge{display:inline-flex;align-items:center;gap:6px;height:24px;padding:2px 8px;border-radius:var(--radius-full);font:500 14px/20px var(--font);white-space:nowrap}
+.badge--success{background:#effdec;box-shadow:inset 0 0 0 1px #bef4b3;color:#1c7d0d}
+.badge--success i{width:8px;height:8px;border-radius:50%;background:var(--brand)}
+.tgl{position:relative;flex-shrink:0;width:44px;height:24px;padding:2px;border-radius:12px;background:#e5e5e5;transition:background-color .3s}
+.tgl i{display:block;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(10,10,10,.1),0 0 .5px rgba(10,10,10,.1);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.tgl.is-on{background:var(--brand)}
+.tgl.is-on i{transform:translateX(20px)}
+.inp{display:flex;flex-direction:column;justify-content:center;gap:4px;height:56px;padding:0 12px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px #d4d4d4}
+.inp.is-focus{box-shadow:inset 0 0 0 1px var(--brand),0 0 0 2px var(--brand)}
+.inp-label{font:400 12px/16px var(--font);color:rgba(10,10,10,.37)}
+.inp-val{display:flex;align-items:center;min-height:22px;font:400 16px/22px var(--font);color:var(--text);font-variant-numeric:tabular-nums}
+.caret{display:inline-block;width:1px;height:18px;margin-left:1px;background:var(--text);animation:caret 1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+
+/* ---------- Як це працює: кроки ліворуч, закріплена картка-сцена праворуч ---------- */
+.how-head{margin-bottom:clamp(24px,3vw,48px)}
+.how-head .h2{margin-top:8px}
+.how-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,5vw,96px);align-items:start}
+.how-steps{position:relative;padding:0 0 0 64px}
+.how-list{list-style:none;margin:0;padding:0}
+.how-rail{position:absolute;left:19px;top:0;height:0;width:2px;border-radius:2px;background:#e5e5e5}
+.how-rail i{position:absolute;inset:0;border-radius:inherit;background:var(--brand);transform-origin:50% 0;transform:scaleY(0)}
+.how-step{position:relative;min-height:clamp(340px,64vh,620px);display:flex;flex-direction:column;justify-content:center;padding:32px 0}
+.how-step:first-child{min-height:clamp(300px,52vh,520px);justify-content:flex-start;padding-top:8px}
+.how-num{position:absolute;left:-64px;top:-2px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#fff;box-shadow:inset 0 0 0 2px #e5e5e5;font:700 16px/1 var(--font);color:var(--text-3);font-variant-numeric:tabular-nums;transition:background-color .4s,color .4s,box-shadow .4s}
+.how-step.is-active .how-num{background:var(--brand);color:#fff;box-shadow:0 0 0 6px rgba(42,189,19,.16)}
+.how-step.is-done .how-num{background:#effdec;color:#1c7d0d;box-shadow:inset 0 0 0 2px #bef4b3}
+.how-copy{position:relative}
+.how-copy>:not(.how-num){transition:opacity .5s}
+.how-step:not(.is-active) .how-copy>:not(.how-num){opacity:.38}
+.how-copy h3{margin:0;font:800 clamp(24px,calc(1vw + 16px),36px)/1.2 var(--font);letter-spacing:-.01em;color:var(--text)}
+.how-copy p{margin:12px 0 0;max-width:26em;font-size:18px;line-height:1.5;color:var(--text-2);text-wrap:pretty}
+.how-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+
+.how-stage{position:sticky;top:max(96px,calc(50vh - var(--stage-h) / 2 + 30px));--stage-h:min(600px,calc(100vh - 150px))}
+@supports (height:100svh){.how-stage{--stage-h:min(600px,calc(100svh - 150px))}}
+.how-card{position:relative;isolation:isolate;overflow:hidden;height:var(--stage-h);border-radius:40px;background:#f4f5f3;box-shadow:inset 0 0 0 1px rgba(10,10,10,.04)}
+.how-inline{display:none}
+.hs{position:absolute;inset:0;display:flex;align-items:center;padding:0 7%;visibility:hidden;opacity:0}
+.hs.is-on{visibility:visible;opacity:1}
+.hs::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(62% 58% at 84% 96%,rgba(var(--glow),.3),rgba(var(--glow),0) 70%),radial-gradient(50% 50% at 8% 0%,rgba(255,255,255,.9),rgba(255,255,255,0) 70%)}
+.hs--1{--glow:42,189,19}.hs--2{--glow:252,94,15}.hs--3{--glow:92,145,185}
+.hs-push{position:absolute;right:3%;bottom:-2%;height:50%;width:auto;max-width:none;pointer-events:none;filter:drop-shadow(0 24px 30px rgba(0,0,0,.18))}
+.hs--2 .hs-push{height:52%}
+.hs--3 .hs-push{right:4%;bottom:0;height:50%}
+
+/* ілюстрація-віджет: біла картка з компонентів DS */
+.hw{position:relative;z-index:1;width:min(348px,60%);padding:20px;border-radius:24px;background:#fff;color:var(--text);box-shadow:0 0 0 1px rgba(10,10,10,.04),0 30px 60px -28px rgba(10,10,10,.35),0 2px 6px -2px rgba(10,10,10,.08)}
+.hw-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hw-logo svg{display:block;width:92px;height:auto}
+.hw-title{margin:16px 0 12px;font:700 18px/24px var(--font)}
+.hw-top .hw-title{margin:0}
+.hw-plan{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--gray-50);font-size:14px;line-height:20px;color:var(--text-2)}
+.hw-plan b{font:800 20px/24px var(--font);color:var(--text);white-space:nowrap}
+.hw-plan small{display:block;font-size:12px;line-height:16px;color:var(--text-3)}
+.hw-btn{width:100%;margin-top:14px;pointer-events:none}
+.hw-btn.is-done{background:#1c7d0d}
+.hw-btn svg{width:20px;height:20px}
+.hw-toast{position:absolute;right:6%;top:9%;display:inline-flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px rgba(10,10,10,.05),0 20px 40px -20px rgba(10,10,10,.35);font:600 14px/20px var(--font);color:var(--text);white-space:nowrap}
+.hw-toast span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff}
+.hw-toast svg{width:16px;height:16px}
+.hw-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:6px 0;font-size:15px;line-height:22px;color:var(--text-2)}
+.hw-row b{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hw-old{position:relative;margin-right:8px;color:var(--text-3);font-weight:500}
+.hw-old i{position:absolute;left:-2px;right:-2px;top:52%;height:2px;border-radius:2px;background:#e41f11;transform-origin:0 50%}
+.hw-zero{display:inline-block;color:#1c7d0d}
+.hw-row--bonus b{color:#1c7d0d}
+.hw-sep{height:1px;margin:8px 0;background:#e5e5e5}
+.hw-row--total{font-weight:600;color:var(--text)}
+.hw-row--total b{font-size:18px}
+.hs-chip{position:absolute;z-index:2}
+.hs--2 .hs-chip--1{left:52%;top:9%}
+.hs--2 .hs-chip--2{left:5%;top:8%}
+.hs--2 .hs-chip--3{left:4%;bottom:10%}
+.hs-pill,.hs-apps{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:18px;background:#fff;box-shadow:0 0 0 1px rgba(10,10,10,.05),0 20px 40px -20px rgba(10,10,10,.35);font:600 14px/18px var(--font);color:var(--text)}
+.hs-apps span{display:flex}
+.hs-pill{padding:6px 14px 6px 6px}
+.hs-dot{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;color:#fff}
+.hs-dot svg{width:17px;height:17px}
+.hs-dot--green{background:var(--brand)}.hs-dot--blue{background:#5c91b9}
+.hs-apps img{width:32px;height:32px;border-radius:9px;margin-left:-8px;box-shadow:0 0 0 2px #fff}
+.hs-apps img:first-child{margin-left:0}
+.hw-plan2{margin-top:14px;padding:14px;border-radius:14px;background:var(--gray-50)}
+.hw-plan2 b{display:block;font:700 16px/22px var(--font)}
+.hw-plan2 span{font-size:14px;line-height:20px;color:var(--text-2)}
+.hw-set{display:flex;align-items:center;gap:12px;margin-top:14px;font-size:16px;line-height:22px}
+.hw-sub{margin:16px 0 6px;font:600 13px/18px var(--font);letter-spacing:.02em;color:var(--text-3)}
+.hw-pay{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #f0f0f0;font-size:14px;line-height:20px;color:var(--text-2)}
+.hw-pay b{margin-left:auto;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.hw-pay svg{width:18px;height:18px;color:var(--brand)}
+.hw-cancel{margin:10px 0 -6px -14px;pointer-events:none}
+
+@media (max-width:899px){
+  .how-grid{grid-template-columns:1fr}
+  .how-stage{display:none}
+  .how-steps{padding-left:56px}
+  .how-rail{left:15px}
+  .how-num{left:-56px;top:0;width:32px;height:32px;font-size:14px}
+  .how-step,.how-step:first-child{min-height:0;justify-content:flex-start;padding:0 0 48px}
+  .how-step:last-child{padding-bottom:0}
+  .how-step:not(.is-active) .how-copy>:not(.how-num){opacity:1}
+  .how-copy p{font-size:16px}
+  .how-inline{display:block;margin-top:20px}
+  .how-inline .how-card{height:auto;border-radius:28px}
+  .how-inline .hs{visibility:visible;opacity:1}
+  /* на мобільному картка росте під віджет, нічого не обрізається */
+  .how-inline .hs{position:relative;min-height:320px;padding:28px 5%}
+  .how-inline .hs--2{padding:68px 5% 76px}
+  .how-inline .hw{width:min(300px,74%);padding:16px;border-radius:20px}
+  .how-inline .hw-title{font-size:16px;line-height:22px}
+  .how-inline .hw-set{font-size:14px;line-height:20px;gap:10px}
+  .how-inline .hw-row{font-size:14px}
+  .how-inline .hs-push{height:42%;right:0}
+  .how-inline .hs--3 .hs-push{right:-3%}
+  .how-inline .hs-chip--1{left:auto;right:4%;top:5%}
+  .how-inline .hs-chip--2{top:5%}
+  .how-inline .hs-chip--3{bottom:5%}
+  .how-inline .hw-toast{display:none}
+  .how-actions .btn{flex:1 1 100%}
+}
+@media (max-width:420px){
+  .how-steps{padding-left:0}
+  .how-rail{display:none}
+  .how-num{position:static;margin-bottom:12px}
+  .how-inline .hs-chip--2{display:none}
+}
+
+/* ---------- Питання (FAQ) ---------- */
+.faq-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(32px,6vw,112px);align-items:start}
+.faq-side{position:sticky;top:120px}
+.faq-side .h2{margin-top:8px}
+.faq-side .lead{margin:16px 0 0;max-width:22em;font-size:17px;text-wrap:pretty}
+.faq-side .btn{margin-top:24px}
+.faq-list{display:grid;gap:12px}
+.faq-item{border-radius:24px;background:var(--gray-50);box-shadow:inset 0 0 0 1px rgba(10,10,10,.04);transition:background-color .3s,box-shadow .4s}
+@media (hover:hover){.faq-item:not(.is-open):hover{background:#f3f3f3}}
+.faq-item.is-open{background:#fff;box-shadow:inset 0 0 0 1px rgba(10,10,10,.06),0 28px 56px -32px rgba(10,10,10,.3)}
+.faq-q{margin:0}
+.faq-q button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 22px 22px 28px;border:0;border-radius:24px;background:none;text-align:left;font:700 clamp(17px,calc(.5vw + 12px),22px)/1.35 var(--font);color:var(--text);cursor:pointer}
+.faq-q button:focus-visible{outline:none;box-shadow:0 0 0 2px var(--brand)}
+/* іконка — ❖ Comfy UI / Button, Variant=Icon, 40 px: закрите — Secondary gray, відкрите — Primary; ховер рядка = Hover кнопки */
+.faq-ico{position:relative;flex-shrink:0;width:40px;height:40px;border-radius:50%;background:#fff;color:var(--text-2);box-shadow:inset 0 0 0 1px var(--line);transition:background-color .15s,box-shadow .15s,color .15s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.faq-q button:hover .faq-ico{background:linear-gradient(var(--fill-hover),var(--fill-hover)),#fff;color:var(--text);box-shadow:inset 0 0 0 1px var(--line-hover)}
+.faq-item.is-open .faq-q button:hover .faq-ico{background:var(--brand-hover)}
+.faq-ico::before,.faq-ico::after{content:"";position:absolute;left:50%;top:50%;width:13px;height:1.67px;margin:-.83px 0 0 -6.5px;border-radius:2px;background:currentColor;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.faq-ico::after{transform:rotate(90deg)}
+.faq-item.is-open .faq-ico{background:var(--brand);color:#fff;box-shadow:none;transform:rotate(180deg)}
+.faq-item.is-open .faq-ico::after{transform:rotate(0deg)}
+.faq-a{height:0;overflow:hidden}
+.faq-item.is-open .faq-a{height:auto}
+.faq-a p{margin:0;padding:0 28px 26px;max-width:42em;font-size:17px;line-height:1.55;color:var(--text-2)}
+@media (max-width:899px){
+  .faq-grid{grid-template-columns:1fr}
+  .faq-side{position:static}
+}
+@media (max-width:640px){
+  .faq-q button{padding:18px 16px 18px 20px;gap:16px}
+  .faq-a p{padding:0 20px 20px;font-size:16px}
+}
+
+/* ---------- Футер ---------- */
+.foot{background:#0a0a0a;color:rgba(255,255,255,.64);padding:40px var(--edge) calc(40px + env(safe-area-inset-bottom,0px))}
+.foot-inner{max-width:1600px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 48px}
+.foot .nav-logo{box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+.foot-links{list-style:none;display:flex;flex-wrap:wrap;gap:12px 28px;margin:0;padding:0}
+.foot-links a{font:600 15px/22px var(--font);color:#fff;text-decoration:none;border-radius:4px}
+.foot-links a:hover{color:var(--brand)}
+.foot-links a:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+.foot-copy{flex-basis:100%;margin:0;padding-top:24px;border-top:1px solid rgba(255,255,255,.12);font-size:13px;line-height:1.5}
+.foot-copy a{color:inherit}
+
+@media (prefers-reduced-motion:reduce){.btn,.btn svg,.nav-pill{transition:none}}
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <nav class="nav-pill" aria-label="Навігація сторінкою">
+    <a class="nav-logo" href="#top" aria-label="Comfy Premium, на початок сторінки">
+      <svg viewBox="0 0 130 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M114.064 0H15.0269C6.72843 0 0 6.71639 0 15C0 23.2836 6.72843 30 15.0269 30H114.064C122.362 30 129.091 23.2836 129.091 15C129.091 6.71639 122.362 0 114.064 0Z" fill="#2ABD13"/><path d="M122.194 15C122.194 19.5711 118.482 23.2767 113.903 23.2767C109.324 23.2767 105.611 19.5711 105.611 15C105.611 10.429 109.324 6.72339 113.903 6.72339C118.482 6.72339 122.194 10.429 122.194 15Z" fill="#FC5E0F"/><path d="M35.2916 5.41211C29.9954 5.41211 25.6865 9.71325 25.6865 15C25.6865 20.2867 29.9954 24.5879 35.2916 24.5879C40.5878 24.5879 44.8966 20.2867 44.8966 15C44.8966 9.71325 40.5878 5.41211 35.2916 5.41211ZM35.2916 19.6285C32.7342 19.6285 30.6548 17.5528 30.6548 15C30.6548 12.4472 32.7342 10.3715 35.2916 10.3715C37.849 10.3715 39.9284 12.4472 39.9284 15C39.9284 17.5528 37.849 19.6285 35.2916 19.6285Z" fill="white"/><path d="M64.5119 5.58985C63.5838 5.20675 62.5144 5.4192 61.8044 6.12793L56.1925 11.7316L50.5997 6.14883C49.8897 5.4401 48.8203 5.22765 47.8923 5.61075C46.9642 5.99385 46.3589 6.89935 46.3589 7.90063V22.117C46.3589 23.4857 47.4719 24.5967 48.843 24.5967C50.2142 24.5967 51.3271 23.4857 51.3271 22.117V13.8874L54.4358 16.9905C55.4057 17.9587 56.9792 17.9587 57.9492 16.9905L61.077 13.8682V22.1188C61.077 23.4875 62.19 24.5984 63.5611 24.5984C64.9323 24.5984 66.0453 23.4875 66.0453 22.1188V7.88147C66.0453 6.87845 65.4399 5.97469 64.5119 5.58985Z" fill="white"/><path d="M80.6286 5.41211H70.5369C69.1657 5.41211 68.0527 6.52309 68.0527 7.89179V22.1082C68.0527 23.4769 69.1657 24.5879 70.5369 24.5879C71.908 24.5879 73.021 23.4769 73.021 22.1082V18.3939H79.8105C81.1816 18.3939 82.2946 17.2829 82.2946 15.9142C82.2946 14.5455 81.1816 13.4345 79.8105 13.4345H73.021V10.3715H80.6286C81.9998 10.3715 83.1128 9.2605 83.1128 7.89179C83.1128 6.52309 81.9998 5.41211 80.6286 5.41211Z" fill="white"/><path d="M101.964 6.13999C100.994 5.1718 99.4201 5.1718 98.4502 6.13999L93.4837 11.0976L88.5172 6.13999C87.5473 5.1718 85.9737 5.1718 85.0038 6.13999C84.0339 7.10818 84.0339 8.67888 85.0038 9.64707L90.9996 15.6321V22.1064C90.9996 23.4751 92.1125 24.5861 93.4837 24.5861C94.8548 24.5861 95.9678 23.4751 95.9678 22.1064V15.6321L101.964 9.64707C102.933 8.67888 102.933 7.10818 101.964 6.13999Z" fill="white"/><path d="M16.5038 10.3715C18.0354 10.3715 19.4676 11.1272 20.3346 12.3914C21.1092 13.5216 22.6548 13.8106 23.7869 13.0375C24.9191 12.2643 25.2087 10.7215 24.4341 9.59135C22.6408 6.9741 19.6752 5.41211 16.502 5.41211C11.2058 5.41211 6.89697 9.71325 6.89697 15C6.89697 20.2867 11.2058 24.5879 16.502 24.5879C19.5444 24.5879 22.3408 23.1965 24.1742 20.7691C25.0011 19.6755 24.7813 18.1205 23.6858 17.2968C22.5902 16.4732 21.0324 16.6908 20.2073 17.7844C19.3211 18.9563 17.9709 19.6302 16.502 19.6302C13.9446 19.6302 11.8652 17.5546 11.8652 15.0017C11.8652 12.4489 13.9446 10.3732 16.502 10.3732" fill="white"/></svg>
+      <span>Premium</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#benefits">Переваги</a></li>
+      <li><a href="#services">Сервіси</a></li>
+      <li><a href="#how">Як це працює</a></li>
+      <li><a href="#faq">Питання</a></li>
+    </ul>
+    <a class="btn btn--primary btn--32" href="#try">Спробувати за 1 ₴</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-main">
+      <div class="hero-copy">
+        <p class="tag hero-tag">Підписка Comfy Premium</p>
+        <h1 class="hero-title" id="hero-title">
+          <span class="line"><span class="w"><span class="wi">Безкоштовна</span></span> <span class="w"><span class="wi">доставка</span></span></span>
+          <span class="line"><span class="w"><span class="wi">та</span></span> <span class="w"><span class="wi">підвищені</span></span> <span class="w"><span class="wi">бонуси</span></span></span>
+        </h1>
+        <p class="hero-sub">Перший місяць коштує 1&nbsp;₴, далі 199&nbsp;₴ на місяць.<br class="br-d"> Скасувати можна будь-коли в особистому кабінеті.</p>
+      </div>
+
+      <!-- Сцена: фургон заїжджає справа і зупиняється як у макеті; з-за правого краю виходить пушик із посилкою.
+           На скрол униз фургон заводиться, а пушик іде тим самим шляхом за край екрана. -->
+      <div class="scene" id="scene">
+        <button class="hit truck" id="truck" type="button" aria-label="Фургон доставки COMFY. Натисни, щоб посигналити">
+          <span class="truck-move">
+            <span class="truck-shadow" aria-hidden="true"></span>
+            <span class="wshadow wshadow--front" aria-hidden="true"></span>
+            <span class="wshadow wshadow--rear" aria-hidden="true"></span>
+            <span class="truck-body"><span class="truck-idle"><span class="truck-honk">
+              <img class="truck-img" src="assets/van.webp" alt="" width="1015" height="627">
+            </span></span></span>
+            <span class="puffs" aria-hidden="true"></span>
+            <span class="bubble" aria-hidden="true">Біп-біп!</span>
+          </span>
+        </button>
+
+        <button class="hit pushik" id="pushik" type="button" aria-label="Пушик із посилкою. Натисни, щоб відкрити посилку">
+          <span class="cue" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="cue-pos" aria-hidden="true"><span class="cue-tip"><svg viewBox="0 0 24 24" fill="none"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-.5v-1a1.5 1.5 0 0 1 3 0V11m0-1a1.5 1.5 0 0 1 3 0v4.5A5.5 5.5 0 0 1 12.5 20h-1.2a5 5 0 0 1-3.9-1.9L4.6 14.6a1.4 1.4 0 0 1 2.1-1.9L9 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Натисни на мене</span></span>
+          <span class="pushik-shadow" aria-hidden="true"></span>
+          <span class="pushik-tilt"><span class="pushik-look"><span class="pushik-squash"><span class="pushik-breathe">
+            <img src="assets/pushik-parcel.webp" alt="" width="379" height="472">
+          </span></span></span></span>
+        </button>
+
+        <!-- TODO копірайт: перевірити ліміти й умови -->
+        <span class="sticker sticker--1"><span class="sticker-par"><span class="sticker-pop"><span class="sticker-in">
+          <span class="glass glass--light">
+            <span class="glass-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a4 4 0 0 0-5.2 5.2l-5.3 5.3a1.6 1.6 0 0 0 2.3 2.3l5.3-5.3a4 4 0 0 0 5.2-5.2l-2.5 2.5-2.1-.6-.6-2.1 2.9-2.1Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>
+            <span class="glass-txt"><small>Ремонт техніки</small><b>до 10 000 ₴</b></span>
+          </span>
+        </span></span></span></span>
+        <span class="sticker sticker--2"><span class="sticker-par"><span class="sticker-pop"><span class="sticker-in">
+          <span class="glass glass--blue">
+            <span class="glass-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 20V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v14M4 20h12M5 10h10m0 0 3 3v4a1.5 1.5 0 0 0 3 0V9l-3-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="glass-txt"><small>Пальне в «Укрнафті»</small><b>−4 грн/л</b></span>
+          </span>
+        </span></span></span></span>
+        <span class="sticker sticker--3"><span class="sticker-par"><span class="sticker-pop"><span class="sticker-in">
+          <span class="glass glass--orange">
+            <span class="glass-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="m10.5 9.5 4 2.5-4 2.5v-5Z" fill="currentColor"/></svg></span>
+            <span class="glass-txt"><small>Цифрові сервіси</small><b>Кіно, книги, VPN</b></span>
+          </span>
+        </span></span></span></span>
+
+        <div class="chips" id="chips" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- TODO копірайт: цифри з макета й поточного лендінгу, перевірити. «5 сервісів у підписці» не збігається з 11 сервісами нижче -->
+    <div class="hero-strip" role="list" aria-label="Підписка в цифрах">
+      <p class="pillstat" role="listitem"><b><span class="js-count" data-to="35000">35 000</span>+</b><span>₴ вигоди на рік</span></p>
+      <p class="pillstat" role="listitem"><b><span class="js-count" data-to="10">10</span>%</b><span>знижка на покупки</span></p>
+      <p class="pillstat" role="listitem"><b><span class="js-count" data-to="5">5</span></b><span>сервісів у підписці</span></p>
+    </div>
+  </section>
+
+
+  <section class="sec" id="benefits" aria-labelledby="benefits-title">
+    <div class="sec-inner">
+      <div class="sec-head sec-head--stack">
+        <p class="tag js-reveal">Переваги</p>
+        <h2 class="h2 js-lines" id="benefits-title">Усі переваги в одному просторі</h2>
+        <p class="lead js-reveal">Ми зібрали вигоди з магазину та партнерів в одну підписку. Відкрий будь-яку, щоб побачити умови.</p>
+      </div>
+      <div class="bento">
+        <article class="card card--repair grain js-card">
+          <div class="card-copy">
+            <p class="card-eyebrow">Вигода в COMFY</p>
+            <p class="card-value">до 10&nbsp;000&nbsp;₴</p>
+            <h3>Безкоштовний ремонт техніки</h3>
+            <p class="card-desc">Полагодимо побутову техніку безкоштовно в межах ліміту, який зростає з кожним місяцем підписки.</p>
+          </div>
+          <button class="btn btn--secondary-gray btn--40 card-more" type="button" data-sheet="repair">Що входить<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <img class="card-img js-card-img" src="assets/bull.webp" alt="Пушик верхи на роботі-пилососі" width="545" height="820" loading="lazy">
+        </article>
+
+        <article class="card card--delivery grain js-card">
+          <div class="card-copy">
+            <p class="card-eyebrow">Вигода в COMFY</p>
+            <p class="card-value">Безліміт</p>
+            <h3>Безкоштовна доставка</h3>
+            <p class="card-desc">Замовляй тоді, коли зручно, без додаткової плати за доставку в межах підписки.</p>
+          </div>
+          <button class="btn btn--secondary-gray btn--40 card-more" type="button" data-sheet="delivery">Що входить<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <img class="card-img js-card-img" src="assets/horse.webp" alt="Пушик верхи на коні" width="575" height="760" loading="lazy">
+        </article>
+
+        <article class="card card--fuel grain js-card">
+          <div class="card-copy">
+            <p class="card-eyebrow">Партнерська пропозиція</p>
+            <p class="card-value">до −4&nbsp;грн/л</p>
+            <h3>Пальне в мережі АЗС «Укрнафта»</h3>
+            <p class="card-desc">Знижка на всі види палива на кожній заправці мережі по всій Україні, без обмежень за кількістю візитів.</p>
+          </div>
+          <button class="btn btn--secondary-gray btn--40 card-more" type="button" data-sheet="fuel">Що входить<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <img class="card-img js-card-img" src="assets/ukrnafta.webp" alt="Пушик заправляє авто на АЗС «Укрнафта»" width="703" height="645" loading="lazy">
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Умови з попапів поточного лендінгу. TODO копірайт: там підписка названа «ComfyPlus», тут — «Comfy Premium»; узгодити назву -->
+  <dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+   <div class="sheet-card">
+    <div class="sheet-top">
+      <p class="sheet-eyebrow" id="sheet-eyebrow"></p>
+      <p class="sheet-value" id="sheet-value"></p>
+      <h3 class="sheet-title" id="sheet-title"></h3>
+      <button class="btn btn--secondary-gray btn--40 btn--icon sheet-close" type="button" id="sheet-close" aria-label="Закрити"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M15 5 5 15M5 5l10 10" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <div class="sheet-body">
+      <p class="sheet-label">Що входить</p>
+      <ul class="sheet-list" id="sheet-list"></ul>
+      <p class="sheet-note">Вигода активується в межах підписки Comfy Premium і працює автоматично після оплати.</p>
+      <a class="btn btn--primary btn--48 sheet-cta" href="#try">Спробувати за 1 ₴<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+   </div>
+  </dialog>
+
+  <section class="sec sec--services" id="services" aria-labelledby="services-title">
+    <div class="sec-inner">
+      <div class="svc-head">
+        <div>
+          <p class="tag js-reveal">Входить у підписку</p>
+          <h2 class="h2 js-lines" id="services-title">Цифрові сервіси</h2>
+        </div>
+        <div class="svc-lead js-reveal" id="svc-lead"><canvas aria-hidden="true"></canvas><p>Стрімінг, книги, навчання та корисні застосунки вже входять у Comfy Premium.</p></div>
+      </div>
+
+      <div class="svc-box js-reveal">
+        <div class="svc-bar">
+          <div class="htabs-wrap" id="htabs-wrap"><div class="htabs" role="group" aria-label="Фільтр сервісів">
+            <button class="htab is-active" type="button" data-filter="all" aria-pressed="true">Усі<span class="count">11</span></button>
+            <button class="htab" type="button" data-filter="media" aria-pressed="false">Кіно й контент<span class="count">2</span></button>
+            <button class="htab" type="button" data-filter="learn" aria-pressed="false">Навчання й книги<span class="count">3</span></button>
+            <button class="htab" type="button" data-filter="health" aria-pressed="false">Спорт і звички<span class="count">2</span></button>
+            <button class="htab" type="button" data-filter="safe" aria-pressed="false">Безпека й пристрої<span class="count">4</span></button>
+          </div></div>
+          <div class="svc-arrows">
+            <button class="btn btn--secondary-gray btn--40 btn--icon" id="svc-prev" type="button" aria-label="Попередні сервіси" disabled><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m12.5 15-5-5 5-5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="btn btn--secondary-gray btn--40 btn--icon" id="svc-next" type="button" aria-label="Наступні сервіси"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m7.5 15 5-5-5-5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+        <!-- Іконки 7 сервісів — з макета (експорт 1x). TODO: офіційні іконки CleanMyMac, NanoHabits, Kroha, ChatMind (зараз монограми) і 2x-версії всіх іконок.
+             data-rays: колір 1 | колір 2 | speed | spread | density — параметри шейдера Light rays з макета -->
+        <div class="svc-scroller" id="svc-scroller" tabindex="0" role="region" aria-label="Список сервісів">
+          <ul class="svc-track" id="svc-track">
+            <li class="svc" data-cat="media" data-rays=".1255,.7451,.7765|.8673,.9105,.2625|.5|.5|.53" style="--c1:32,190,198;--c2:221,232,67"><canvas aria-hidden="true"></canvas><img class="svc-ico" src="assets/ic-sweettv.png" alt="" width="52" height="52"><p class="svc-txt"><b>SweetTV</b><span>Стрімінг українських та світових фільмів і серіалів</span></p></li>
+            <li class="svc" data-cat="learn" data-rays=".0858,.2669,.9911|.8673,.9105,.2625|.5|.5|.53" style="--c1:22,68,253;--c2:221,232,67"><canvas aria-hidden="true"></canvas><img class="svc-ico" src="assets/ic-gramaro.png" alt="" width="52" height="52"><p class="svc-txt"><b>Gramaro</b><span>Англійська граматика та інтерактивна практика</span></p></li>
+            <li class="svc" data-cat="safe" data-rays="0,.6667,1|.2625,.6621,.9105|.39|.56|.56" style="--c1:0,170,255;--c2:67,169,232"><canvas aria-hidden="true"></canvas><img class="svc-ico" src="assets/ic-vpn.png" alt="" width="52" height="52"><p class="svc-txt"><b>VPN Unlimited</b><span>Безпечний VPN, висока швидкість та приватність</span></p></li>
+            <li class="svc" data-cat="learn" data-rays=".9961,.851,.1059|.3961,.6353,.8902|.39|.56|.56" style="--c1:254,217,27;--c2:101,162,227"><canvas aria-hidden="true"></canvas><img class="svc-ico" src="assets/ic-librarius.png" alt="" width="52" height="52"><p class="svc-txt"><b>Librarius</b><span>Бібліотека книжок та аудіокниг у кишені</span></p></li>
+            <li class="svc" data-cat="health" data-rays=".8471,.9686,.4588|.4949,.8902,.3961|.39|.56|.56" style="--c1:216,247,117;--c2:126,227,101"><canvas aria-hidden="true"></canvas><img class="svc-ico" src="assets/ic-onlinefitness.png" alt="" width="52" height="52"><p class="svc-txt"><b>OnlineFitness</b><span>Твій шлях до ідеального тіла</span></p></li>
+            <li class="svc" data-cat="safe" data-rays=".8667,.1961,.6941|.7502,.3961,.8902|.39|.56|.56" style="--c1:221,50,177;--c2:191,101,227"><canvas aria-hidden="true"></canvas><img class="svc-ico" src="assets/ic-cleanmyphone.png" alt="" width="52" height="52"><p class="svc-txt"><b>CleanMyPhone</b><span>Очищення пам'яті iPhone та впорядкування фото</span></p></li>
+            <li class="svc" data-cat="media" data-rays=".5792,.0288,1|.4373,.8902,.3961|.39|.56|.56" style="--c1:148,7,255;--c2:111,227,101"><canvas aria-hidden="true"></canvas><img class="svc-ico" src="assets/ic-reface.png" alt="" width="52" height="52"><p class="svc-txt"><b>Reface</b><span>AI-генерація, заміна облич та вірусний контент</span></p></li>
+            <li class="svc" data-cat="safe" data-rays=".2,.55,1|.75,.4,.89|.39|.56|.56" style="--c1:51,140,255;--c2:191,102,227"><canvas aria-hidden="true"></canvas><span class="svc-ico svc-mono" style="--m1:#3b82f6;--m2:#8b5cf6" aria-hidden="true">CM</span><p class="svc-txt"><b>CleanMyMac</b><span>Оптимізація, очищення та захист вашого Mac</span></p></li>
+            <li class="svc" data-cat="health" data-rays="1,.55,.15|.99,.85,.11|.39|.56|.56" style="--c1:255,140,38;--c2:252,217,28"><canvas aria-hidden="true"></canvas><span class="svc-ico svc-mono" style="--m1:#fb923c;--m2:#f59e0b" aria-hidden="true">NH</span><p class="svc-txt"><b>NanoHabits</b><span>Формування корисних звичок та досягнення цілей</span></p></li>
+            <li class="svc" data-cat="safe" data-rays="1,.4,.45|.4,.8,.95|.39|.56|.56" style="--c1:255,102,115;--c2:102,204,242"><canvas aria-hidden="true"></canvas><span class="svc-ico svc-mono" style="--m1:#fb7185;--m2:#38bdf8" aria-hidden="true">K</span><p class="svc-txt"><b>Kroha</b><span>Батьківський контроль та безпека дитини в інтернеті</span></p></li>
+            <li class="svc" data-cat="learn" data-rays=".25,.85,.65|.58,.03,1|.39|.56|.56" style="--c1:64,217,166;--c2:148,8,255"><canvas aria-hidden="true"></canvas><span class="svc-ico svc-mono" style="--m1:#34d399;--m2:#7c3aed" aria-hidden="true">Ch</span><p class="svc-txt"><b>ChatMind</b><span>Компактні міні-курси для розвитку життєвих навичок</span></p></li>
+          </ul>
+        </div>
+        <div class="svc-progress" aria-hidden="true"><i></i></div>
+        <div class="svc-cta">
+          <p class="svc-cta-copy"><b>Усе це входить у підписку</b><span class="svc-price">199 ₴ на місяць, перший місяць за 1 ₴</span></p>
+          <a class="btn btn--secondary-gray btn--40" href="#try">Спробувати за 1 ₴</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec calc" id="calc" aria-labelledby="calc-title">
+    <!-- TODO: орієнтовні умови (доставка ≈100 ₴, пальне 4 грн/л, бонуси 10%, підписка 1 ₴ + 199 ₴ × 11) — замінити на реальні; усі числа в CALC у скрипті -->
+    <div class="sec-inner calc-grid">
+      <div class="calc-side">
+        <div class="calc-head">
+          <p class="tag js-reveal">Калькулятор вигоди</p>
+          <h2 class="h2 js-lines" id="calc-title">Скільки ти заощадиш за рік</h2>
+          <p class="lead js-reveal">Рухай повзунки, і чек одразу перерахується. Розрахунок орієнтовний.</p>
+        </div>
+        <div class="calc-stick">
+        <form class="calc-controls js-reveal" id="calc-form" aria-label="Параметри розрахунку">
+          <div class="field">
+            <div class="field-row"><label for="c-orders">Замовлень із доставкою на місяць</label><output id="o-orders" for="c-orders">3</output></div>
+            <div class="range"><input type="range" id="c-orders" min="0" max="12" step="1" value="3"><span class="range-tip" aria-hidden="true">3</span></div>
+          </div>
+          <div class="field">
+            <div class="field-row"><label for="c-repair">Ремонт техніки за рік</label><output id="o-repair" for="c-repair">3 000 ₴</output></div>
+            <div class="range"><input type="range" id="c-repair" min="0" max="10000" step="500" value="3000"><span class="range-tip" aria-hidden="true">3 000 ₴</span></div>
+          </div>
+          <div class="field">
+            <div class="field-row"><label for="c-fuel">Пальне на місяць</label><output id="o-fuel" for="c-fuel">60 л</output></div>
+            <div class="range"><input type="range" id="c-fuel" min="0" max="200" step="5" value="60"><span class="range-tip" aria-hidden="true">60 л</span></div>
+          </div>
+          <div class="field">
+            <div class="field-row"><label for="c-shop">Покупки в COMFY за рік</label><output id="o-shop" for="c-shop">20 000 ₴</output></div>
+            <div class="range"><input type="range" id="c-shop" min="0" max="100000" step="1000" value="20000"><span class="range-tip" aria-hidden="true">20 000 ₴</span></div>
+          </div>
+        </form>
+        <div class="calc-bar" aria-hidden="true">
+          <span><small class="js-net-label">Твій плюс за рік</small><b data-k="net2">+9 290 ₴</b></span>
+          <span class="calc-bar-sub">Вигода <b data-k="total2">11 480 ₴</b><br>мінус підписка 2 190 ₴</span>
+        </div>
+        </div>
+      </div>
+
+      <div class="printer" aria-live="polite">
+        <div class="printer-head" aria-hidden="true"><span class="printer-led"></span><span class="printer-slot"></span></div>
+        <div class="receipt-clip">
+          <div class="receipt" id="receipt">
+            <div class="rc-head"><svg viewBox="0 0 130 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M114.064 0H15.0269C6.72843 0 0 6.71639 0 15C0 23.2836 6.72843 30 15.0269 30H114.064C122.362 30 129.091 23.2836 129.091 15C129.091 6.71639 122.362 0 114.064 0Z" fill="#2ABD13"/><path d="M122.194 15C122.194 19.5711 118.482 23.2767 113.903 23.2767C109.324 23.2767 105.611 19.5711 105.611 15C105.611 10.429 109.324 6.72339 113.903 6.72339C118.482 6.72339 122.194 10.429 122.194 15Z" fill="#FC5E0F"/><path d="M35.2916 5.41211C29.9954 5.41211 25.6865 9.71325 25.6865 15C25.6865 20.2867 29.9954 24.5879 35.2916 24.5879C40.5878 24.5879 44.8966 20.2867 44.8966 15C44.8966 9.71325 40.5878 5.41211 35.2916 5.41211ZM35.2916 19.6285C32.7342 19.6285 30.6548 17.5528 30.6548 15C30.6548 12.4472 32.7342 10.3715 35.2916 10.3715C37.849 10.3715 39.9284 12.4472 39.9284 15C39.9284 17.5528 37.849 19.6285 35.2916 19.6285Z" fill="white"/><path d="M64.5119 5.58985C63.5838 5.20675 62.5144 5.4192 61.8044 6.12793L56.1925 11.7316L50.5997 6.14883C49.8897 5.4401 48.8203 5.22765 47.8923 5.61075C46.9642 5.99385 46.3589 6.89935 46.3589 7.90063V22.117C46.3589 23.4857 47.4719 24.5967 48.843 24.5967C50.2142 24.5967 51.3271 23.4857 51.3271 22.117V13.8874L54.4358 16.9905C55.4057 17.9587 56.9792 17.9587 57.9492 16.9905L61.077 13.8682V22.1188C61.077 23.4875 62.19 24.5984 63.5611 24.5984C64.9323 24.5984 66.0453 23.4875 66.0453 22.1188V7.88147C66.0453 6.87845 65.4399 5.97469 64.5119 5.58985Z" fill="white"/><path d="M80.6286 5.41211H70.5369C69.1657 5.41211 68.0527 6.52309 68.0527 7.89179V22.1082C68.0527 23.4769 69.1657 24.5879 70.5369 24.5879C71.908 24.5879 73.021 23.4769 73.021 22.1082V18.3939H79.8105C81.1816 18.3939 82.2946 17.2829 82.2946 15.9142C82.2946 14.5455 81.1816 13.4345 79.8105 13.4345H73.021V10.3715H80.6286C81.9998 10.3715 83.1128 9.2605 83.1128 7.89179C83.1128 6.52309 81.9998 5.41211 80.6286 5.41211Z" fill="white"/><path d="M101.964 6.13999C100.994 5.1718 99.4201 5.1718 98.4502 6.13999L93.4837 11.0976L88.5172 6.13999C87.5473 5.1718 85.9737 5.1718 85.0038 6.13999C84.0339 7.10818 84.0339 8.67888 85.0038 9.64707L90.9996 15.6321V22.1064C90.9996 23.4751 92.1125 24.5861 93.4837 24.5861C94.8548 24.5861 95.9678 23.4751 95.9678 22.1064V15.6321L101.964 9.64707C102.933 8.67888 102.933 7.10818 101.964 6.13999Z" fill="white"/><path d="M16.5038 10.3715C18.0354 10.3715 19.4676 11.1272 20.3346 12.3914C21.1092 13.5216 22.6548 13.8106 23.7869 13.0375C24.9191 12.2643 25.2087 10.7215 24.4341 9.59135C22.6408 6.9741 19.6752 5.41211 16.502 5.41211C11.2058 5.41211 6.89697 9.71325 6.89697 15C6.89697 20.2867 11.2058 24.5879 16.502 24.5879C19.5444 24.5879 22.3408 23.1965 24.1742 20.7691C25.0011 19.6755 24.7813 18.1205 23.6858 17.2968C22.5902 16.4732 21.0324 16.6908 20.2073 17.7844C19.3211 18.9563 17.9709 19.6302 16.502 19.6302C13.9446 19.6302 11.8652 17.5546 11.8652 15.0017C11.8652 12.4489 13.9446 10.3732 16.502 10.3732" fill="white"/></svg><span>Чек вигоди · 12 місяців</span></div>
+            <div class="rc-rows">
+              <div class="rc-row"><span>Доставка<small id="d-orders">3 × 12 міс × 100 ₴</small></span><b data-k="delivery">3 600 ₴</b></div>
+              <div class="rc-row"><span>Ремонт техніки<small>ліміт до 10 000 ₴</small></span><b data-k="repair">3 000 ₴</b></div>
+              <div class="rc-row"><span>Пальне в «Укрнафті»<small id="d-fuel">60 л × 12 міс × 4 ₴</small></span><b data-k="fuel">2 880 ₴</b></div>
+              <div class="rc-row"><span>Бонуси за покупки<small>10% від суми</small></span><b data-k="bonus">2 000 ₴</b></div>
+              <div class="rc-row"><span>Цифрові сервіси<small>11 сервісів</small></span><b class="rc-free">входять</b></div>
+            </div>
+            <div class="rc-rows rc-sum">
+              <div class="rc-row"><span>Вигода за рік</span><b data-k="total">11 480 ₴</b></div>
+              <div class="rc-row"><span>Підписка за рік<small>1 ₴ + 199 ₴ × 11</small></span><b data-k="price">−2 190 ₴</b></div>
+            </div>
+            <div class="rc-net"><span id="net-label">Твій плюс за рік</span><b data-k="net" id="net">9 290 ₴</b></div>
+            <div class="rc-barcode" aria-hidden="true"></div>
+            <p class="rc-note">Розрахунок орієнтовний: доставка ≈ 100 ₴, знижка на пальне 4 грн/л, бонуси 10% від покупок.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Кроки й тексти — з поточного лендінгу («3 кроки»). TODO копірайт: перевірити. Віджети на картці — ілюстрація з компонентів ❖ Comfy UI (Input, Button, Badge, Toggle), не справжні екрани -->
+  <section class="sec how" id="how" aria-labelledby="how-title">
+    <div class="sec-inner">
+      <div class="how-head">
+        <p class="tag js-reveal">Як це працює</p>
+        <h2 class="h2 js-lines" id="how-title">3 кроки до вигоди</h2>
+      </div>
+      <div class="how-grid">
+        <div class="how-steps" id="how-steps">
+          <span class="how-rail" aria-hidden="true"><i></i></span>
+          <ol class="how-list">
+          <li class="how-step is-active">
+            <div class="how-copy">
+              <span class="how-num" aria-hidden="true">1</span>
+              <h3>Підключи підписку</h3>
+              <p>Увійди за номером телефону та оплати підписку — це займає менше хвилини.</p>
+              <div class="how-actions">
+                <a class="btn btn--primary btn--48" href="#try">Спробувати за 1 ₴<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <a class="btn btn--secondary-gray btn--48" href="#code">У мене є код активації</a>
+              </div>
+            </div>
+            <div class="how-inline" aria-hidden="true"></div>
+          </li>
+          <li class="how-step">
+            <div class="how-copy">
+              <span class="how-num" aria-hidden="true">2</span>
+              <h3>Користуйся перевагами</h3>
+              <p>Безкоштовна доставка, підвищені бонуси, знижки партнерів і цифрові сервіси застосовуються автоматично під час кожної покупки.</p>
+            </div>
+            <div class="how-inline" aria-hidden="true"></div>
+          </li>
+          <li class="how-step">
+            <div class="how-copy">
+              <span class="how-num" aria-hidden="true">3</span>
+              <h3>Налаштуй свою підписку</h3>
+              <p>Керуй своєю підпискою у Особистому Кабінеті: історія платежів, скасування в один клік.</p>
+            </div>
+            <div class="how-inline" aria-hidden="true"></div>
+          </li>
+          </ol>
+        </div>
+
+        <div class="how-stage" aria-hidden="true">
+          <div class="how-card" id="how-card">
+            <!-- 1. Вхід за номером і оплата -->
+            <div class="hs hs--1 is-on">
+              <div class="hw">
+                <div class="hw-top"><span class="hw-logo"><svg viewBox="0 0 130 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M114.064 0H15.0269C6.72843 0 0 6.71639 0 15C0 23.2836 6.72843 30 15.0269 30H114.064C122.362 30 129.091 23.2836 129.091 15C129.091 6.71639 122.362 0 114.064 0Z" fill="#2ABD13"/><path d="M122.194 15C122.194 19.5711 118.482 23.2767 113.903 23.2767C109.324 23.2767 105.611 19.5711 105.611 15C105.611 10.429 109.324 6.72339 113.903 6.72339C118.482 6.72339 122.194 10.429 122.194 15Z" fill="#FC5E0F"/><path d="M35.2916 5.41211C29.9954 5.41211 25.6865 9.71325 25.6865 15C25.6865 20.2867 29.9954 24.5879 35.2916 24.5879C40.5878 24.5879 44.8966 20.2867 44.8966 15C44.8966 9.71325 40.5878 5.41211 35.2916 5.41211ZM35.2916 19.6285C32.7342 19.6285 30.6548 17.5528 30.6548 15C30.6548 12.4472 32.7342 10.3715 35.2916 10.3715C37.849 10.3715 39.9284 12.4472 39.9284 15C39.9284 17.5528 37.849 19.6285 35.2916 19.6285Z" fill="white"/><path d="M64.5119 5.58985C63.5838 5.20675 62.5144 5.4192 61.8044 6.12793L56.1925 11.7316L50.5997 6.14883C49.8897 5.4401 48.8203 5.22765 47.8923 5.61075C46.9642 5.99385 46.3589 6.89935 46.3589 7.90063V22.117C46.3589 23.4857 47.4719 24.5967 48.843 24.5967C50.2142 24.5967 51.3271 23.4857 51.3271 22.117V13.8874L54.4358 16.9905C55.4057 17.9587 56.9792 17.9587 57.9492 16.9905L61.077 13.8682V22.1188C61.077 23.4875 62.19 24.5984 63.5611 24.5984C64.9323 24.5984 66.0453 23.4875 66.0453 22.1188V7.88147C66.0453 6.87845 65.4399 5.97469 64.5119 5.58985Z" fill="white"/><path d="M80.6286 5.41211H70.5369C69.1657 5.41211 68.0527 6.52309 68.0527 7.89179V22.1082C68.0527 23.4769 69.1657 24.5879 70.5369 24.5879C71.908 24.5879 73.021 23.4769 73.021 22.1082V18.3939H79.8105C81.1816 18.3939 82.2946 17.2829 82.2946 15.9142C82.2946 14.5455 81.1816 13.4345 79.8105 13.4345H73.021V10.3715H80.6286C81.9998 10.3715 83.1128 9.2605 83.1128 7.89179C83.1128 6.52309 81.9998 5.41211 80.6286 5.41211Z" fill="white"/><path d="M101.964 6.13999C100.994 5.1718 99.4201 5.1718 98.4502 6.13999L93.4837 11.0976L88.5172 6.13999C87.5473 5.1718 85.9737 5.1718 85.0038 6.13999C84.0339 7.10818 84.0339 8.67888 85.0038 9.64707L90.9996 15.6321V22.1064C90.9996 23.4751 92.1125 24.5861 93.4837 24.5861C94.8548 24.5861 95.9678 23.4751 95.9678 22.1064V15.6321L101.964 9.64707C102.933 8.67888 102.933 7.10818 101.964 6.13999Z" fill="white"/><path d="M16.5038 10.3715C18.0354 10.3715 19.4676 11.1272 20.3346 12.3914C21.1092 13.5216 22.6548 13.8106 23.7869 13.0375C24.9191 12.2643 25.2087 10.7215 24.4341 9.59135C22.6408 6.9741 19.6752 5.41211 16.502 5.41211C11.2058 5.41211 6.89697 9.71325 6.89697 15C6.89697 20.2867 11.2058 24.5879 16.502 24.5879C19.5444 24.5879 22.3408 23.1965 24.1742 20.7691C25.0011 19.6755 24.7813 18.1205 23.6858 17.2968C22.5902 16.4732 21.0324 16.6908 20.2073 17.7844C19.3211 18.9563 17.9709 19.6302 16.502 19.6302C13.9446 19.6302 11.8652 17.5546 11.8652 15.0017C11.8652 12.4489 13.9446 10.3732 16.502 10.3732" fill="white"/></svg></span><span class="badge badge--success"><i></i>Premium</span></div>
+                <p class="hw-title">Вхід за номером телефону</p>
+                <div class="inp is-focus"><span class="inp-label">Номер телефону</span><span class="inp-val"><span class="js-type" data-text="+380 67 123 45 67">+380 67 123 45 67</span><i class="caret"></i></span></div>
+                <div class="hw-plan"><span>Перший місяць<small>далі 199 ₴ на місяць</small></span><b>1 ₴</b></div>
+                <span class="btn btn--primary btn--48 hw-btn"><span class="hw-btn-txt">Оплатити 1 ₴</span></span>
+              </div>
+              <span class="hw-toast"><span><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Підписку активовано</span>
+              <img class="hs-push" src="assets/pushik-step.webp" alt="" width="465" height="600" loading="lazy">
+            </div>
+            <!-- 2. Вигоди застосовуються в кошику автоматично -->
+            <div class="hs hs--2">
+              <div class="hw">
+                <p class="hw-title" style="margin-top:0">Твоє замовлення</p>
+                <div class="hw-row"><span>Товари · 2 шт.</span><b>24 999 ₴</b></div>
+                <div class="hw-row"><span>Доставка</span><b><span class="hw-old">150 ₴<i></i></span><span class="hw-zero">0 ₴</span></b></div>
+                <div class="hw-row hw-row--bonus"><span>Бонуси на рахунок</span><b>+<span class="js-bonus">2 500</span></b></div>
+                <div class="hw-sep"></div>
+                <div class="hw-row hw-row--total"><span>До сплати</span><b>24 999 ₴</b></div>
+              </div>
+              <span class="hs-chip hs-chip--1 hs-pill"><i class="hs-dot hs-dot--green"><svg viewBox="0 0 24 24" fill="none"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7" cy="17" r="1.8" fill="currentColor"/><circle cx="17" cy="17" r="1.8" fill="currentColor"/></svg></i>Доставка 0 ₴</span>
+              <span class="hs-chip hs-chip--2 hs-pill"><i class="hs-dot hs-dot--blue"><svg viewBox="0 0 24 24" fill="none"><path d="M5 20V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v14M4 20h12M5 10h10m0 0 3 3v4a1.5 1.5 0 0 0 3 0V9l-3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i>−4 грн/л на АЗС</span>
+              <span class="hs-chip hs-chip--3 hs-apps"><span><img src="assets/ic-sweettv.png" alt="" width="52" height="52"><img src="assets/ic-vpn.png" alt="" width="52" height="52"><img src="assets/ic-librarius.png" alt="" width="52" height="52"></span>+ 8 сервісів</span>
+              <img class="hs-push" src="assets/pushik-box.webp" alt="" width="387" height="479" loading="lazy">
+            </div>
+            <!-- 3. Керування в особистому кабінеті -->
+            <div class="hs hs--3">
+              <div class="hw">
+                <div class="hw-top"><p class="hw-title">Моя підписка</p><span class="badge badge--success hw-badge"><i></i>Активна</span></div>
+                <div class="hw-plan2"><b>Comfy Premium</b><span>199 ₴ на місяць</span></div>
+                <div class="hw-set"><span class="tgl is-on"><i></i></span>Автопродовження</div>
+                <p class="hw-sub">Історія платежів</p>
+                <div class="hw-pay"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="currentColor" opacity=".14"/><path d="m8 12.2 2.7 2.6L16 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Місяць 3<b>199 ₴</b></div>
+                <div class="hw-pay"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="currentColor" opacity=".14"/><path d="m8 12.2 2.7 2.6L16 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Місяць 2<b>199 ₴</b></div>
+                <div class="hw-pay"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="currentColor" opacity=".14"/><path d="m8 12.2 2.7 2.6L16 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Місяць 1<b>1 ₴</b></div>
+                <span class="btn btn--tertiary-gray btn--40 hw-cancel">Скасувати підписку</span>
+              </div>
+              <img class="hs-push" src="assets/pushik-wave.webp" alt="" width="494" height="532" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Питання — з поточного лендінгу. Відповідь на перше — дослівно, решта — за змістом попапів. TODO копірайт: звірити з оригіналом; там підписка названа «ComfyPlus» -->
+  <section class="sec faq" id="faq" aria-labelledby="faq-title">
+    <div class="sec-inner faq-grid">
+      <div class="faq-side">
+        <p class="tag js-reveal">Питання</p>
+        <h2 class="h2 js-lines" id="faq-title">Часті запитання</h2>
+        <p class="lead js-reveal">Не знайшли відповідь? Служба підтримки COMFY допоможе з підпискою.</p>
+        <!-- TODO: посилання на підтримку -->
+        <a class="btn btn--secondary-gray btn--48 js-reveal" href="#support">Написати в підтримку</a>
+      </div>
+      <div class="faq-list" id="faq-list">
+        <div class="faq-item is-open">
+          <h3 class="faq-q"><button type="button" id="faq-q1" aria-expanded="true" aria-controls="faq-a1"><span>Як працює підписка?</span><i class="faq-ico" aria-hidden="true"></i></button></h3>
+          <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1"><p>Підписка стає активною за кілька хвилин після оплати — і ти одразу отримуєш доступ до спеціальних пропозицій. Продовження підписки відбувається автоматично залежно від обраного тарифу (щомісячно, піврічно або річно): кожні 30 днів, 6 місяців або 12 місяців відповідно — доки ти її не скасуєш.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q"><button type="button" id="faq-q2" aria-expanded="false" aria-controls="faq-a2"><span>Як користуватись підпискою?</span><i class="faq-ico" aria-hidden="true"></i></button></h3>
+          <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><p>Нічого окремо вмикати не треба: усі переваги застосовуються автоматично під час покупки. Керувати підпискою можна в особистому кабінеті, у розділі підписки.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q"><button type="button" id="faq-q3" aria-expanded="false" aria-controls="faq-a3"><span>Скільки діє підписка?</span><i class="faq-ico" aria-hidden="true"></i></button></h3>
+          <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><p>Залежно від тарифу — 30 днів, 6 або 12 місяців. Після цього підписка продовжується автоматично, доки ти її не скасуєш.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q"><button type="button" id="faq-q4" aria-expanded="false" aria-controls="faq-a4"><span>Як зупинити підписку?</span><i class="faq-ico" aria-hidden="true"></i></button></h3>
+          <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><p>В один клік в особистому кабінеті, у розділі «Керування підпискою». Після скасування переваги діють до кінця вже оплаченого періоду.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q"><button type="button" id="faq-q5" aria-expanded="false" aria-controls="faq-a5"><span>Скільки коштує підписка?</span><i class="faq-ico" aria-hidden="true"></i></button></h3>
+          <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden><p>Перший місяць — 1 ₴, далі — 199 ₴ на місяць.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q"><button type="button" id="faq-q6" aria-expanded="false" aria-controls="faq-a6"><span>Чи товаришує підписка з іншими акціями?</span><i class="faq-ico" aria-hidden="true"></i></button></h3>
+          <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><p>Так, переваги підписки поєднуються з більшістю акцій COMFY. Винятком можуть бути окремі партнерські пропозиції.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final grain" id="start" aria-labelledby="final-title">
+    <div class="final-inner">
+      <div class="final-copy">
+        <h2 class="final-title js-lines" id="final-title">Почни економити вже сьогодні</h2>
+        <p class="final-sub js-reveal">Перший місяць — 1 ₴, далі 199 ₴ на місяць. Скасувати можна будь-коли.</p>
+        <div class="final-cta js-reveal"><a class="btn btn--secondary-gray btn--56 js-magnet" href="#try">Спробувати за 1 ₴<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      </div>
+      <div class="final-art" aria-hidden="true">
+        <span class="final-glow"></span>
+        <img class="final-pushik" src="assets/pushik-wave.webp" alt="" width="494" height="532" loading="lazy">
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <a class="nav-logo" href="#top" aria-label="Comfy Premium, на початок сторінки">
+      <svg viewBox="0 0 130 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M114.064 0H15.0269C6.72843 0 0 6.71639 0 15C0 23.2836 6.72843 30 15.0269 30H114.064C122.362 30 129.091 23.2836 129.091 15C129.091 6.71639 122.362 0 114.064 0Z" fill="#2ABD13"/><path d="M122.194 15C122.194 19.5711 118.482 23.2767 113.903 23.2767C109.324 23.2767 105.611 19.5711 105.611 15C105.611 10.429 109.324 6.72339 113.903 6.72339C118.482 6.72339 122.194 10.429 122.194 15Z" fill="#FC5E0F"/><path d="M35.2916 5.41211C29.9954 5.41211 25.6865 9.71325 25.6865 15C25.6865 20.2867 29.9954 24.5879 35.2916 24.5879C40.5878 24.5879 44.8966 20.2867 44.8966 15C44.8966 9.71325 40.5878 5.41211 35.2916 5.41211ZM35.2916 19.6285C32.7342 19.6285 30.6548 17.5528 30.6548 15C30.6548 12.4472 32.7342 10.3715 35.2916 10.3715C37.849 10.3715 39.9284 12.4472 39.9284 15C39.9284 17.5528 37.849 19.6285 35.2916 19.6285Z" fill="white"/><path d="M64.5119 5.58985C63.5838 5.20675 62.5144 5.4192 61.8044 6.12793L56.1925 11.7316L50.5997 6.14883C49.8897 5.4401 48.8203 5.22765 47.8923 5.61075C46.9642 5.99385 46.3589 6.89935 46.3589 7.90063V22.117C46.3589 23.4857 47.4719 24.5967 48.843 24.5967C50.2142 24.5967 51.3271 23.4857 51.3271 22.117V13.8874L54.4358 16.9905C55.4057 17.9587 56.9792 17.9587 57.9492 16.9905L61.077 13.8682V22.1188C61.077 23.4875 62.19 24.5984 63.5611 24.5984C64.9323 24.5984 66.0453 23.4875 66.0453 22.1188V7.88147C66.0453 6.87845 65.4399 5.97469 64.5119 5.58985Z" fill="white"/><path d="M80.6286 5.41211H70.5369C69.1657 5.41211 68.0527 6.52309 68.0527 7.89179V22.1082C68.0527 23.4769 69.1657 24.5879 70.5369 24.5879C71.908 24.5879 73.021 23.4769 73.021 22.1082V18.3939H79.8105C81.1816 18.3939 82.2946 17.2829 82.2946 15.9142C82.2946 14.5455 81.1816 13.4345 79.8105 13.4345H73.021V10.3715H80.6286C81.9998 10.3715 83.1128 9.2605 83.1128 7.89179C83.1128 6.52309 81.9998 5.41211 80.6286 5.41211Z" fill="white"/><path d="M101.964 6.13999C100.994 5.1718 99.4201 5.1718 98.4502 6.13999L93.4837 11.0976L88.5172 6.13999C87.5473 5.1718 85.9737 5.1718 85.0038 6.13999C84.0339 7.10818 84.0339 8.67888 85.0038 9.64707L90.9996 15.6321V22.1064C90.9996 23.4751 92.1125 24.5861 93.4837 24.5861C94.8548 24.5861 95.9678 23.4751 95.9678 22.1064V15.6321L101.964 9.64707C102.933 8.67888 102.933 7.10818 101.964 6.13999Z" fill="white"/><path d="M16.5038 10.3715C18.0354 10.3715 19.4676 11.1272 20.3346 12.3914C21.1092 13.5216 22.6548 13.8106 23.7869 13.0375C24.9191 12.2643 25.2087 10.7215 24.4341 9.59135C22.6408 6.9741 19.6752 5.41211 16.502 5.41211C11.2058 5.41211 6.89697 9.71325 6.89697 15C6.89697 20.2867 11.2058 24.5879 16.502 24.5879C19.5444 24.5879 22.3408 23.1965 24.1742 20.7691C25.0011 19.6755 24.7813 18.1205 23.6858 17.2968C22.5902 16.4732 21.0324 16.6908 20.2073 17.7844C19.3211 18.9563 17.9709 19.6302 16.502 19.6302C13.9446 19.6302 11.8652 17.5546 11.8652 15.0017C11.8652 12.4489 13.9446 10.3732 16.502 10.3732" fill="white"/></svg>
+      <span>Premium</span>
+    </a>
+    <ul class="foot-links">
+      <li><a href="#benefits">Переваги</a></li>
+      <li><a href="#services">Сервіси</a></li>
+      <li><a href="#how">Як це працює</a></li>
+      <li><a href="#faq">Питання</a></li>
+    </ul>
+    <!-- TODO: посилання на умови підписки -->
+    <p class="foot-copy">© COMFY, 2026 · <a href="#terms">Умови підписки</a> · Ціни й умови на сторінці орієнтовні.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var reveal=function(){root.classList.remove('intro-pending')};
+
+  /* мобільний розмір кнопок DS: 56 → 48 px */
+  var sizeMq=matchMedia('(max-width: 640px)');
+  function syncSizes(){document.querySelectorAll('.js-size').forEach(function(b){b.classList.toggle('btn--56',!sizeMq.matches);b.classList.toggle('btn--48',sizeMq.matches)})}
+  syncSizes(); if(sizeMq.addEventListener) sizeMq.addEventListener('change',syncSizes);
+
+  if(typeof gsap==='undefined'){reveal();return;}
+  gsap.registerPlugin(ScrollTrigger);
+
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine=matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var $=function(s,c){return (c||document).querySelector(s)};
+  var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+  /* ---------- Плавний скрол ---------- */
+  var lenis=null;
+  if(!reduce && typeof Lenis!=='undefined'){
+    lenis=new Lenis({lerp:.1,smoothWheel:true});
+    lenis.on('scroll',ScrollTrigger.update);
+    gsap.ticker.add(function(t){lenis.raf(t*1000)});
+    gsap.ticker.lagSmoothing(0);
+  }
+  $$('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=a.getAttribute('href'); if(id.length<2) return;
+      var t=document.getElementById(id.slice(1)); if(!t) return;
+      e.preventDefault();
+      if(lenis) lenis.scrollTo(id==='#top'?0:t,{offset:-100,duration:1.1});
+      else t.scrollIntoView({behavior:reduce?'auto':'smooth'});
+    });
+  });
+
+  /* ---------- Навігація ---------- */
+  var nav=$('#nav');
+  ScrollTrigger.create({start:12,end:'max',onToggle:function(s){nav.classList.toggle('is-scrolled',s.isActive)}});
+  var links=$$('.nav-links a');
+  links.forEach(function(a){
+    var sec=document.getElementById(a.getAttribute('href').slice(1)); if(!sec) return;
+    ScrollTrigger.create({trigger:sec,start:'top 55%',end:'bottom 45%',onToggle:function(s){
+      if(s.isActive){links.forEach(function(l){l.classList.toggle('is-active',l===a)})}
+      else a.classList.remove('is-active');
+    }});
+  });
+
+  /* ---------- Hero: елементи ---------- */
+  var hero=$('.hero'), scene=$('#scene'), truckBtn=$('#truck'), truckMove=$('.truck-move'), truckBody=$('.truck-body'),
+      truckIdle=$('.truck-idle'), truckHonk=$('.truck-honk'), puffs=$('.puffs'), bubble=$('.bubble'),
+      pushik=$('#pushik'), pTilt=$('.pushik-tilt'), pLook=$('.pushik-look'), pSquash=$('.pushik-squash'), pBreathe=$('.pushik-breathe'),
+      stickers=$$('.sticker'), pops=stickers.map(function(s){return $('.sticker-pop',s)}), pars=stickers.map(function(s){return $('.sticker-par',s)}),
+      chips=$('#chips'), rings=$$('.cue i'), cueTip=$('.cue-tip');
+  var ready=false, idle=[], cueTl=null, cueOn=false, cueDone=false, exitST=null, engine=null, puffLoop=null, engineOn=false;
+
+  var mobile=function(){return scene.offsetWidth<560};
+  var sceneLeft=function(){return scene.getBoundingClientRect().left};
+  /* фургон їде кабіною вперед (ліворуч): стартує повністю за правим краєм екрана */
+  var truckIn=function(){return window.innerWidth-sceneLeft()+40};
+  /* пушик заходить і виходить через правий край екрана */
+  var pushikOff=function(){return window.innerWidth-(sceneLeft()+pushik.offsetLeft)+30};
+  /* центр посилки у координатах сцени (без трансформацій) */
+  var parcelPoint=function(){return {x:pushik.offsetLeft+pushik.offsetWidth*.34, y:pushik.offsetTop+pushik.offsetHeight*.4}};
+  var centerOf=function(el){
+    var s=el.getBoundingClientRect(), g=scene.getBoundingClientRect();
+    return {x:s.left-g.left+s.width/2-gsap.getProperty(el,'x'), y:s.top-g.top+s.height/2-gsap.getProperty(el,'y')};
+  };
+
+  function killIdle(){idle.forEach(function(t){t.kill()});idle=[];}
+  function startIdle(){
+    if(reduce) return;
+    idle.push(gsap.to(pBreathe,{scaleY:1.025,scaleX:.992,duration:1.6,repeat:-1,yoyo:true,ease:'sine.inOut'}));
+    stickers.forEach(function(s,i){
+      idle.push(gsap.to($('.sticker-in',s),{y:-5,duration:2.6+i*.5,repeat:-1,yoyo:true,ease:'sine.inOut',delay:i*.3}));
+    });
+  }
+
+  /* клуби пилу й вихлопу; px, py — частки рамки фургона */
+  function puff(px,py,o){
+    var b=document.createElement('b'); puffs.appendChild(b);
+    var k=scene.offsetWidth/760;
+    b.style.left=(px*100)+'%'; b.style.top=(py*100)+'%';
+    gsap.fromTo(b,{x:0,y:0,scale:o.s0||.4,autoAlpha:o.a||.9},
+      {x:gsap.utils.random(o.x0,o.x1)*k,y:gsap.utils.random(o.y0,o.y1)*k,scale:gsap.utils.random(o.s1||1.4,o.s2||2.4),autoAlpha:0,
+       duration:gsap.utils.random(.8,1.3),delay:o.d||0,ease:'power2.out',onComplete:function(){b.remove()}});
+  }
+  function spawnDust(){
+    for(var i=0;i<6;i++){
+      puff(.26,.97,{x0:30,x1:120,y0:-40,y1:-6,d:i*.04});
+      puff(.84,.97,{x0:30,x1:120,y0:-40,y1:-6,d:i*.04});
+    }
+  }
+  function exhaust(n,strong){
+    for(var i=0;i<n;i++) puff(.745,.95,{x0:30,x1:strong?150:100,y0:strong?-70:-50,y1:-10,s0:.3,s1:strong?2.2:1.5,s2:strong?3.4:2.4,a:strong?.95:.7,d:i*.06});
+  }
+
+  /* ---------- Смуга з цифрами: світлова хвиля (shimmer) ---------- */
+  var strip=$('.hero-strip'), pstats=$$('.pillstat'), sw={p:0}, geo=[], sweepTl=null, sweepVis=true;
+  function measureSweep(){
+    geo=pstats.map(function(p){return {el:p,l:p.offsetLeft,w:p.offsetWidth}});
+    geo.forEach(function(g){g.el.style.setProperty('--ox',g.l)});
+  }
+  function paintSweep(){
+    var W=strip.offsetWidth, x=-260+sw.p*(W+520);
+    strip.style.setProperty('--sx',x.toFixed(1));
+    geo.forEach(function(g){
+      var k=Math.max(0,1-Math.abs(x-(g.l+g.w/2))/(g.w/2+170));
+      g.el.style.setProperty('--g',(k*k*(3-2*k)).toFixed(3));
+    });
+  }
+  function startSweep(){
+    if(reduce||sweepTl) return;
+    measureSweep();
+    sweepTl=gsap.timeline({repeat:-1,repeatDelay:2.8,onRepeat:measureSweep});
+    sweepTl.fromTo(sw,{p:0},{p:1,duration:2,ease:'power1.inOut',onUpdate:paintSweep});
+    if(!sweepVis) sweepTl.pause();
+  }
+  window.addEventListener('resize',function(){if(sweepTl) measureSweep()});
+  /* поза екраном хвилю не крутимо */
+  ScrollTrigger.create({trigger:strip,start:'top bottom',end:'bottom top',onToggle:function(st){
+    sweepVis=st.isActive; if(sweepTl){ if(sweepVis) sweepTl.resume(); else sweepTl.pause(); }
+  }});
+
+  /* ---------- Hero: інтро ---------- */
+  gsap.set(pushik,{autoAlpha:0});
+  var DUR=2.2, T0=.45, T1=T0+DUR+.05, WALK=1.55, T2=T1+WALK+.35;
+  var tl=gsap.timeline({paused:true,defaults:{ease:'power3.out'}});
+  tl.set(pushik,{autoAlpha:0},0)
+    .fromTo('.hero-tag',{y:10,autoAlpha:0},{y:0,autoAlpha:1,duration:.7},0)
+    .fromTo('.hero-title .wi',{yPercent:115},{yPercent:0,duration:1,stagger:.05,ease:'power4.out'},.05)
+    .fromTo('.hero-sub',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.8},.45)
+    .fromTo('.pillstat',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.7,stagger:.08},.55)
+    .call(function(){startSweep()},null,1.7)
+    .fromTo(scene,{autoAlpha:0},{autoAlpha:1,duration:.01},T0)
+    /* фургон заїжджає справа і гальмує там, де стоїть у макеті */
+    .fromTo(truckMove,{x:truckIn},{x:0,duration:DUR,ease:'power2.out'},T0)
+    .fromTo(truckIdle,{y:0},{keyframes:{y:[0,-2.5,0,-2,0,-1.2,0],easeEach:'sine.inOut'},duration:DUR*.7,ease:'none'},T0)
+    .call(spawnDust,null,T0+DUR*.5)
+    /* гальмування: ніс донизу, задок угору, пружно назад */
+    .fromTo(truckBody,{rotation:0},{rotation:-.9,duration:.3,ease:'power2.out'},T0+DUR*.55)
+    .to(truckBody,{rotation:0,duration:1.1,ease:'elastic.out(1,.45)'},T0+DUR*.55+.3)
+    /* з-за правого краю виходить пушик із посилкою і дрібними кроками йде до кузова */
+    .set(pushik,{autoAlpha:1,x:pushikOff},T1)
+    .to(pushik,{x:0,duration:WALK,ease:'power1.out'},T1)
+    .to(pushik,{keyframes:{yPercent:[0,-5,0,-5,0,-4.5,0,-4,0,-3,0],easeEach:'sine.inOut'},duration:WALK,ease:'none'},T1)
+    .set(pTilt,{rotation:0},T1)
+    .to(pTilt,{keyframes:{rotation:[0,-4,3.5,-3.5,3,-3,2.5,-2,0],easeEach:'sine.inOut'},duration:WALK,ease:'none'},T1)
+    .fromTo(pSquash,{scaleX:1,scaleY:1,y:0},{scaleX:1.07,scaleY:.9,duration:.12,ease:'power2.out'},T1+WALK)
+    .to(pSquash,{scaleX:1,scaleY:1,duration:.7,ease:'elastic.out(1,.4)'},T1+WALK+.12)
+    /* пушик піднімає посилку — з неї виринають скляні плашки з перевагами */
+    .to(pSquash,{y:function(){return -pushik.offsetHeight*.08},duration:.22,ease:'power2.out'},T2-.2)
+    .to(pSquash,{y:0,duration:.5,ease:'power2.inOut'},T2+.02)
+    .fromTo(pops,
+      {x:function(i,el){return parcelPoint().x-centerOf(el).x},
+       y:function(i,el){return parcelPoint().y-centerOf(el).y},
+       scale:.4,autoAlpha:0},
+      {x:0,y:0,scale:1,autoAlpha:1,duration:1.15,stagger:.14,ease:'expo.out'},T2)
+    .call(function(){ready=true;startIdle();setupExit();startCue();},null,T2+1.1);
+
+  /* ---------- Скрол униз: фургон заводиться, пушик іде за край тим самим шляхом ---------- */
+  function startEngine(){
+    if(engineOn||reduce) return; engineOn=true;
+    if(cueTl) cueTl.pause();
+    if(engine) engine.kill();
+    exhaust(7,true);
+    engine=gsap.timeline();
+    /* стартер: кілька ривків, потім дрібна вібрація холостого ходу */
+    engine.fromTo(truckIdle,{y:0,rotation:0},{keyframes:{y:[0,-4,2,-3,1.5,-1.5,.8,0],rotation:[0,-.5,.35,-.3,.2,-.1,0,0],easeEach:'sine.inOut'},duration:.7,ease:'none'})
+      .to(truckIdle,{y:-1.2,duration:.06,repeat:-1,yoyo:true,ease:'sine.inOut'});
+    puffLoop=gsap.delayedCall(.55,function loop(){exhaust(1,false);puffLoop=gsap.delayedCall(gsap.utils.random(.35,.6),loop)});
+  }
+  function stopEngine(){
+    if(!engineOn) return; engineOn=false;
+    if(engine){engine.kill();engine=null;}
+    if(puffLoop){puffLoop.kill();puffLoop=null;}
+    gsap.to(truckIdle,{y:0,rotation:0,duration:.35,ease:'power2.out'});
+    if(cueTl&&!cueDone) cueTl.resume();
+  }
+  function setupExit(){
+    if(reduce||exitST) return;
+    ScrollTrigger.create({trigger:hero,start:'top+=8 top',end:'bottom top',
+      onEnter:startEngine,onLeaveBack:stopEngine,
+      /* поза екраном двигун не крутимо */
+      onLeave:function(){if(engine)engine.pause();if(puffLoop)puffLoop.pause()},
+      onEnterBack:function(){if(engine)engine.resume();if(puffLoop)puffLoop.resume()}});
+    var ex=gsap.timeline({defaults:{ease:'none'}});
+    ex.fromTo(pushik,{x:0},{x:pushikOff,duration:1,ease:'power1.in'},0)
+      .to(pushik,{keyframes:{yPercent:[0,-5,0,-5,0,-5,0,-5,0],easeEach:'sine.inOut'},duration:1},0)
+      .to(pTilt,{keyframes:{rotation:[0,3,-3,3,-3,3,-3,0],easeEach:'sine.inOut'},duration:1},0)
+      .fromTo(pars,{yPercent:0,opacity:1},{yPercent:function(i){return -70-i*30},opacity:0,duration:.7,stagger:.05},0);
+    exitST=ScrollTrigger.create({trigger:hero,start:'top top',end:function(){return '+='+Math.round(Math.max(240,window.innerHeight*.42))},
+      scrub:.6,animation:ex,invalidateOnRefresh:true});
+  }
+
+  function run(){
+    reveal();
+    if(reduce){tl.progress(1);return;}
+    tl.play(0);
+  }
+  if(document.readyState==='complete') run(); else window.addEventListener('load',run);
+
+  /* ---------- Інтерактив ---------- */
+  var LABELS=[['Доставка 0 ₴','green'],['+ бонуси','amber'],['Ремонт до 10 000 ₴','orange'],['−4 грн/л','blue'],['SweetTV','green'],['VPN Unlimited','orange'],['Librarius','green'],['1 ₴ перший місяць','orange']];
+  var li=0;
+  function burst(){
+    if(chips.children.length>18) return;
+    var o=parcelPoint(), n=mobile()?4:6, k=mobile()?.6:1;
+    for(var i=0;i<n;i++){
+      var L=LABELS[li++%LABELS.length];
+      var c=document.createElement('span'); c.className='glass glass--'+L[1]; c.textContent=L[0]; chips.appendChild(c);
+      var ang=(-165+i*(150/(n-1))+gsap.utils.random(-8,8))*Math.PI/180, d=gsap.utils.random(120,200)*k;
+      var tx=o.x+Math.cos(ang)*d, ty=o.y+Math.sin(ang)*d*.8;
+      gsap.set(c,{x:o.x,y:o.y,xPercent:-50,yPercent:-50,scale:.4,rotation:gsap.utils.random(-12,12),autoAlpha:0});
+      gsap.timeline({onComplete:(function(el){return function(){el.remove()}})(c)})
+        .to(c,reduce?{autoAlpha:1,x:tx,y:ty,scale:1,duration:.01}:{x:tx,y:ty,scale:1,autoAlpha:1,rotation:gsap.utils.random(-6,6),duration:.8,ease:'expo.out'})
+        .to(c,{y:ty-(reduce?0:gsap.utils.random(20,40)*k),autoAlpha:0,duration:.6,ease:'power2.in'},reduce?'+=1.2':'+=.5');
+    }
+  }
+  /* заклик: кільця-пінг під ногами, підказка і підскок, доки на пушика не натиснуть */
+  function startCue(){
+    if(cueDone||cueOn) return; cueOn=true;
+    gsap.fromTo(cueTip,{autoAlpha:0,scale:.6,y:8},{autoAlpha:1,scale:1,y:0,duration:.55,ease:'back.out(2)',delay:.3});
+    if(reduce) return;
+    cueTl=gsap.timeline({repeat:-1,repeatDelay:1.4,delay:.5});
+    cueTl.fromTo(rings,{scale:.3,autoAlpha:.95},{scale:1.1,autoAlpha:0,duration:1.7,stagger:.32,ease:'power2.out'},0)
+      .to(pSquash,{scaleX:1.07,scaleY:.9,duration:.1,ease:'power2.out'},.05)
+      .to(pSquash,{scaleX:.96,scaleY:1.06,y:function(){return -pushik.offsetHeight*.07},duration:.2,ease:'power2.out'},.15)
+      .to(pSquash,{scaleX:1,scaleY:1,y:0,duration:.55,ease:'bounce.out'},.35)
+      .to(cueTip,{y:-5,duration:.22,yoyo:true,repeat:1,ease:'sine.inOut'},.15);
+    if(engineOn) cueTl.pause();
+  }
+  function stopCue(){
+    if(!cueOn) return; cueOn=false; cueDone=true;
+    if(cueTl){cueTl.kill();cueTl=null;}
+    gsap.to(rings,{autoAlpha:0,duration:.3}); gsap.to(cueTip,{autoAlpha:0,scale:.85,duration:.3});
+  }
+
+  pushik.addEventListener('click',function(){
+    if(!ready) return; stopCue();
+    if(reduce){burst();return;}
+    gsap.timeline()
+      .to(pSquash,{scaleX:1.1,scaleY:.84,y:0,duration:.12,ease:'power2.out'})
+      .to(pSquash,{scaleX:.94,scaleY:1.08,y:function(){return -pushik.offsetHeight*.2},duration:.26,ease:'power2.out'})
+      .call(burst)
+      .to(pSquash,{scaleX:.97,scaleY:1.03,y:0,duration:.24,ease:'power2.in'})
+      .to(pSquash,{scaleX:1.08,scaleY:.9,duration:.08,ease:'power2.out'})
+      .to(pSquash,{scaleX:1,scaleY:1,duration:.7,ease:'elastic.out(1,.4)'});
+  });
+
+  truckBtn.addEventListener('click',function(){
+    if(!ready) return;
+    gsap.killTweensOf(bubble);
+    gsap.fromTo(bubble,{autoAlpha:0,scale:.5,y:10,transformOrigin:'0% 100%'},{autoAlpha:1,scale:1,y:0,duration:.4,ease:'back.out(2)'});
+    gsap.to(bubble,{autoAlpha:0,y:-8,duration:.3,delay:1.1});
+    if(reduce) return;
+    gsap.timeline()
+      .to(truckHonk,{scaleY:.97,scaleX:1.01,duration:.08,ease:'power2.out'})
+      .to(truckHonk,{scaleY:1,scaleX:1,duration:.7,ease:'elastic.out(1,.3)'});
+  });
+
+  /* десктоп: пушик і скляні плашки м'яко стежать за курсором */
+  if(fine && !reduce){
+    var rot=gsap.quickTo(pLook,'rotation',{duration:.7,ease:'power3'});
+    var par=pars.map(function(el,i){return {x:gsap.quickTo(el,'x',{duration:1,ease:'power3'}),y:gsap.quickTo(el,'y',{duration:1,ease:'power3'}),d:8+i*5}});
+    hero.addEventListener('pointermove',function(e){
+      if(!ready) return;
+      var r=pushik.getBoundingClientRect(), cx=r.left+r.width/2;
+      rot(gsap.utils.clamp(-6,6,(e.clientX-cx)/window.innerWidth*14));
+      var nx=e.clientX/window.innerWidth-.5, ny=e.clientY/window.innerHeight-.5;
+      par.forEach(function(p){p.x(nx*p.d);p.y(ny*p.d)});
+    });
+    hero.addEventListener('pointerleave',function(){ if(!ready) return; rot(0); par.forEach(function(p){p.x(0);p.y(0)}); });
+  }
+
+  /* ---------- Статистика: лічильники ---------- */
+  var fmt=function(n){return Math.round(n).toLocaleString('uk-UA')};
+  $$('.js-count').forEach(function(el){
+    var to=+el.dataset.to; el.textContent=fmt(to);
+    if(reduce) return;
+    var o={v:0};
+    ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:function(){
+      gsap.fromTo(o,{v:0},{v:to,duration:1.6,ease:'power3.out',onUpdate:function(){el.textContent=fmt(o.v)}});
+    }});
+  });
+
+  /* ---------- Поява секцій під час скролу ---------- */
+  if(!reduce){
+    gsap.set('.js-reveal',{y:32,autoAlpha:0});
+    gsap.set('.js-card',{y:70,autoAlpha:0,scale:.97}); gsap.set('.js-card-img',{clipPath:'inset(100% -40% -40% -40%)',scale:1.05}); gsap.set('.svc',{autoAlpha:0,x:48});
+    ScrollTrigger.batch('.js-reveal',{start:'top 90%',once:true,onEnter:function(b){gsap.to(b,{y:0,autoAlpha:1,duration:.9,stagger:.1,ease:'power3.out'})}});
+    ScrollTrigger.batch('.js-card',{start:'top 90%',once:true,onEnter:function(b){
+      gsap.to(b,{y:0,autoAlpha:1,scale:1,duration:1.1,stagger:.12,ease:'power3.out'});
+      gsap.to(b.map(function(c){return $('.js-card-img',c)}),{clipPath:'inset(-40% -40% -40% -40%)',scale:1,duration:1.4,stagger:.14,delay:.15,ease:'power4.out',clearProps:'clipPath'});
+    }});
+    ScrollTrigger.create({trigger:'.svc-box',start:'top 85%',once:true,onEnter:function(){gsap.to('.svc',{autoAlpha:1,x:0,duration:.9,stagger:.06,delay:.2,ease:'power3.out'})}});
+  }
+
+  /* ---------- Bento: 3D-нахил, паралакс і відблиск за курсором ---------- */
+  if(fine && !reduce){
+    $$('.js-card').forEach(function(card){
+      var img=$('.js-card-img',card);
+      var rx=gsap.quickTo(card,'rotationX',{duration:.8,ease:'power3'}), ry=gsap.quickTo(card,'rotationY',{duration:.8,ease:'power3'});
+      var ix=gsap.quickTo(img,'x',{duration:1,ease:'power3'}), iy=gsap.quickTo(img,'y',{duration:1,ease:'power3'});
+      gsap.set(card,{transformPerspective:1400});
+      card.addEventListener('pointermove',function(e){
+        var r=card.getBoundingClientRect(), px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+        rx((.5-py)*5); ry((px-.5)*6); ix((px-.5)*-22); iy((py-.5)*-12);
+        card.style.setProperty('--mx',(px*100)+'%'); card.style.setProperty('--my',(py*100)+'%');
+      });
+      card.addEventListener('pointerleave',function(){rx(0);ry(0);ix(0);iy(0);});
+    });
+  }
+
+  /* ---------- Сервіси: «сіяшки» — порт шейдера Light rays з макета (WebGL), рухаються при наведенні ----------
+     Figma віддає цей ефект як WebGPU-шейдер, якому потрібен експериментальний HTML-in-Canvas API.
+     Тут та сама математика променів і ті самі параметри, але на WebGL, щоб працювало в усіх браузерах.
+     Один спільний WebGL-контекст малює кожну картку і копіює кадр у її 2D-canvas. */
+  var FRAG=[
+    'precision highp float;',
+    'uniform vec2 uRes;uniform float uTime;uniform float uMode;',
+    'uniform vec4 uL0;uniform vec4 uR0;uniform vec3 uA0;uniform vec3 uB0;uniform vec3 uX0;',
+    'uniform vec4 uL1;uniform vec4 uR1;uniform vec3 uA1;uniform vec3 uB1;uniform vec3 uX1;',
+    'float luma(vec3 c){return dot(c,vec3(0.2126,0.7152,0.0722));}',
+    'float band(vec2 s2p,vec2 rd,float reach,float bb,float bs,float sa,float sb,float sp,float t){',
+    '  float d=length(s2p);vec2 dir=d>0.0001?s2p/d:rd;float ca=dot(dir,rd);',
+    '  float wave=(0.15*sin(ca*sa+t*sp)+0.20*cos(-ca*sb+t*sp))/0.35;',
+    '  float st=clamp(bb+bs*wave,0.0,1.0);float dm=clamp((reach-d)/reach,0.5,1.0);',
+    '  float rf=1.0-smoothstep(reach*0.35,reach,d);',
+    '  float pulse=1.0-0.16*sin(t*sp*0.55+sa*0.1)-0.07*sin(t*sp*1.27+sb*0.1);',
+    '  return st*dm*rf*pulse;}',
+    'vec3 rays(vec2 uv,vec4 L,vec4 R,vec3 A,vec3 B,vec3 X){',
+    '  float sh=max(min(uRes.x,uRes.y),1.0);vec2 k=uRes/sh;vec2 s2p=uv*k-L.xy*k;float dist=length(s2p);',
+    '  float blend=clamp(R.z,-1.0,1.0)*0.5+0.5;float ds=pow(2.0,mix(-2.4,2.4,clamp(X.x,0.0,1.0)));',
+    '  float sp=mix(0.2,4.0,clamp(X.z,0.0,1.0));float la=radians(L.z);vec2 rd=vec2(cos(la),sin(la));',
+    '  float halfArc=mix(0.16,3.14159265*1.7,clamp(R.y,0.0,1.0));float pa=atan(s2p.y,s2p.x);',
+    '  float afa=atan(sin(pa-la),cos(pa-la));float rm=1.0-smoothstep(halfArc*0.6,halfArc,abs(afa));',
+    '  float reach=max(L.w,0.005);float si=1.0-clamp(X.y,0.0,1.0);float sc=si*si*si*(si*(si*6.0-15.0)+10.0);',
+    '  float bb=mix(1.10,0.40,sc);float bs=mix(0.05,0.65,sc);',
+    '  float b1=band(s2p,rd,reach,bb,bs,36.2214*ds,21.11349*ds,sp,uTime)*rm;',
+    '  float b2=band(s2p,rd,reach,bb,bs,22.3991*ds,18.0234*ds,sp*0.2,uTime)*rm;',
+    '  float db=mix(0.5,4.0,clamp(R.x,0.0,1.0))*0.4/pow(max(dist/reach,0.001),1.7);',
+    '  return (A*b1*(1.0-blend)*0.9+B*b2*blend*0.9)*db;}',
+    'void main(){',
+    '  vec2 uv=vec2(gl_FragCoord.x/uRes.x,1.0-gl_FragCoord.y/uRes.y);',
+    '  vec3 r0=rays(uv,uL0,uR0,uA0,uB0,uX0);',
+    /* картка: промені поверх чорного */
+    '  if(uMode<0.5){gl_FragColor=vec4(clamp(r0,0.0,1.0),1.0);return;}',
+    /* лід-картка: 2 проходи поверх 10% чорного, результат накладається на білий фон сторінки */
+    '  vec3 c1=clamp(r0,0.0,1.0);float a1=clamp(0.1+luma(c1)*0.9,0.0,1.0);',
+    '  vec3 r1=rays(uv,uL1,uR1,uA1,uB1,uX1);float m=smoothstep(0.0,0.34,luma(c1));float o=1.0-m;',
+    '  float ll=clamp(max(r1.r,max(r1.g,r1.b)),0.0,3.0);float gm=clamp(1.3*m*o,0.0,1.0);',
+    '  vec3 glow=mix(uA1,uB1,clamp(uR1.z,-1.0,1.0)*0.5+0.5)*gm*ll*mix(0.0,12.0,pow(clamp(uR1.w,0.0,1.0),0.8));',
+    '  vec3 lc=r1*o+glow;vec3 fc=c1+lc;float a2=clamp(a1+luma(clamp(lc,0.0,1.0))*(1.0-a1),0.0,1.0);',
+    '  gl_FragColor=vec4(clamp(clamp(fc,0.0,1.0)+(1.0-a2),0.0,1.0),1.0);}'
+  ].join('\n');
+  var RAYS=(function(){
+    var cv=document.createElement('canvas'), gl=null;
+    try{gl=cv.getContext('webgl',{alpha:false,antialias:false,depth:false,stencil:false,premultipliedAlpha:false,powerPreference:'low-power'})}catch(e){}
+    if(!gl) return null;
+    function sh(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return gl.getShaderParameter(s,gl.COMPILE_STATUS)?s:null}
+    var vs=sh(gl.VERTEX_SHADER,'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}'), fs=sh(gl.FRAGMENT_SHADER,FRAG);
+    if(!vs||!fs) return null;
+    var pr=gl.createProgram(); gl.attachShader(pr,vs); gl.attachShader(pr,fs); gl.linkProgram(pr);
+    if(!gl.getProgramParameter(pr,gl.LINK_STATUS)) return null;
+    gl.useProgram(pr);
+    gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+    var loc=gl.getAttribLocation(pr,'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+    var U={}; ['uRes','uTime','uMode','uL0','uR0','uA0','uB0','uX0','uL1','uR1','uA1','uB1','uX1'].forEach(function(n){U[n]=gl.getUniformLocation(pr,n)});
+    function pass(i,p,w,h){
+      var reach=p.r/100*(h/Math.max(Math.min(w,h),1))*2;
+      gl.uniform4f(U['uL'+i],p.x/100,p.y/100,p.a,reach);
+      gl.uniform4f(U['uR'+i],p.int,p.spread,0,.5);
+      gl.uniform3fv(U['uA'+i],p.c1); gl.uniform3fv(U['uB'+i],p.c2);
+      gl.uniform3f(U['uX'+i],p.dens,.53,p.speed);
+    }
+    return function(it){
+      var w=it.w,h=it.h;
+      if(cv.width<w||cv.height<h){cv.width=Math.max(cv.width,w);cv.height=Math.max(cv.height,h);}
+      gl.viewport(0,0,w,h);
+      gl.uniform2f(U.uRes,w,h); gl.uniform1f(U.uTime,it.t); gl.uniform1f(U.uMode,it.passes.length>1?1:0);
+      pass(0,it.passes[0],w,h); if(it.passes[1]) pass(1,it.passes[1],w,h);
+      gl.drawArrays(gl.TRIANGLES,0,6);
+      it.ctx.clearRect(0,0,w,h);
+      it.ctx.drawImage(cv,0,cv.height-h,w,h,0,0,w,h);
+    };
+  })();
+
+  var rayItems=[];
+  function paint(it){
+    if(!RAYS) return;
+    var dpr=Math.min(window.devicePixelRatio||1,2), w=Math.round(it.c.clientWidth*dpr), h=Math.round(it.c.clientHeight*dpr);
+    if(!w||!h) return;
+    if(w!==it.w||h!==it.h){it.w=w;it.h=h;it.c.width=w;it.c.height=h;}
+    RAYS(it);
+  }
+  function addRays(host,passes,t0){
+    if(!RAYS){host.classList.add('no-gl');return null;}
+    var c=$('canvas',host), it={host:host,c:c,ctx:c.getContext('2d'),passes:passes,t:t0||0,vel:0,w:0,h:0};
+    rayItems.push(it); host._rays=it;
+    if(!reduce && fine){
+      /* наведення: промені плавно «оживають», після виходу курсора так само плавно завмирають */
+      host.addEventListener('pointerenter',function(){gsap.to(it,{vel:1,duration:.5,ease:'power2.out',overwrite:true})});
+      host.addEventListener('pointerleave',function(){gsap.to(it,{vel:0,duration:1.4,ease:'power2.out',overwrite:true})});
+    }
+    return it;
+  }
+  var LIGHT={x:7.3308,y:0,r:85.5418,a:76.3735};
+  var cards=$$('.svc');
+  cards.forEach(function(card){
+    var d=card.dataset.rays.split('|'), n=function(s){return s.split(',').map(Number)};
+    addRays(card,[{x:LIGHT.x,y:LIGHT.y,r:LIGHT.r,a:LIGHT.a,int:.26,c1:n(d[0]),c2:n(d[1]),speed:+d[2],spread:+d[3],dens:+d[4]}],0);
+  });
+  addRays($('#svc-lead'),[
+    {x:22.1964,y:184.9629,r:164.3722,a:-165,int:.26,spread:.56,dens:.56,speed:.39,c1:[.8667,.632,.1961],c2:[.7502,.3961,.8902]},
+    {x:89.6335,y:-72.7026,r:119.2189,a:135.349,int:.26,spread:.56,dens:.56,speed:.39,c1:[.1961,.8667,.2408],c2:[.7502,.3961,.8902]}
+  ],0);
+  if(RAYS){
+    var paintAll=function(){rayItems.forEach(paint)};
+    requestAnimationFrame(paintAll);
+    var rT=null; window.addEventListener('resize',function(){clearTimeout(rT);rT=setTimeout(paintAll,150)});
+    gsap.ticker.add(function(time,dt){
+      var s=Math.min(dt,50)/1000;
+      for(var i=0;i<rayItems.length;i++){var it=rayItems[i]; if(it.vel>.002){it.t+=s*it.vel*1.4; paint(it);}}
+    });
+    /* сенсорні екрани: наведення немає — повільно рухаються картки, які видно в каруселі */
+    if(!fine && !reduce && 'IntersectionObserver' in window){
+      var secIn=false, vis=new Set();
+      var sync=function(){rayItems.forEach(function(it){var on=secIn&&(vis.has(it.host)||it.host.id==='svc-lead');gsap.to(it,{vel:on?.7:0,duration:on?.6:1,overwrite:true})})};
+      new IntersectionObserver(function(es){es.forEach(function(e){secIn=e.isIntersecting});sync()},{threshold:.15}).observe($('#services'));
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.intersectionRatio>.6)vis.add(e.target);else vis.delete(e.target)});sync()},{root:$('#svc-scroller'),threshold:[0,.6,1]});
+      cards.forEach(function(c){io.observe(c)});
+    }
+  }
+
+  /* ---------- Сервіси: карусель і стрілки ---------- */
+  var scroller=$('#svc-scroller'), prevB=$('#svc-prev'), nextB=$('#svc-next');
+  var stepW=function(){var c=cards.filter(function(x){return !x.classList.contains('is-off')})[0], w=c?c.offsetWidth+12:236; return Math.max(1,Math.floor((scroller.clientWidth-96)/w))*w};
+  function syncArrows(){
+    var max=scroller.scrollWidth-scroller.clientWidth;
+    prevB.disabled=scroller.scrollLeft<=2; nextB.disabled=scroller.scrollLeft>=max-2;
+  }
+  prevB.addEventListener('click',function(){scroller.scrollBy({left:-stepW(),behavior:reduce?'auto':'smooth'})});
+  nextB.addEventListener('click',function(){scroller.scrollBy({left:stepW(),behavior:reduce?'auto':'smooth'})});
+  /* індикатор прокрутки (мобільна версія) */
+  var prog=$('.svc-progress i');
+  function syncProg(){
+    var sw=scroller.scrollWidth, cw=scroller.clientWidth, max=sw-cw, w=Math.min(1,Math.max(.14,cw/sw)), p=max>0?scroller.scrollLeft/max:0;
+    prog.style.width=(w*100)+'%'; prog.style.transform='translateX('+(p*(1-w)/w*100).toFixed(2)+'%)';
+  }
+  function onScroll(){syncArrows();syncProg()}
+  scroller.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+  /* мишкою картки можна тягнути, як свайпом; після відпускання — доводимо до найближчої картки */
+  var drag=null;
+  scroller.addEventListener('pointerdown',function(e){
+    if(e.pointerType!=='mouse'||e.button!==0) return;
+    drag={x:e.clientX,sl:scroller.scrollLeft,moved:false};
+  });
+  window.addEventListener('pointermove',function(e){
+    if(!drag) return;
+    var dx=e.clientX-drag.x;
+    if(!drag.moved&&Math.abs(dx)>4){drag.moved=true;scroller.classList.add('is-drag');}
+    if(drag.moved) scroller.scrollLeft=drag.sl-dx;
+  });
+  window.addEventListener('pointerup',function(){
+    if(!drag) return;
+    var moved=drag.moved; drag=null;
+    if(!moved) return;
+    var pad=parseFloat(getComputedStyle(scroller).scrollPaddingLeft)||0, best=0, bd=1e9;
+    cards.forEach(function(c){ if(c.classList.contains('is-off')) return; var t=c.offsetLeft-pad, d=Math.abs(t-scroller.scrollLeft); if(d<bd){bd=d;best=t;} });
+    best=Math.min(best,scroller.scrollWidth-scroller.clientWidth);
+    scroller.scrollTo({left:best,behavior:reduce?'auto':'smooth'});
+    setTimeout(function(){scroller.classList.remove('is-drag')},reduce?0:450);
+  });
+  scroller.addEventListener('click',function(e){ if(scroller.classList.contains('is-drag')){e.preventDefault();e.stopPropagation();} },true);
+
+  /* ---------- Сервіси: фільтри — усе зникає і з'являється наново; CTA-смуга під каруселлю є завжди ---------- */
+  var tabs=$$('.htab'), busy=false;
+  var match=function(el,f){return f==='all'||el.dataset.cat===f};
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      if(t.classList.contains('is-active')||busy) return;
+      var f=t.dataset.filter;
+      tabs.forEach(function(x){var on=x===t;x.classList.toggle('is-active',on);x.setAttribute('aria-pressed',on)});
+      /* якщо таби гортаються — підкручуємо активний у центр */
+      var tw=$('#htabs-wrap'); if(tw.scrollWidth>tw.clientWidth) tw.scrollTo({left:t.offsetLeft-(tw.clientWidth-t.offsetWidth)/2,behavior:reduce?'auto':'smooth'});
+      var shown=cards.filter(function(el){return !el.classList.contains('is-off')});
+      var next=cards.filter(function(el){return match(el,f)});
+      var apply=function(){
+        cards.forEach(function(el){el.classList.toggle('is-off',!match(el,f))});
+        scroller.scrollLeft=0; onScroll();
+        next.forEach(function(el){if(el._rays) paint(el._rays)});
+      };
+      if(reduce){apply();return;}
+      busy=true;
+      gsap.to(shown,{autoAlpha:0,y:12,scale:.97,duration:.22,stagger:.015,ease:'power2.in',onComplete:function(){
+        apply();
+        gsap.fromTo(next,{autoAlpha:0,x:40,y:0,scale:.97},{autoAlpha:1,x:0,scale:1,duration:.6,stagger:.05,ease:'power3.out',onComplete:function(){busy=false}});
+      }});
+    });
+  });
+
+  /* ---------- Заголовки секцій: розкриття по рядках ---------- */
+  function splitLines(el){
+    var txt=el.dataset.txt||(el.dataset.txt=el.textContent.trim());
+    el.setAttribute('aria-label',txt);
+    el.innerHTML=txt.split(/\s+/).map(function(w){return '<span class="lw" aria-hidden="true">'+w+'</span>'}).join(' ');
+    var lines=[],top=null,cur=null;
+    $$('.lw',el).forEach(function(s){if(s.offsetTop!==top){top=s.offsetTop;cur=[];lines.push(cur)}cur.push(s.textContent)});
+    el.innerHTML=lines.map(function(l){return '<span class="ln" aria-hidden="true"><span class="lni">'+l.join(' ')+'</span></span>'}).join('');
+    return $$('.lni',el);
+  }
+  var heads=$$('.js-lines');
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){
+    heads.forEach(function(h){
+      var lnis=splitLines(h);
+      if(reduce) return;
+      gsap.set(lnis,{yPercent:112});
+      ScrollTrigger.create({trigger:h,start:'top 88%',once:true,onEnter:function(){
+        gsap.to($$('.lni',h),{yPercent:0,duration:1.15,stagger:.09,ease:'power4.out',onComplete:function(){h.dataset.done='1'}});
+      }});
+    });
+    ScrollTrigger.refresh();
+  });
+  var lastW=window.innerWidth;
+  window.addEventListener('resize',function(){
+    if(window.innerWidth===lastW) return; lastW=window.innerWidth;
+    heads.forEach(function(h){ if(h.dataset.done||reduce) splitLines(h); });
+  });
+
+  /* ---------- Умови вигоди в модальному вікні ---------- */
+  var SHEETS={
+    repair:{eyebrow:'Вигода в COMFY',value:'до 10 000 ₴',title:'Безкоштовний ремонт техніки',items:['Ремонт техніки без додаткової оплати','Ліміт зростає на 2 000 ₴ щомісяця','Діє на техніку, придбану в COMFY']},
+    delivery:{eyebrow:'Вигода в COMFY',value:'Безліміт',title:'Безкоштовна доставка',items:['Безкоштовна доставка в межах тарифу','Зручно для щотижневих великих замовлень','Одна підписка — менше побутових витрат']},
+    fuel:{eyebrow:'Партнерська пропозиція',value:'до −4 грн/л',title:'Пальне в мережі АЗС «Укрнафта»',items:['Знижка до 4 грн/л на всі види палива','Діє на кожній заправці мережі','Активація за промокодом на касі АЗС','Без обмежень за кількістю заправок']}
+  };
+  var sheet=$('#sheet'), lastBtn=null;
+  var CHECK='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="currentColor" opacity=".14"/><path d="m8 12.2 2.7 2.6L16 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function openSheet(key,btn){
+    var d=SHEETS[key]; if(!d||!sheet.showModal) return; lastBtn=btn;
+    sheet.dataset.t=key;
+    $('#sheet-eyebrow').textContent=d.eyebrow; $('#sheet-value').textContent=d.value; $('#sheet-title').textContent=d.title;
+    $('#sheet-list').innerHTML=d.items.map(function(t){return '<li>'+CHECK+'<span>'+t+'</span></li>'}).join('');
+    sheet.showModal(); if(lenis) lenis.stop();
+    if(!reduce){
+      /* трансформуємо лише вміст: трансформ самого dialog у GSAP виводить його з modal-шару */
+      gsap.fromTo(sheet,{opacity:0},{opacity:1,duration:.3,ease:'power1.out'});
+      gsap.fromTo($('.sheet-card'),{y:40,scale:.96},{y:0,scale:1,duration:.6,ease:'power3.out'});
+      gsap.fromTo($$('#sheet-list li'),{x:-12,autoAlpha:0},{x:0,autoAlpha:1,duration:.45,stagger:.06,delay:.18,ease:'power3.out'});
+    }
+  }
+  function closeSheet(){
+    if(!sheet.open) return;
+    var done=function(){sheet.close()};
+    if(reduce) done(); else { gsap.to($('.sheet-card'),{y:24,scale:.97,duration:.25,ease:'power2.in'}); gsap.to(sheet,{opacity:0,duration:.25,ease:'power2.in',onComplete:done}); }
+  }
+  sheet.addEventListener('close',function(){ if(lenis) lenis.start(); gsap.set(sheet,{clearProps:'opacity'}); gsap.set($('.sheet-card'),{clearProps:'transform'}); if(lastBtn) lastBtn.focus(); });
+  sheet.addEventListener('cancel',function(e){e.preventDefault();closeSheet();});
+  sheet.addEventListener('click',function(e){ if(e.target===sheet) closeSheet(); });
+  $('#sheet-close').addEventListener('click',closeSheet);
+  $('.sheet-cta').addEventListener('click',function(){closeSheet();});
+  $$('.card-more').forEach(function(b){ b.addEventListener('click',function(){openSheet(b.dataset.sheet,b)}); });
+
+
+  /* ---------- Калькулятор-«чек» ---------- */
+  /* TODO: орієнтовні умови — замінити на реальні */
+  var CALC={delivery:100, fuel:4, bonus:.10, price:1+199*11};
+  var money=function(n){return Math.round(n).toLocaleString('uk-UA')+' ₴'};
+  var pl=function(n,a,b,c){var m=n%10,h=n%100; if(m===1&&h!==11) return a; if(m>=2&&m<=4&&(h<12||h>14)) return b; return c;};
+  var inputs={orders:$('#c-orders'),repair:$('#c-repair'),fuel:$('#c-fuel'),shop:$('#c-shop')};
+  var outs={orders:$('#o-orders'),repair:$('#o-repair'),fuel:$('#o-fuel'),shop:$('#o-shop')};
+  var fmtIn={orders:function(v){return v+' '+pl(v,'замовлення','замовлення','замовлень')},repair:money,fuel:function(v){return v+' л'},shop:money};
+  var fmtTip={orders:function(v){return String(v)},repair:money,fuel:function(v){return v+' л'},shop:money};
+  var shown={};
+  $$('#calc [data-k]').forEach(function(el){shown[el.dataset.k]={el:el,v:null}});
+  function paintRange(k){
+    var i=inputs[k], p=(i.value-i.min)/(i.max-i.min)*100;
+    i.style.setProperty('--p',p+'%');
+    var tip=i.parentNode.querySelector('.range-tip');
+    tip.style.setProperty('--tip','calc('+p+'% + '+((.5-p/100)*24).toFixed(2)+'px)');
+    tip.textContent=fmtTip[k](+i.value); outs[k].textContent=fmtIn[k](+i.value);
+  }
+  function setNum(k,val,prefix,flash){
+    var s=shown[k]; if(!s) return; prefix=prefix||'';
+    if(s.v===null||reduce){s.v=val;s.el.textContent=prefix+money(val);return;}
+    if(s.v!==val){
+      var o={v:s.v}; s.v=val;
+      gsap.to(o,{v:val,duration:.5,ease:'power2.out',overwrite:true,onUpdate:function(){s.el.textContent=prefix+money(o.v)}});
+    } else s.el.textContent=prefix+money(val);
+    if(flash){var row=s.el.closest('.rc-row'); if(row) gsap.fromTo(row,{backgroundColor:'rgba(42,189,19,.16)'},{backgroundColor:'rgba(42,189,19,0)',duration:1,ease:'power2.out'});}
+  }
+  function calc(changed){
+    var o=+inputs.orders.value, r=+inputs.repair.value, f=+inputs.fuel.value, sh=+inputs.shop.value;
+    var d=o*12*CALC.delivery, fu=f*12*CALC.fuel, bo=sh*CALC.bonus, tot=d+r+fu+bo, net=tot-CALC.price, neg=net<0;
+    $('#d-orders').textContent=o+' × 12 міс × '+CALC.delivery+' ₴';
+    $('#d-fuel').textContent=f+' л × 12 міс × '+CALC.fuel+' ₴';
+    setNum('delivery',d,'',changed==='orders'); setNum('repair',r,'',changed==='repair');
+    setNum('fuel',fu,'',changed==='fuel'); setNum('bonus',bo,'',changed==='shop');
+    setNum('total',tot,'',!!changed); setNum('price',CALC.price,'−');
+    var netEl=$('#net'); netEl.parentNode.classList.toggle('is-neg',neg);
+    $('#net-label').textContent=neg?'Поки не окупається':'Твій плюс за рік';
+    setNum('net',Math.abs(net),neg?'−':'+');
+    setNum('net2',Math.abs(net),neg?'−':'+'); setNum('total2',tot,'');
+    $('.calc-bar').classList.toggle('is-neg',neg); $('.js-net-label').textContent=neg?'Поки не окупається':'Твій плюс за рік';
+    if(changed&&!reduce) gsap.fromTo(netEl,{scale:1.06},{scale:1,duration:.55,ease:'back.out(3)',transformOrigin:'100% 50%',overwrite:'auto'});
+  }
+  Object.keys(inputs).forEach(function(k){
+    var i=inputs[k]; paintRange(k);
+    i.addEventListener('input',function(){paintRange(k);calc(k)});
+    i.addEventListener('pointerdown',function(){i.parentNode.classList.add('is-drag')});
+    ['pointerup','pointercancel','blur'].forEach(function(ev){i.addEventListener(ev,function(){i.parentNode.classList.remove('is-drag')})});
+  });
+  calc(null);
+  /* плашка з результатом з'являється, коли на екрані вже повзунки, а не заголовок */
+  ScrollTrigger.create({trigger:'.calc-stick',start:'top 72%',end:'max',toggleClass:{targets:'.calc-bar',className:'is-shown'}});
+  $('#calc-form').addEventListener('submit',function(e){e.preventDefault()});
+  if(!reduce){
+    /* чек «друкується» згори вниз: рядок за рядком виходить з-під принтера */
+    gsap.set('#receipt',{clipPath:'inset(0% 0% 100% 0%)',y:-40});
+    ScrollTrigger.create({trigger:'.printer',start:'top 78%',once:true,onEnter:function(){
+      gsap.to('#receipt',{clipPath:'inset(0% 0% 0% 0%)',y:0,duration:2.4,ease:'steps(24)',clearProps:'clipPath'});
+      gsap.fromTo('.printer-led',{opacity:.25},{opacity:1,duration:.1,repeat:23,yoyo:true,ease:'none'});
+    }});
+  }
+
+  /* ---------- Як це працює: активний крок, закріплена картка-сцена, лінія прогресу ---------- */
+  var howSteps=$$('.how-step'), howCard=$('#how-card'), howScenes=$$('.hs',howCard), rail=$('.how-rail'), railFill=$('.how-rail i'), stepsList=$('#how-steps');
+  var howMq=matchMedia('(max-width: 899px)');
+  var CHECK_SVG='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function runScene(root,i){
+    if(root._tl) root._tl.kill();
+    var tl=gsap.timeline({defaults:{ease:'power3.out'}});
+    var w=$('.hw',root), push=$('.hs-push',root);
+    tl.fromTo(w,{y:28,autoAlpha:0,scale:.97},{y:0,autoAlpha:1,scale:1,duration:.7},0)
+      .fromTo(push,{xPercent:i===2?70:28,autoAlpha:0},{xPercent:0,autoAlpha:1,duration:.9},.15);
+    if(i===0){
+      var typed=$('.js-type',root), txt=typed.dataset.text, o={n:0}, btn=$('.hw-btn',root), bt=$('.hw-btn-txt',root), toast=$('.hw-toast',root);
+      btn.classList.remove('is-done'); bt.textContent='Оплатити 1 ₴'; gsap.set(toast,{autoAlpha:0});
+      tl.fromTo(o,{n:0},{n:txt.length,duration:1.1,ease:'none',onUpdate:function(){typed.textContent=txt.slice(0,Math.round(o.n))}},.45)
+        .to(btn,{scale:.96,duration:.1,ease:'power2.in'},1.75)
+        .call(function(){btn.classList.add('is-done');bt.innerHTML=CHECK_SVG+'Оплачено'},null,1.85)
+        .to(btn,{scale:1,duration:.45,ease:'back.out(3)'},1.85)
+        .fromTo(toast,{y:-16,autoAlpha:0,scale:.9},{y:0,autoAlpha:1,scale:1,duration:.6,ease:'back.out(2)'},2.05);
+    } else if(i===1){
+      var rows=$$('.hw-row',root), strike=$('.hw-old i',root), zero=$('.hw-zero',root), bonus=$('.js-bonus',root), ob={v:0}, chips=$$('.hs-chip',root);
+      tl.fromTo(rows,{x:-14,autoAlpha:0},{x:0,autoAlpha:1,duration:.5,stagger:.08},.35)
+        .fromTo(strike,{scaleX:0},{scaleX:1,duration:.4,ease:'power2.inOut'},.95)
+        .fromTo(zero,{autoAlpha:0,scale:.5},{autoAlpha:1,scale:1,duration:.5,ease:'back.out(3)'},1.25)
+        .fromTo(ob,{v:0},{v:2500,duration:1.1,ease:'power2.out',onUpdate:function(){bonus.textContent=Math.round(ob.v).toLocaleString('uk-UA')}},1.1)
+        .fromTo(chips,{scale:.5,autoAlpha:0,y:14},{scale:1,autoAlpha:1,y:0,duration:.7,stagger:.14,ease:'back.out(2)'},1.35);
+    } else {
+      var tg=$('.tgl',root), pays=$$('.hw-pay',root), badge=$('.hw-badge',root), cancel=$('.hw-cancel',root);
+      tg.classList.remove('is-on');
+      tl.fromTo(badge,{scale:.6,autoAlpha:0},{scale:1,autoAlpha:1,duration:.5,ease:'back.out(2)'},.5)
+        .call(function(){tg.classList.add('is-on')},null,.95)
+        .fromTo(pays,{y:10,autoAlpha:0},{y:0,autoAlpha:1,duration:.45,stagger:.12},1.05)
+        .fromTo(cancel,{autoAlpha:0},{autoAlpha:1,duration:.4},1.5);
+    }
+    root._tl=tl;
+    if(reduce) tl.progress(1);
+  }
+  /* мобільна версія: кожен крок отримує копію своєї сцени під текстом */
+  howSteps.forEach(function(st,i){
+    var box=$('.how-inline',st), card=document.createElement('div'); card.className='how-card';
+    var sc=howScenes[i].cloneNode(true); sc.classList.add('is-on'); card.appendChild(sc); box.appendChild(card);
+    ScrollTrigger.create({trigger:box,start:'top 80%',once:true,onEnter:function(){ if(howMq.matches) runScene(sc,i); }});
+  });
+  var howCur=0;
+  function howShow(i){
+    howSteps.forEach(function(s,k){s.classList.toggle('is-active',k===i);s.classList.toggle('is-done',k<i)});
+    if(i===howCur||howMq.matches){howCur=i;return;}
+    var prev=howScenes[howCur]; howCur=i;
+    var next=howScenes[i];
+    if(reduce){prev.classList.remove('is-on');next.classList.add('is-on');runScene(next,i);return;}
+    gsap.to(prev,{autoAlpha:0,duration:.35,ease:'power1.out',onComplete:function(){prev.classList.remove('is-on')}});
+    next.classList.add('is-on');
+    gsap.fromTo(next,{autoAlpha:0},{autoAlpha:1,duration:.45,ease:'power1.out'});
+    runScene(next,i);
+  }
+  howSteps.forEach(function(st,i){
+    ScrollTrigger.create({trigger:st,start:'top 55%',end:'bottom 55%',onToggle:function(s){if(s.isActive) howShow(i)}});
+  });
+  /* перша сцена грає, коли картка з'являється на екрані */
+  ScrollTrigger.create({trigger:howCard,start:'top 75%',once:true,onEnter:function(){ if(!howMq.matches&&howCur===0) runScene(howScenes[0],0); }});
+  if(!reduce) gsap.set(howScenes[0],{autoAlpha:1});
+  /* лінія прогресу між номерами кроків */
+  var nums=$$('.how-num',stepsList);
+  function railGeo(){
+    var a=nums[0], b=nums[nums.length-1], base=stepsList.getBoundingClientRect().top;
+    var top=a.getBoundingClientRect().top-base+a.offsetHeight/2, bot=b.getBoundingClientRect().top-base+b.offsetHeight/2;
+    rail.style.top=top+'px'; rail.style.height=Math.max(0,bot-top)+'px';
+    return {top:top,bot:bot};
+  }
+  railGeo(); window.addEventListener('resize',railGeo);
+  if(!reduce){
+    gsap.fromTo(railFill,{scaleY:0},{scaleY:1,ease:'none',scrollTrigger:{trigger:stepsList,
+      start:function(){return 'top+='+railGeo().top+' 55%'},end:function(){return 'top+='+railGeo().bot+' 55%'},scrub:.4,invalidateOnRefresh:true}});
+  } else gsap.set(railFill,{scaleY:1});
+
+  /* ---------- Питання: акордеон, відкрите одне питання за раз ---------- */
+  var faqItems=$$('.faq-item');
+  function faqSet(item,open){
+    var btn=$('button',item), a=$('.faq-a',item);
+    if(open===item.classList.contains('is-open')) return;
+    btn.setAttribute('aria-expanded',open);
+    if(open){
+      a.hidden=false; item.classList.add('is-open');
+      if(!reduce){
+        gsap.fromTo(a,{height:0},{height:'auto',duration:.5,ease:'power3.out',clearProps:'height',onComplete:function(){ScrollTrigger.refresh()}});
+        gsap.fromTo($('p',a),{y:-8,autoAlpha:0},{y:0,autoAlpha:1,duration:.45,delay:.08,ease:'power2.out'});
+      } else ScrollTrigger.refresh();
+    } else {
+      item.classList.remove('is-open');
+      if(!reduce){
+        gsap.fromTo(a,{height:a.scrollHeight},{height:0,duration:.4,ease:'power3.inOut',onComplete:function(){a.hidden=true;gsap.set(a,{clearProps:'height'});ScrollTrigger.refresh()}});
+      } else {a.hidden=true;ScrollTrigger.refresh();}
+    }
+  }
+  faqItems.forEach(function(item){
+    $('button',item).addEventListener('click',function(){
+      var open=!item.classList.contains('is-open');
+      if(open) faqItems.forEach(function(o){if(o!==item) faqSet(o,false)});
+      faqSet(item,open);
+    });
+  });
+  if(!reduce){
+    gsap.set(faqItems,{y:24,autoAlpha:0});
+    ScrollTrigger.batch(faqItems,{start:'top 92%',once:true,onEnter:function(b){gsap.to(b,{y:0,autoAlpha:1,duration:.7,stagger:.07,ease:'power3.out'})}});
+  }
+
+  /* ---------- Фінальний CTA: пушик махає, кнопки-магніти ---------- */
+  var fp=$('.final-pushik');
+  if(window.matchMedia('(max-width: 900px)').matches) gsap.set(fp,{xPercent:-50});
+  if(!reduce){
+    gsap.fromTo(fp,{rotation:-3},{rotation:4,duration:1.1,repeat:-1,yoyo:true,ease:'sine.inOut'});
+    gsap.timeline({repeat:-1,repeatDelay:2.2,delay:1})
+      .to(fp,{y:-18,duration:.22,ease:'power2.out'})
+      .to(fp,{y:0,duration:.5,ease:'bounce.out'});
+    gsap.fromTo(fp,{yPercent:28},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.final',start:'top bottom',end:'top 30%',scrub:.6}});
+  }
+  if(fine&&!reduce){
+    $$('.js-magnet').forEach(function(btn){
+      var mx=gsap.quickTo(btn,'x',{duration:.6,ease:'power3'}), my=gsap.quickTo(btn,'y',{duration:.6,ease:'power3'});
+      var zone=btn.closest('.final-copy, .hero-inner');
+      zone.addEventListener('pointermove',function(e){
+        var r=btn.getBoundingClientRect(), dx=e.clientX-(r.left+r.width/2), dy=e.clientY-(r.top+r.height/2);
+        if(Math.hypot(dx,dy)<160){mx(dx*.28);my(dy*.36)} else {mx(0);my(0)}
+      });
+      zone.addEventListener('pointerleave',function(){mx(0);my(0)});
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
