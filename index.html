@@ -638,6 +638,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   /* на мобільному картка росте під віджет, нічого не обрізається */
   .how-inline .hs{position:relative;min-height:320px;padding:28px 5%}
   .how-inline .hs--2{padding:68px 5% 76px}
+  .how-inline .hs--3{justify-content:center}
   .how-inline .hw{width:min(300px,74%);padding:16px;border-radius:20px}
   .how-inline .hw-title{font-size:16px;line-height:22px}
   .how-inline .hw-set{font-size:14px;line-height:20px;gap:10px}
@@ -1421,7 +1422,11 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
       .to(pushik,{keyframes:{yPercent:[0,-5,0,-5,0,-5,0,-5,0],easeEach:'sine.inOut'},duration:1},0)
       .to(pTilt,{keyframes:{rotation:[0,3,-3,3,-3,3,-3,0],easeEach:'sine.inOut'},duration:1},0)
       .fromTo(pars,{yPercent:0,opacity:1},{yPercent:function(i){return -70-i*30},opacity:0,duration:.7,stagger:.05},0);
-    exitST=ScrollTrigger.create({trigger:hero,start:'top top',end:function(){return '+='+Math.round(Math.max(240,window.innerHeight*.42))},
+    var exitMob=matchMedia('(max-width: 699px)');
+    exitST=ScrollTrigger.create({trigger:hero,
+      /* на мобільному сцена нижче першого екрана — пушик рушає, коли вона піднялась приблизно до 30% висоти екрана */
+      start:function(){ if(!exitMob.matches) return 'top top'; var off=scene.getBoundingClientRect().top-hero.getBoundingClientRect().top; return 'top+='+Math.max(0,Math.round(off-window.innerHeight*.3))+' top'; },
+      end:function(){return '+='+Math.round(Math.max(240,window.innerHeight*.42))},
       scrub:.6,animation:ex,invalidateOnRefresh:true});
   }
 
@@ -1505,16 +1510,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
     hero.addEventListener('pointerleave',function(){ if(!ready) return; rot(0); par.forEach(function(p){p.x(0);p.y(0)}); });
   }
 
-  /* ---------- Статистика: лічильники ---------- */
-  var fmt=function(n){return Math.round(n).toLocaleString('uk-UA')};
-  $$('.js-count').forEach(function(el){
-    var to=+el.dataset.to; el.textContent=fmt(to);
-    if(reduce) return;
-    var o={v:0};
-    ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:function(){
-      gsap.fromTo(o,{v:0},{v:to,duration:1.6,ease:'power3.out',onUpdate:function(){el.textContent=fmt(o.v)}});
-    }});
-  });
+  /* Статистика: числа статичні — анімацію лічильників прибрано, щоб пілюлі не змінювали ширину */
 
   /* ---------- Поява секцій під час скролу ---------- */
   if(!reduce){
