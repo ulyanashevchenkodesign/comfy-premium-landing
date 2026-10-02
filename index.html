@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%232abd13'/%3E%3Ccircle cx='22' cy='16' r='5' fill='%23fc5e0f'/%3E%3C/svg%3E">
 <!--
-  Comfy Premium — лендінг підписки. Чекпоінт 7: правки з макета Figma — CTA у херо й калькуляторі, нові пушики, темний фінальний блок, футер COMFY. Херо і сервіси — за макетом Figma (ztnqBrswwn8uvmLHKlj100),
+  Comfy Premium — лендінг підписки. Чекпоінт 8: макет «Новий» — картки з цифрами в херо, сервіси без підкладки, фінальний блок із променями й пушиком зі стрілкою. Херо і сервіси — за макетом Figma (ztnqBrswwn8uvmLHKlj100),
   Укрнафта у брендовому #5C91B9, калькулятор в один екран.
   TODO копірайт: цифри й умови підписки (199 ₴/міс, 1 ₴ перший місяць, ремонт до 10 000 ₴, −4 грн/л, 35 000+ ₴, 10%, 5 сервісів)
   взяті з поточного лендінгу comfy-premium.vercel.app і макета. Перевірити і виправити перед релізом.
@@ -116,14 +116,15 @@ a{color:inherit}
 .hero-sub .br-d{display:none}
 .hero-cta{margin-top:24px}
 @media (max-width:699px){.hero-cta .btn{width:100%}}
-html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .hero-sub,html.intro-pending .hero-cta,html.intro-pending .scene,html.intro-pending .pillstat{visibility:hidden}
+html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .hero-sub,html.intro-pending .hero-cta,html.intro-pending .scene,html.intro-pending .hero-stat{visibility:hidden}
 
 /* Сцена = рамка фургона (1015×627 у макеті). Правий обріз картинки завжди на краю або за краєм екрана */
-.scene{position:relative;z-index:2;width:108vw;margin:calc(24px + 12vw) 0 calc(24px + 14vw) 4vw;aspect-ratio:1015/627}
+.scene{position:relative;z-index:2;width:108vw;margin:calc(24px + 12vw) 0 calc(12px + 5vw) 4vw;aspect-ratio:1015/627}
 @media (max-width:699px){.hero-main{padding-top:calc(env(safe-area-inset-top,0px) + 90px)}}
 @media (min-width:700px){.scene{width:min(86vw,max(420px,calc((100svh - 400px) * 1.619)));margin:8px 0 4vw auto}}
 @media (min-width:1180px){
-  .hero-main{height:clamp(560px,calc(39.7vw + 64px),calc(100svh - 86px));padding-top:56px;display:flex;align-items:center;container-type:size}
+  /* смуги з цифрами більше немає — херо займає весь перший екран (848 px на 1920, як у макеті) */
+  .hero-main{height:clamp(600px,calc(39.7vw + 86px),100svh);padding-top:0;display:flex;align-items:center;container-type:size}
   .hero-copy{padding-right:0}
   .hero-title{text-wrap:nowrap}
   .hero-title .line{display:block;white-space:nowrap}
@@ -188,21 +189,22 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .chips{position:absolute;inset:0;z-index:5;pointer-events:none}
 .chips .glass{position:absolute;left:0;top:0;padding:6px 12px;border-radius:14px;font-size:13px;font-weight:600;gap:0}
 
-/* ---------- Смуга з цифрами під херо ---------- */
-.hero-strip{position:relative;z-index:7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 48px;padding:20px var(--gutter);background:#0a0a0a}
-.pillstat{display:inline-flex;align-items:center;gap:8px;margin:0;padding:4px 20px;border-radius:var(--radius-full);border:1px solid #fff;background:linear-gradient(111deg,#fff 45%,#e6e6e6 100%);color:#000;white-space:nowrap}
-.pillstat b{font-size:28px;line-height:36px;font-weight:800;font-variant-numeric:tabular-nums}
-.pillstat>span{font-size:18px;line-height:24px}
-/* Світлова хвиля по смузі — як shimmer під час завантаження: м'яка смуга світла йде по чорному,
-   пілюлі під нею спалахують відблиском і світінням. --sx (позиція хвилі) і --g (сила спалаху) задає скрипт */
-.hero-strip{overflow:hidden;isolation:isolate;--sx:-9999}
-.hero-strip::before{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:420px;z-index:-1;pointer-events:none;
-  background:linear-gradient(100deg,rgba(255,255,255,0) 16%,rgba(255,255,255,.07) 33%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.07) 67%,rgba(255,255,255,0) 84%);
-  transform:translateX(calc(var(--sx) * 1px - 50%))}
-.pillstat{position:relative;overflow:hidden;isolation:isolate;--ox:0;--g:0;box-shadow:0 0 calc(var(--g) * 26px) calc(var(--g) * 1px) rgba(255,255,255,calc(var(--g) * .45))}
-.pillstat::after{content:"";position:absolute;top:-10%;bottom:-10%;left:0;width:150px;z-index:-1;pointer-events:none;
-  background:linear-gradient(100deg,rgba(200,200,200,0) 6%,rgba(160,160,160,.34) 30%,#fff 50%,rgba(160,160,160,.34) 70%,rgba(200,200,200,0) 94%);
-  transform:translateX(calc((var(--sx) - var(--ox)) * 1px - 50%)) skewX(-18deg)}
+/* ---------- Цифри в херо: три скляні картки під кнопкою (макет «Новий»). На мобільному — рядом під фургоном ---------- */
+.glass--red{--tint:252,30,30;--tint-2:215,5,5}
+.glass--violet{--tint:71,30,252;--tint-2:37,5,215}
+.hero-stats{display:flex;flex-wrap:wrap;gap:16px 25px;margin:48px 0 0;padding:0;list-style:none}
+.hero-stat{flex-direction:column;align-items:flex-start;gap:1px;padding:20px;border-radius:20px;line-height:1}
+.hero-stat b{position:relative;font-size:28px;line-height:36px;font-weight:800;letter-spacing:0;font-variant-numeric:tabular-nums}
+.hero-stat span{position:relative;font-size:16px;line-height:22px;font-weight:700}
+.hero-stats--mob{display:none}
+@media (min-width:1180px) and (max-height:760px){.hero-stats{margin-top:32px}}
+@media (max-width:699px){
+  .hero-stats--desk{display:none}
+  .hero-stats--mob{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 var(--edge);padding-bottom:8px}
+  .hero-stats--mob .hero-stat{padding:12px 10px;border-radius:16px;white-space:normal}
+  .hero-stats--mob .hero-stat b{font-size:clamp(17px,5.2vw,22px);line-height:1.25}
+  .hero-stats--mob .hero-stat span{margin-top:2px;font-size:12px;line-height:16px}
+}
 
 @media (max-width:699px){
   .sticker--1{left:1%;right:auto;top:-6%}.sticker--2{left:47%;top:-18%}.sticker--3{left:-1%;right:auto;top:61%}
@@ -211,12 +213,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   .pushik .cue-tip{font-size:12px;padding:6px 10px 6px 8px;border-radius:12px}
   .pushik .cue-pos{bottom:calc(100% + 9px)}
   .bubble{font-size:12px}
-  .hero-strip{gap:8px;padding:14px var(--gutter)}
-  .pillstat{gap:6px;padding:3px 14px}
-  .pillstat b{font-size:20px;line-height:28px}
-  .pillstat>span{font-size:14px;line-height:20px}
 }
-@media (max-width:420px){.pillstat b{font-size:18px;line-height:24px}.pillstat>span{font-size:13px;line-height:18px}.pillstat{padding:3px 12px}}
 
 /* ---------- Секції ---------- */
 .sec{padding:clamp(88px,10vw,144px) var(--edge)}
@@ -257,17 +254,17 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .card--delivery .card-img{right:-3%;bottom:-3%;height:57%}
 .card--fuel .card-img{right:9%;bottom:-6%;height:92%}
 
-/* ---------- Цифрові сервіси (Figma 8:3004): темний контейнер, DS-таби, карусель карток із «сіяшками» ---------- */
-.sec--services{background:var(--white)}
-.svc-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,568px);align-items:end;gap:24px 48px;margin-bottom:24px}
+/* ---------- Цифрові сервіси (макет «Новий»): без темної підкладки й CTA-смуги — таби на білому, карусель від краю контенту до краю екрана ---------- */
+.sec--services{background:var(--white);overflow-x:clip}
+.svc-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,568px);align-items:end;gap:24px 48px;margin-bottom:48px}
 .svc-head .h2{margin-top:8px}
 /* лід-картка: той самий шейдер Light rays, 2 проходи (параметри з макета); фолбек без WebGL — пастельний градієнт */
-.svc-lead{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;min-height:144px;margin:0;padding:24px 32px;border-radius:32px;background:linear-gradient(115deg,#fdf1dc,#f6e9fb 45%,#e8f8e6)}
+.svc-lead{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;min-height:114px;margin:0;padding:24px 32px;border-radius:32px;background:linear-gradient(115deg,#fdf1dc,#f6e9fb 45%,#e8f8e6)}
 .svc-lead canvas{position:absolute;inset:0;z-index:-1;width:100%;height:100%}
 .svc-lead p{margin:0;font:700 clamp(18px,1.25vw,24px)/1.34 var(--font);color:var(--text);text-wrap:balance}
 
-.svc-box{position:relative;overflow:hidden;padding:40px 0;border-radius:40px;background:linear-gradient(109.7deg,#0a0a0a 10.5%,#323232 56.7%,#161616 141.4%)}
-.svc-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 48px}
+.svc-box{position:relative}
+.svc-bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
 /* ❖ Comfy UI / Horizontal tabs: Full corner radius=True, Color=Brand */
 /* компонент не ріжемо: якщо таби не влазять, гортається вся пілюля цілком */
 .htabs-wrap{position:relative;min-width:0;margin:-2px;padding:2px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
@@ -283,14 +280,16 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .htab.is-active .count{border-color:var(--brand);background:var(--brand);color:#fff}
 .svc-arrows{display:flex;gap:12px;flex-shrink:0}
 
-.svc-scroller{margin-top:32px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:48px;scrollbar-width:none;outline:none}
+/* --bleed = відступ контенту від краю екрана (поля секції або центрування 1600 px) */
+.svc-box{--bleed:max(var(--edge),(var(--vw,100vw) - 1600px) / 2)}
+.svc-scroller{margin:32px calc(-1 * var(--bleed)) 0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--bleed);scrollbar-width:none;outline:none}
 .svc-scroller::-webkit-scrollbar{display:none}
 .svc-scroller:focus-visible{box-shadow:inset 0 0 0 2px var(--brand)}
 @media (hover:hover) and (pointer:fine){.svc-scroller{cursor:grab}}
 .svc-scroller.is-drag{cursor:grabbing;scroll-snap-type:none;user-select:none}
 .svc img{-webkit-user-drag:none;user-select:none}
 .svc-progress{display:none}
-.svc-track{display:flex;gap:12px;width:max-content;margin:0;padding:0 48px;list-style:none}
+.svc-track{display:flex;gap:12px;width:max-content;margin:0;padding:0 var(--bleed);list-style:none}
 .svc{position:relative;isolation:isolate;overflow:hidden;flex:0 0 224px;height:194px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:16px;border-radius:24px;background:#000;scroll-snap-align:start;transition:translate .45s cubic-bezier(.2,.8,.2,1)}
 .svc canvas{position:absolute;inset:0;z-index:-1;width:100%;height:100%}
 .svc.no-gl{background:radial-gradient(130% 110% at 4% -10%,rgba(255,255,255,.85),rgb(var(--c1)) 20%,rgba(var(--c2),.6) 46%,#000 86%)}
@@ -303,30 +302,20 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .svc-txt b{display:block;font:700 16px/22px var(--font)}
 .svc-txt span{display:block;font:400 14px/20px var(--font)}
 
-.svc-cta{display:flex;align-items:center;justify-content:space-between;gap:16px 32px;width:min(1064px,calc(100% - 96px));margin:32px auto 0;padding:12px clamp(20px,3.2vw,48px);border-radius:var(--radius-full);background:linear-gradient(99.8deg,rgba(36,163,16,.8) 14%,rgba(72,235,46,.8) 46.8%,rgba(42,189,19,.8) 110%)}
-.svc-cta-copy{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0}
-.svc-cta-copy b{font:700 24px/32px var(--font);color:#fff}
-.svc-price{display:inline-flex;align-items:center;min-height:32px;padding:4px 12px;border-radius:var(--radius-full);background:#0a0a0a;font:700 18px/24px var(--font);color:#fff}
-.svc-cta .btn{flex-shrink:0}
 
 @media (max-width:1024px){.svc-head{grid-template-columns:1fr 1fr}}
 @media (max-width:760px){
   .svc-head{grid-template-columns:1fr;gap:20px}
   .svc-lead{min-height:0;padding:20px;border-radius:24px}
-  .svc-box{padding:20px 0;border-radius:28px}
-  .svc-bar{padding:0}
-  .htabs-wrap{margin:0;padding:2px 16px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 40px),transparent)}
+  .svc-head{margin-bottom:24px}
+  .htabs-wrap{margin:0 calc(-1 * var(--bleed));padding:2px var(--bleed);-webkit-mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 40px),transparent)}
   .htab{height:36px;padding:0 10px;font-size:15px}
   .svc-arrows{display:none}
-  .svc-scroller{margin-top:16px;scroll-padding-inline:16px}
-  .svc-track{padding:0 16px}
+  .svc-scroller{margin-top:16px}
   .svc{flex-basis:min(76vw,300px);height:auto;min-height:200px}
   /* індикатор прокрутки замість стрілок */
-  .svc-progress{display:block;position:relative;height:4px;margin:16px 16px 0;border-radius:999px;background:rgba(255,255,255,.16);overflow:hidden}
-  .svc-progress i{position:absolute;left:0;top:0;bottom:0;width:30%;border-radius:inherit;background:#fff}
-  .svc-cta{flex-direction:column;align-items:stretch;width:auto;margin:20px 16px 0;padding:20px;border-radius:24px}
-  .svc-cta-copy b{font-size:20px;line-height:26px}
-  .svc-price{font-size:15px;line-height:20px;border-radius:12px}
+  .svc-progress{display:block;position:relative;height:4px;margin:16px 0 0;border-radius:999px;background:rgba(10,10,10,.08);overflow:hidden}
+  .svc-progress i{position:absolute;left:0;top:0;bottom:0;width:30%;border-radius:inherit;background:#0a0a0a}
 }
 
 /* Bento — мобільні правила */
@@ -504,16 +493,22 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 }
 
 /* ---------- Фінальний CTA ---------- */
-.final{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:radial-gradient(70% 60% at 10% 0%,rgba(255,255,255,.12),rgba(255,255,255,0) 70%),linear-gradient(155deg,#171717 0%,#000 52%,#2b2b2b 100%)}
+/* макет «Новий»: чорний фон зі світловими променями — той самий шейдер Light rays, що й у сервісах (3 шари: зелений праворуч,
+   помаранчеві спалахи в лівому верхньому куті й біля кнопки). Шари малює скрипт; без WebGL — м'які градієнти */
+.final{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:#000}
+.final-rays{position:absolute;inset:0;z-index:0;pointer-events:none}
+.final-rays canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
+.final.no-gl .final-rays{background:radial-gradient(40% 65% at 100% 60%,rgba(38,254,27,.55),rgba(38,254,27,0) 70%),radial-gradient(22% 30% at 0 0,rgba(254,88,27,.6),rgba(254,88,27,0) 70%)}
+.final-inner{position:relative;z-index:1}
 .final-inner{max-width:calc(1600px + 2 * var(--edge));margin:0 auto;padding:clamp(48px,11vw,160px) var(--edge) 0;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:end;gap:32px;min-height:clamp(520px,70vh,680px)}
 .final-copy{align-self:center;padding-bottom:clamp(96px,11vw,160px)}
-.final-title{margin:0;font-size:clamp(40px,3.75vw,72px);line-height:1.05;font-weight:800;letter-spacing:-.03em;max-width:9.5em}
-.final-sub{margin:20px 0 0;font-size:18px;line-height:1.5;color:rgba(255,255,255,.86);max-width:28em}
+.final-title{margin:0;font-size:clamp(40px,3.75vw,72px);line-height:1.25;font-weight:700;letter-spacing:0;max-width:9.5em}
+.final-sub{margin:20px 0 0;font-size:18px;line-height:24px;color:rgba(255,255,255,.86);max-width:28em}
 .final-cta{margin-top:32px}
 .final-art{position:relative;align-self:end;height:100%;min-height:420px}
-.final-glow{position:absolute;left:40%;top:44%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.35),rgba(255,255,255,0))}
-/* картинка обрізана знизу — тримаємо запас під краєм секції, щоб погойдування не показувало зріз */
-.final-pushik{position:absolute;right:14%;bottom:-3%;width:105%;height:auto;max-width:none;transform-origin:50% 120%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))}
+.final-glow{position:absolute;left:40%;top:57%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.35),rgba(255,255,255,0))}
+/* пушик зі стрілкою (макет: 769 px на 1920, низ обрізаний краєм секції) */
+.final-pushik{position:absolute;right:2%;bottom:0;width:109%;height:auto;max-width:none;transform-origin:60% 100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))}
 .final-copy{position:relative;z-index:2}
 .js-magnet{will-change:transform}
 
@@ -521,11 +516,16 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   .final-inner{grid-template-columns:1fr;min-height:0}
   .final-copy{padding-bottom:0}
   .final-art{min-height:340px;height:340px}
-  .final-glow{left:50%;top:60%}
-  .final-pushik{width:min(90vw,440px);bottom:-3%;right:auto;left:50%}
+  .final{background:radial-gradient(70% 60% at 10% 0%,rgba(255,255,255,.12),rgba(255,255,255,0) 70%),linear-gradient(155deg,#171717 0%,#000 52%,#2b2b2b 100%)}
+  .final.no-gl .final-rays{background:radial-gradient(70% 45% at 15% 100%,rgba(38,254,27,.5),rgba(38,254,27,0) 70%),radial-gradient(35% 18% at 0 0,rgba(254,88,27,.6),rgba(254,88,27,0) 70%)}
+  .final-glow{left:50%;top:62%}
+  .final-pushik{width:min(89.5vw,440px);bottom:10px;right:auto;left:50%;transform-origin:50% 100%}
 }
 @media (max-width:640px){
   .final .btn{width:100%}
+  .final-title{font-size:34px;line-height:42px;font-weight:800}
+  .final-sub{margin-top:16px}
+  .final-cta{margin-top:28px}
 }
 
 /* ---------- ❖ Comfy UI: Badge (Dot, 24 px, Success), Toggle (24 px), Input (56 px) — для ілюстрацій у «Як це працює» ---------- */
@@ -797,6 +797,12 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
         </h1>
         <p class="hero-sub">Перший місяць коштує 1&nbsp;₴, далі 199&nbsp;₴ на місяць.<br class="br-d"> Скасувати можна будь-коли в особистому кабінеті.</p>
         <div class="hero-cta"><a class="btn btn--primary btn--56" href="#try">Спробувати за 1&nbsp;₴</a></div>
+        <!-- TODO копірайт: цифри з макета й поточного лендінгу, перевірити. «5 сервісів у підписці» не збігається з 11 сервісами нижче -->
+        <ul class="hero-stats hero-stats--desk" aria-label="Підписка в цифрах">
+          <li class="glass glass--orange hero-stat"><b>35&nbsp;000+</b><span>₴ вигоди на рік</span></li>
+          <li class="glass glass--red hero-stat"><b>10%</b><span>знижка на покупки</span></li>
+          <li class="glass glass--violet hero-stat"><b>5</b><span>сервісів у підписці</span></li>
+        </ul>
       </div>
 
       <!-- Сцена: фургон заїжджає справа і зупиняється як у макеті; з-за правого краю виходить пушик із посилкою.
@@ -848,12 +854,11 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
       </div>
     </div>
 
-    <!-- TODO копірайт: цифри з макета й поточного лендінгу, перевірити. «5 сервісів у підписці» не збігається з 11 сервісами нижче -->
-    <div class="hero-strip" role="list" aria-label="Підписка в цифрах">
-      <p class="pillstat" role="listitem"><b><span class="js-count" data-to="35000">35 000</span>+</b><span>₴ вигоди на рік</span></p>
-      <p class="pillstat" role="listitem"><b><span class="js-count" data-to="10">10</span>%</b><span>знижка на покупки</span></p>
-      <p class="pillstat" role="listitem"><b><span class="js-count" data-to="5">5</span></b><span>сервісів у підписці</span></p>
-    </div>
+    <ul class="hero-stats hero-stats--mob" aria-label="Підписка в цифрах">
+      <li class="glass glass--orange hero-stat"><b>35&nbsp;000+</b><span>₴ вигоди на рік</span></li>
+      <li class="glass glass--red hero-stat"><b>10%</b><span>знижка на покупки</span></li>
+      <li class="glass glass--violet hero-stat"><b>5</b><span>сервісів у підписці</span></li>
+    </ul>
   </section>
 
 
@@ -961,10 +966,6 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
           </ul>
         </div>
         <div class="svc-progress" aria-hidden="true"><i></i></div>
-        <div class="svc-cta">
-          <p class="svc-cta-copy"><b>Усе це входить у підписку</b><span class="svc-price">199 ₴ на місяць, перший місяць за 1 ₴</span></p>
-          <a class="btn btn--secondary-gray btn--40" href="#try">Спробувати за 1 ₴</a>
-        </div>
       </div>
     </div>
   </section>
@@ -1160,7 +1161,8 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
     </div>
   </section>
 
-  <section class="final grain" id="start" aria-labelledby="final-title">
+  <section class="final" id="start" aria-labelledby="final-title">
+    <div class="final-rays" aria-hidden="true"><canvas></canvas></div>
     <div class="final-inner">
       <div class="final-copy">
         <h2 class="final-title js-lines" id="final-title">Почни економити вже сьогодні</h2>
@@ -1169,7 +1171,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
       </div>
       <div class="final-art" aria-hidden="true">
         <span class="final-glow"></span>
-        <picture><source media="(max-width: 900px)" srcset="assets/pushik-dab.webp" width="698" height="644"><img class="final-pushik" src="assets/pushik-cool.webp" alt="" width="740" height="558" loading="lazy"></picture>
+        <picture><source media="(max-width: 900px)" srcset="assets/pushik-arrow-m.webp" width="767" height="710"><img class="final-pushik" src="assets/pushik-arrow.webp" alt="" width="1153" height="920" loading="lazy"></picture>
       </div>
     </div>
   </section>
@@ -1242,6 +1244,9 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 
   if(typeof gsap==='undefined'){reveal();return;}
   gsap.registerPlugin(ScrollTrigger);
+  /* ширина вікна без смуги прокрутки — для каруселі сервісів «від краю контенту до краю екрана» */
+  var setVw=function(){document.documentElement.style.setProperty('--vw',document.documentElement.clientWidth+'px')};
+  setVw(); window.addEventListener('resize',setVw);
 
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine=matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -1327,33 +1332,6 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
     for(var i=0;i<n;i++) puff(.745,.95,{x0:30,x1:strong?150:100,y0:strong?-70:-50,y1:-10,s0:.3,s1:strong?2.2:1.5,s2:strong?3.4:2.4,a:strong?.95:.7,d:i*.06});
   }
 
-  /* ---------- Смуга з цифрами: світлова хвиля (shimmer) ---------- */
-  var strip=$('.hero-strip'), pstats=$$('.pillstat'), sw={p:0}, geo=[], sweepTl=null, sweepVis=true;
-  function measureSweep(){
-    geo=pstats.map(function(p){return {el:p,l:p.offsetLeft,w:p.offsetWidth}});
-    geo.forEach(function(g){g.el.style.setProperty('--ox',g.l)});
-  }
-  function paintSweep(){
-    var W=strip.offsetWidth, x=-260+sw.p*(W+520);
-    strip.style.setProperty('--sx',x.toFixed(1));
-    geo.forEach(function(g){
-      var k=Math.max(0,1-Math.abs(x-(g.l+g.w/2))/(g.w/2+170));
-      g.el.style.setProperty('--g',(k*k*(3-2*k)).toFixed(3));
-    });
-  }
-  function startSweep(){
-    if(reduce||sweepTl) return;
-    measureSweep();
-    sweepTl=gsap.timeline({repeat:-1,repeatDelay:2.8,onRepeat:measureSweep});
-    sweepTl.fromTo(sw,{p:0},{p:1,duration:2,ease:'power1.inOut',onUpdate:paintSweep});
-    if(!sweepVis) sweepTl.pause();
-  }
-  window.addEventListener('resize',function(){if(sweepTl) measureSweep()});
-  /* поза екраном хвилю не крутимо */
-  ScrollTrigger.create({trigger:strip,start:'top bottom',end:'bottom top',onToggle:function(st){
-    sweepVis=st.isActive; if(sweepTl){ if(sweepVis) sweepTl.resume(); else sweepTl.pause(); }
-  }});
-
   /* ---------- Hero: інтро ---------- */
   gsap.set(pushik,{autoAlpha:0});
   var DUR=2.2, T0=.45, T1=T0+DUR+.05, WALK=1.55, T2=T1+WALK+.35;
@@ -1363,8 +1341,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
     .fromTo('.hero-title .wi',{yPercent:115},{yPercent:0,duration:1,stagger:.05,ease:'power4.out'},.05)
     .fromTo('.hero-sub',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.8},.45)
     .fromTo('.hero-cta',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.8},.55)
-    .fromTo('.pillstat',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.7,stagger:.08},.55)
-    .call(function(){startSweep()},null,1.7)
+    .fromTo('.hero-stat',{y:16,autoAlpha:0},{y:0,autoAlpha:1,duration:.7,stagger:.08},.65)
     .fromTo(scene,{autoAlpha:0},{autoAlpha:1,duration:.01},T0)
     /* фургон заїжджає справа і гальмує там, де стоїть у макеті */
     .fromTo(truckMove,{x:truckIn},{x:0,duration:DUR,ease:'power2.out'},T0)
@@ -1601,7 +1578,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
       gl.uniform4f(U['uL'+i],p.x/100,p.y/100,p.a,reach);
       gl.uniform4f(U['uR'+i],p.int,p.spread,0,.5);
       gl.uniform3fv(U['uA'+i],p.c1); gl.uniform3fv(U['uB'+i],p.c2);
-      gl.uniform3f(U['uX'+i],p.dens,.53,p.speed);
+      gl.uniform3f(U['uX'+i],p.dens,p.sharp!=null?p.sharp:.53,p.speed);
     }
     return function(it){
       var w=it.w,h=it.h;
@@ -1664,7 +1641,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 
   /* ---------- Сервіси: карусель і стрілки ---------- */
   var scroller=$('#svc-scroller'), prevB=$('#svc-prev'), nextB=$('#svc-next');
-  var stepW=function(){var c=cards.filter(function(x){return !x.classList.contains('is-off')})[0], w=c?c.offsetWidth+12:236; return Math.max(1,Math.floor((scroller.clientWidth-96)/w))*w};
+  var stepW=function(){var c=cards.filter(function(x){return !x.classList.contains('is-off')})[0], w=c?c.offsetWidth+12:236, pad=parseFloat(getComputedStyle($('#svc-track')).paddingLeft)||0; return Math.max(1,Math.floor((scroller.clientWidth-pad-24)/w))*w};
   function syncArrows(){
     var max=scroller.scrollWidth-scroller.clientWidth;
     prevB.disabled=scroller.scrollLeft<=2; nextB.disabled=scroller.scrollLeft>=max-2;
@@ -1705,7 +1682,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   });
   scroller.addEventListener('click',function(e){ if(scroller.classList.contains('is-drag')){e.preventDefault();e.stopPropagation();} },true);
 
-  /* ---------- Сервіси: фільтри — усе зникає і з'являється наново; CTA-смуга під каруселлю є завжди ---------- */
+  /* ---------- Сервіси: фільтри — усе зникає і з'являється наново ---------- */
   var tabs=$$('.htab'), busy=false;
   var match=function(el,f){return f==='all'||el.dataset.cat===f};
   tabs.forEach(function(t){
@@ -1968,13 +1945,131 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
     });
   });
 
-  /* ---------- Фінальний CTA: пушик пританцьовує, кнопки-магніти ---------- */
+  /* ---------- Фінальний CTA: світлові промені (шейдер), пушик «підштовхує» стрілкою до кнопки, кнопки-магніти ---------- */
+  var fin=$('.final'), finBtn=$('.final-cta .btn'), finMob=matchMedia('(max-width: 900px)');
+  /* Один окремий WebGL-canvas на всю секцію: три шари рахуються в одному проході шейдера й змішуються як «screen»
+     (так дешевше, ніж три canvas із копіюванням кадрів). Повернуті шари — через обернену матрицю повороту. */
+  var FRAG_F=[
+    'precision highp float;',
+    'uniform vec2 uRes;uniform vec2 uSec;uniform float uTime;',
+    'uniform vec4 uBox[3];uniform float uRot[3];uniform vec4 uL[3];uniform vec4 uR[3];uniform vec3 uA[3];uniform vec3 uB[3];uniform vec3 uX[3];',
+    'float band(vec2 s2p,vec2 rd,float reach,float bb,float bs,float sa,float sb,float sp,float t){',
+    '  float d=length(s2p);vec2 dir=d>0.0001?s2p/d:rd;float ca=dot(dir,rd);',
+    '  float wave=(0.15*sin(ca*sa+t*sp)+0.20*cos(-ca*sb+t*sp))/0.35;',
+    '  float st=clamp(bb+bs*wave,0.0,1.0);float dm=clamp((reach-d)/reach,0.5,1.0);',
+    '  float rf=1.0-smoothstep(reach*0.35,reach,d);',
+    '  float pulse=1.0-0.16*sin(t*sp*0.55+sa*0.1)-0.07*sin(t*sp*1.27+sb*0.1);',
+    '  return st*dm*rf*pulse;}',
+    'vec3 rays(vec2 uv,vec2 lres,vec4 L,vec4 R,vec3 A,vec3 B,vec3 X){',
+    '  float sh=max(min(lres.x,lres.y),1.0);vec2 k=lres/sh;vec2 s2p=uv*k-L.xy*k;float dist=length(s2p);',
+    '  float blend=clamp(R.z,-1.0,1.0)*0.5+0.5;float ds=pow(2.0,mix(-2.4,2.4,clamp(X.x,0.0,1.0)));',
+    '  float sp=mix(0.2,4.0,clamp(X.z,0.0,1.0));float la=radians(L.z);vec2 rd=vec2(cos(la),sin(la));',
+    '  float halfArc=mix(0.16,3.14159265*1.7,clamp(R.y,0.0,1.0));float pa=atan(s2p.y,s2p.x);',
+    '  float afa=atan(sin(pa-la),cos(pa-la));float rm=1.0-smoothstep(halfArc*0.6,halfArc,abs(afa));',
+    '  float reach=max(L.w,0.005);float si=1.0-clamp(X.y,0.0,1.0);float sc=si*si*si*(si*(si*6.0-15.0)+10.0);',
+    '  float bb=mix(1.10,0.40,sc);float bs=mix(0.05,0.65,sc);',
+    '  float b1=band(s2p,rd,reach,bb,bs,36.2214*ds,21.11349*ds,sp,uTime)*rm;',
+    '  float b2=band(s2p,rd,reach,bb,bs,22.3991*ds,18.0234*ds,sp*0.2,uTime)*rm;',
+    '  float db=mix(0.5,4.0,clamp(R.x,0.0,1.0))*0.4/pow(max(dist/reach,0.001),1.7);',
+    '  return (A*b1*(1.0-blend)*0.9+B*b2*blend*0.9)*db;}',
+    'void main(){',
+    '  vec2 p=vec2(gl_FragCoord.x/uRes.x*uSec.x,(1.0-gl_FragCoord.y/uRes.y)*uSec.y);vec3 inv=vec3(1.0);',
+    '  for(int i=0;i<3;i++){',
+    '    vec2 d=p-uBox[i].xy;vec2 l=uRot[i]>0.5?vec2(-d.y,d.x):d;vec2 uv=l/uBox[i].zw+0.5;',
+    '    if(uv.x<0.0||uv.y<0.0||uv.x>1.0||uv.y>1.0) continue;',
+    '    inv*=1.0-clamp(rays(uv,uBox[i].zw,uL[i],uR[i],uA[i],uB[i],uX[i]),0.0,1.0);}',
+    '  vec3 c=1.0-inv;gl_FragColor=vec4(c,max(c.r,max(c.g,c.b)));}'
+  ].join('\n');
+  var finCv=$('.final-rays canvas'), FG=(function(){
+    var gl=null;
+    try{gl=finCv.getContext('webgl',{alpha:true,premultipliedAlpha:true,antialias:false,depth:false,stencil:false,powerPreference:'low-power'})}catch(e){}
+    if(!gl) return null;
+    function sh(type,src){var o=gl.createShader(type);gl.shaderSource(o,src);gl.compileShader(o);return gl.getShaderParameter(o,gl.COMPILE_STATUS)?o:null}
+    var vs=sh(gl.VERTEX_SHADER,'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}'), fs=sh(gl.FRAGMENT_SHADER,FRAG_F);
+    if(!vs||!fs) return null;
+    var pr=gl.createProgram(); gl.attachShader(pr,vs); gl.attachShader(pr,fs); gl.linkProgram(pr);
+    if(!gl.getProgramParameter(pr,gl.LINK_STATUS)) return null;
+    gl.useProgram(pr);
+    gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+    var loc=gl.getAttribLocation(pr,'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+    var U={}; ['uRes','uSec','uTime','uBox[0]','uRot[0]','uL[0]','uR[0]','uA[0]','uB[0]','uX[0]'].forEach(function(n){U[n.replace('[0]','')]=gl.getUniformLocation(pr,n)});
+    return {gl:gl,U:U};
+  })();
+  var finT=0, finSec=[0,0];
+  /* шари з макета: box — рамка шару на екрані (px макета), rot 90 — шар повернутий у Figma (проти годинникової),
+     at — до чого прив'язаний: tl/tr/bl — кут секції, btn — правий верхній кут кнопки; p — параметри шейдера в координатах шару */
+  var GREEN=[.1504,.9961,.1059], PEACH=[.9087,.5889,.3606], ORANGE=[.9961,.3433,.1059], YELLOW=[.9087,.8904,.3606];
+  var L1={x:94.4458,y:10.8256,r:41.3159,a:-165.6864,c1:ORANGE,c2:YELLOW}, L2={x:54.3145,y:70.006,r:15.4016,a:177.659,c1:ORANGE,c2:YELLOW};
+  var FL={
+    d:{W:1920,res:.5,layers:[
+      {box:[-1923,0,2434,1095],rot:90,at:'tr',p:{x:50,y:103.9702,r:48.4083,a:-161.1457,c1:GREEN,c2:PEACH}},
+      {box:[-147,-17,568,437],rot:90,at:'tl',p:L1},
+      {box:[-246,-84,318,245],rot:90,at:'btn',p:L2}]},
+    m:{W:390,res:.75,layers:[
+      {box:[-16,-674,405,901],rot:0,at:'bl',p:{x:17.4936,y:100,r:39.9855,a:-161.7672,c1:GREEN,c2:PEACH}},
+      {box:[-23,-15,181,140],rot:90,at:'tl',p:L1},
+      {box:[-126,-16,163,125],rot:90,at:'btn',p:L2}]}
+  };
+  var FU={box:new Float32Array(12),rot:new Float32Array(3),L:new Float32Array(12),R:new Float32Array(12),A:new Float32Array(9),B:new Float32Array(9),X:new Float32Array(9)};
+  function rel(el,root){var x=0,y=0;while(el&&el!==root){x+=el.offsetLeft;y+=el.offsetTop;el=el.offsetParent}return {x:x,y:y}}
+  function layoutFinal(){
+    if(!FG) return;
+    var cfg=finMob.matches?FL.m:FL.d, W=fin.offsetWidth, H=fin.offsetHeight, s=Math.max(.55,W/cfg.W);
+    var b=rel(finBtn,fin), bR=b.x+finBtn.offsetWidth, bT=b.y;
+    cfg.layers.forEach(function(L,i){
+      var k=L.at==='btn'?1:s, bx=L.box[0]*k, by=L.box[1]*k, bw=L.box[2]*k, bh=L.box[3]*k;
+      if(L.at==='tr') bx+=W; else if(L.at==='bl') by+=H; else if(L.at==='btn'){bx+=bR;by+=bT;}
+      var cw=L.rot?bh:bw, ch=L.rot?bw:bh;
+      FU.box.set([bx+bw/2,by+bh/2,cw,ch],i*4); FU.rot[i]=L.rot?1:0;
+      FU.L.set([L.p.x/100,L.p.y/100,L.p.a,L.p.r/100*(ch/Math.min(cw,ch))*2],i*4);
+      FU.R.set([.26,.56,0,.5],i*4); FU.A.set(L.p.c1,i*3); FU.B.set(L.p.c2,i*3); FU.X.set([.56,.45,.39],i*3);
+    });
+    var w=Math.max(2,Math.round(W*cfg.res)), h=Math.max(2,Math.round(H*cfg.res));
+    if(finCv.width!==w||finCv.height!==h){finCv.width=w;finCv.height=h;}
+    finSec=[W,H];
+    var gl=FG.gl,U=FG.U; gl.viewport(0,0,w,h);
+    gl.uniform2f(U.uRes,w,h); gl.uniform2f(U.uSec,W,H);
+    gl.uniform4fv(U.uBox,FU.box); gl.uniform1fv(U.uRot,FU.rot); gl.uniform4fv(U.uL,FU.L); gl.uniform4fv(U.uR,FU.R);
+    gl.uniform3fv(U.uA,FU.A); gl.uniform3fv(U.uB,FU.B); gl.uniform3fv(U.uX,FU.X);
+    drawFinal();
+  }
+  function drawFinal(){var gl=FG.gl; gl.uniform1f(FG.U.uTime,finT); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLES,0,6);}
+  if(!FG) fin.classList.add('no-gl');
+  else {
+    layoutFinal();
+    var fT=null; window.addEventListener('resize',function(){clearTimeout(fT);fT=setTimeout(layoutFinal,150)});
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(layoutFinal);
+    if(!reduce){
+      /* промені повільно рухаються, поки блок на екрані; 30 кадрів/с досить — рух повільний і м'який */
+      var finOn=false, finAcc=0;
+      ScrollTrigger.create({trigger:fin,start:'top bottom',end:'bottom top',onToggle:function(st){finOn=st.isActive}});
+      gsap.ticker.add(function(time,dt){
+        if(!finOn) return;
+        finAcc+=Math.min(dt,50); if(finAcc<32) return;
+        finT+=finAcc/1000*.9; finAcc=0; drawFinal();
+      });
+    }
+  }
+
   var fp=$('.final-pushik');
-  if(window.matchMedia('(max-width: 900px)').matches) gsap.set(fp,{xPercent:-50});
+  if(finMob.matches) gsap.set(fp,{xPercent:-50});
   if(!reduce){
-    gsap.fromTo(fp,{rotation:-1.5},{rotation:1.5,duration:.9,repeat:-1,yoyo:true,ease:'sine.inOut'});
-    gsap.fromTo(fp,{y:0},{y:7,duration:.45,repeat:-1,yoyo:true,ease:'sine.inOut'});
     gsap.fromTo(fp,{yPercent:28},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.final',start:'top bottom',end:'top 30%',scrub:.6}});
+    /* десктоп: стрілка вліво — пушик двічі «штовхає» її до кнопки; мобільний: стрілка вгору — підстрибує до кнопки */
+    var nudge=gsap.timeline({repeat:-1,repeatDelay:1.8,delay:1,paused:true});
+    if(finMob.matches){
+      nudge.to(fp,{y:-14,rotation:-1.5,duration:.3,ease:'power2.out'})
+           .to(fp,{y:0,rotation:0,duration:.7,ease:'elastic.out(1,.45)'})
+           .to(fp,{y:-8,duration:.22,ease:'power2.out'},'-=.1')
+           .to(fp,{y:0,duration:.5,ease:'elastic.out(1,.5)'});
+    } else {
+      nudge.to(fp,{x:-22,rotation:-1.2,duration:.32,ease:'power2.out'})
+           .to(fp,{x:0,rotation:0,duration:.75,ease:'elastic.out(1,.45)'})
+           .to(fp,{x:-12,duration:.22,ease:'power2.out'},'-=.12')
+           .to(fp,{x:0,duration:.55,ease:'elastic.out(1,.5)'});
+    }
+    ScrollTrigger.create({trigger:fin,start:'top 85%',end:'bottom top',onToggle:function(st){st.isActive?nudge.play():nudge.pause()}});
   }
   if(fine&&!reduce){
     $$('.js-magnet').forEach(function(btn){
