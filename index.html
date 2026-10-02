@@ -130,7 +130,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   .hero-title .line{display:block;white-space:nowrap}
   .hero-sub{margin-top:24px;max-width:none;font-size:clamp(18px,1.25vw,24px);line-height:1.34}
   .hero-sub .br-d{display:inline}
-  .scene{position:absolute;right:0;bottom:clamp(18px,2.66vw,56px);margin:0;width:min(52.9vw,calc((100cqh - clamp(18px,2.66vw,56px) - 12px) * 1.619),calc(100cqw - var(--edge) - var(--h-size) * var(--title-em,11.9) - 24px))}
+  .scene{position:absolute;right:0;top:50%;bottom:auto;translate:0 calc(-50% - 1.4vw);margin:0;width:min(52.9vw,calc((100cqh - clamp(18px,2.66vw,56px) - 12px) * 1.619),calc(100cqw - var(--edge) - var(--h-size) * var(--title-em,11.9) - 24px))}
 }
 
 .hit{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}
@@ -161,15 +161,16 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .pushik .cue{position:absolute;left:52%;bottom:-5%;width:150%;aspect-ratio:4/1;transform:translateX(-50%);pointer-events:none;z-index:-1}
 .pushik .cue i{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(42,189,19,.6);box-shadow:0 0 18px rgba(42,189,19,.25);opacity:0}
 /* бабл «Натисни на мене» над головою кур'єра, хвостик дивиться вниз на нього */
-.pushik .cue-pos{position:absolute;z-index:2;left:66%;bottom:calc(100% + 12px);transform:translateX(-50%);pointer-events:none}
-.pushik .cue-tip{position:relative;display:inline-flex;align-items:center;gap:6px;padding:8px 13px 8px 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px rgba(10,10,10,.06),0 14px 30px -14px rgba(10,10,10,.4);font:600 14px/1.1 var(--font);color:var(--text);white-space:nowrap;opacity:0;visibility:hidden;transform-origin:50% 130%}
+.pushik .cue-pos{position:absolute;z-index:2;left:61.3%;bottom:calc(100% + 14px);transform:translateX(-50%);pointer-events:none}
+.pushik .cue-tip{position:relative;display:inline-flex;align-items:center;gap:6px;padding:8px 13px 8px 10px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px rgba(10,10,10,.06),0 14px 30px -14px rgba(10,10,10,.4);font:700 14px/20px var(--font);color:var(--text);white-space:nowrap;opacity:0;visibility:hidden;transform-origin:50% 130%}
 .pushik .cue-tip::after{content:"";position:absolute;left:50%;top:100%;width:12px;height:12px;margin:-7px 0 0 -6px;background:#fff;border-radius:0 0 3px 0;transform:rotate(45deg);box-shadow:1px 1px 0 rgba(10,10,10,.06)}
 .pushik .cue-tip svg{width:17px;height:17px;color:var(--brand)}
 
 /* ---------- Кольорове скло ---------- */
 .sticker{position:absolute;z-index:4;pointer-events:none}
 .sticker-par,.sticker-pop,.sticker-in{display:block}
-.sticker--1{right:4%;top:7%}.sticker--2{left:1%;top:2%}.sticker--3{right:1%;top:48%}
+/* позиції з макета «Новий» (у % рамки фургона 1015×627) */
+.sticker--1{right:11.4%;top:4.6%}.sticker--2{left:6.5%;top:10.4%}.sticker--3{right:3.3%;top:53.4%}
 .sticker--1 .glass{transform:rotate(2deg)}.sticker--2 .glass{transform:rotate(-3deg)}.sticker--3 .glass{transform:rotate(-2deg)}
 .glass{--tint:42,189,19;--tint-2:24,140,10;--ink:#fff;position:relative;display:inline-flex;align-items:center;gap:10px;padding:9px 16px 9px 9px;border-radius:20px;color:var(--ink);text-align:left;white-space:nowrap;
   background:linear-gradient(145deg,rgba(var(--tint),.74),rgba(var(--tint-2),.56));
@@ -220,7 +221,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .sec-inner{max-width:1600px;margin:0 auto}
 .sec-head{max-width:760px;margin:0 auto clamp(36px,4vw,56px);text-align:center}
 .eyebrow{margin:0;font-size:15px;font-weight:500;color:var(--text-2)}
-.h2{margin:12px 0 0;font-size:clamp(32px,4vw,52px);line-height:1.06;font-weight:700;letter-spacing:-.04em;text-wrap:balance;font-variation-settings:"opsz" 32}
+.h2{margin:8px 0 0;font-size:clamp(32px,4vw,52px);line-height:1.06;font-weight:700;letter-spacing:-.04em;text-wrap:balance;font-variation-settings:"opsz" 32}
 .lead{margin:16px auto 0;max-width:34em;font-size:18px;line-height:1.5;color:var(--text-2);text-wrap:balance}
 .grain::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.4;mix-blend-mode:soft-light;border-radius:inherit;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -333,7 +334,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 /* ---------- Масштаб, ритм, bento з вигодою, умови ---------- */
 
 .sec{padding:clamp(48px,9vw,144px) var(--edge)}
-.h2{font-size:var(--h-size);line-height:1.2;font-weight:800;letter-spacing:-.01em}
+.h2{font-size:var(--h-size);line-height:1.2;font-weight:800;letter-spacing:0}
 .sec-head--split{max-width:none;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:end;gap:20px 64px;text-align:left;margin-bottom:clamp(40px,5vw,72px)}
 .sec-head--split .h2{max-width:11em}
 .sec-head--split .lead{margin:0;max-width:26em;text-wrap:pretty}
@@ -389,24 +390,31 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 
 
 /* ---------- Переваги в один екран: 3 колонки, висота від вікна ---------- */
-.sec-head--stack{max-width:none;text-align:left;margin:0 0 clamp(28px,3vw,40px)}
+.sec-head--stack{max-width:none;text-align:left;margin:0 0 clamp(28px,2.5vw,48px)}
 .sec-head--stack .h2{white-space:normal}
-.sec-head--stack .lead{margin:12px 0 0;max-width:40em;font-size:17px}
+.sec-head--stack .lead{margin:20px 0 0;max-width:680px;font-size:18px;line-height:24px}
 
-.bento{grid-template-columns:minmax(0,4.4fr) minmax(0,3.8fr) minmax(0,3.8fr);gap:16px}
+/* три однакові картки (макет: 523×560, проміжок 16) */
+.bento{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .card,.card--fuel{grid-column:auto;min-height:0;height:clamp(400px,calc(100vh - 320px),560px);padding:28px;container-type:inline-size}
 @supports (height:100svh){.card,.card--fuel{height:clamp(400px,calc(100svh - 320px),560px)}}
-.card .card-value{margin-top:12px;font-size:clamp(38px,3.35vw,56px)}
-.card h3{margin-top:14px;font-size:20px}
-.card .card-desc{font-size:15px;line-height:1.45;max-width:none}
+.card .card-eyebrow{margin:0;line-height:20px}
+.card .card-value{margin-top:12px;font-size:clamp(38px,3.125vw,60px);line-height:1.2;letter-spacing:0}
+.card h3{margin-top:14px;font-size:20px;line-height:28px;letter-spacing:0}
+.card .card-desc{font-size:16px;line-height:22px;max-width:none}
 .card--delivery .card-copy,.card--fuel .card-copy,.card-copy{max-width:none}
 .card--repair .card-img{right:0;bottom:0;height:52%}
 .card--delivery .card-img{right:0;bottom:0;height:50%}
-.card--fuel .card-img{right:1%;bottom:0;height:42%}
+.card--fuel .card-img{right:0;bottom:0;height:53.6%}
 @media (max-width:1024px){
   .bento{grid-template-columns:1fr 1fr}
   .card--fuel{grid-column:1 / -1}
   .card,.card--fuel{height:auto;min-height:520px}
+}
+@media (min-width:1025px) and (max-width:1500px){
+  .card--repair .card-img{height:42%}
+  .card--delivery .card-img{height:42%}
+  .card--fuel .card-img{height:36%}
 }
 @media (max-width:760px){
   .bento{grid-template-columns:1fr}
@@ -419,12 +427,12 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 /* ---------- Калькулятор-«чек»: заголовок і повзунки ліворуч, чек праворуч — усе в один екран ---------- */
 .calc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);align-items:start;gap:clamp(32px,6vw,112px)}
 .calc-head .h2{margin-top:8px}
-.calc-head .lead{margin:12px 0 0;max-width:30em;font-size:17px;text-wrap:pretty}
+.calc-head .lead{margin:12px 0 0;max-width:none;font-size:18px;line-height:24px;text-wrap:pretty}
 .calc-controls{display:grid;gap:clamp(18px,3.2vh,32px);margin-top:clamp(24px,4.4vh,44px)}
-.field-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:10px}
-.calc-cta{margin-top:clamp(24px,4vh,40px)}
-.field-row label{font-size:16px;font-weight:500;color:var(--text)}
-.field-row output{font-size:16px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
+.field-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:12px}
+.calc-cta{margin-top:24px}
+.field-row label{font-size:16px;line-height:22px;font-weight:500;color:var(--text)}
+.field-row output{font-size:16px;line-height:22px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
 /* ❖ Comfy UI / Slider: трек 4 px #e5e5e5, прогрес brand, ручка 24 px біла з обводкою 2 px brand, тултип Label=Top tooltip */
 .range{position:relative;height:24px}
 .range input{-webkit-appearance:none;appearance:none;width:100%;height:24px;margin:0;background:transparent;cursor:pointer;--p:25%}
@@ -577,7 +585,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .hs--3 .hs-push{right:3%;bottom:auto;top:41%;width:min(67%,calc(var(--stage-h,600px) * .91))}
 
 /* ілюстрація-віджет: біла картка з компонентів DS */
-.hw{position:relative;z-index:1;width:min(348px,60%);padding:20px;border-radius:24px;background:#fff;color:var(--text);box-shadow:0 0 0 1px rgba(10,10,10,.04),0 30px 60px -28px rgba(10,10,10,.35),0 2px 6px -2px rgba(10,10,10,.08)}
+.hw{position:relative;z-index:1;width:min(360px,60%);padding:20px;border-radius:24px;background:#fff;color:var(--text);box-shadow:0 0 0 1px rgba(10,10,10,.04),0 30px 60px -28px rgba(10,10,10,.35),0 2px 6px -2px rgba(10,10,10,.08)}
 .hw-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .hw-logo svg{display:block;width:92px;height:auto}
 .hw-title{margin:16px 0 12px;font:700 18px/24px var(--font)}
@@ -663,14 +671,14 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .faq-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(32px,6vw,112px);align-items:start}
 .faq-side{position:sticky;top:120px}
 .faq-side .h2{margin-top:8px}
-.faq-side .lead{margin:16px 0 0;max-width:22em;font-size:17px;text-wrap:pretty}
+.faq-side .lead{margin:16px 0 0;max-width:400px;font-size:18px;line-height:24px;text-wrap:pretty}
 .faq-side .btn{margin-top:24px}
 .faq-list{display:grid;gap:12px}
-.faq-item{border-radius:24px;background:var(--gray-50);box-shadow:inset 0 0 0 1px rgba(10,10,10,.04);transition:background-color .3s,box-shadow .4s}
+.faq-item{padding:1px;border-radius:24px;background:var(--gray-50);box-shadow:inset 0 0 0 1px rgba(10,10,10,.04);transition:background-color .3s,box-shadow .4s}
 @media (hover:hover){.faq-item:not(.is-open):hover{background:#f3f3f3}}
 .faq-item.is-open{background:#fff;box-shadow:inset 0 0 0 1px rgba(10,10,10,.06),0 28px 56px -32px rgba(10,10,10,.3)}
 .faq-q{margin:0}
-.faq-q button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 22px 22px 28px;border:0;border-radius:24px;background:none;text-align:left;font:700 clamp(17px,calc(.5vw + 12px),22px)/1.35 var(--font);color:var(--text);cursor:pointer}
+.faq-q button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 22px 22px 28px;border:0;border-radius:24px;background:none;text-align:left;font:700 clamp(17px,calc(.5vw + 10.4px),20px)/1.4 var(--font);color:var(--text);cursor:pointer}
 .faq-q button:focus-visible{outline:none;box-shadow:0 0 0 2px var(--brand)}
 /* іконка — ❖ Comfy UI / Button, Variant=Icon, 40 px: закрите — Secondary gray, відкрите — Primary; ховер рядка = Hover кнопки */
 .faq-ico{position:relative;flex-shrink:0;width:40px;height:40px;border-radius:50%;background:#fff;color:var(--text-2);box-shadow:inset 0 0 0 1px var(--line);transition:background-color .15s,box-shadow .15s,color .15s,transform .45s cubic-bezier(.2,.8,.2,1)}
@@ -682,7 +690,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 .faq-item.is-open .faq-ico::after{transform:rotate(0deg)}
 .faq-a{height:0;overflow:hidden}
 .faq-item.is-open .faq-a{height:auto}
-.faq-a p{margin:0;padding:0 28px 26px;max-width:42em;font-size:17px;line-height:1.55;color:var(--text-2)}
+.faq-a p{margin:0;padding:0 28px 26px;max-width:770px;font-size:18px;line-height:24px;color:var(--text-2)}
 @media (max-width:899px){
   .faq-grid{grid-template-columns:1fr}
   .faq-side{position:static}
