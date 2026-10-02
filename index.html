@@ -908,6 +908,8 @@ dialog.fl-modal[open]{display:flex;flex-direction:column;animation:flin .25s cub
 .fl-toast{position:fixed;left:50%;bottom:88px;z-index:2000;max-width:calc(100vw - 32px);padding:12px 16px;border-radius:12px;background:rgba(10,10,10,.92);color:#fff;font:500 14px/20px var(--font);opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:opacity .25s,transform .25s}
 .fl-toast.is-on{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){dialog.fl-modal[open]{animation:none}.fl-toast{transition:none}}
+
+.fl-tile--logo{background:none;overflow:hidden}.fl-tile--logo img{width:100%;height:100%;display:block;object-fit:cover}.fl-tile--mono{color:#fff;background:linear-gradient(145deg,var(--m1),var(--m2));font-weight:800;font-size:16px;letter-spacing:-.02em;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
 /*FLOW-CSS-END*/
 </style>
 </head>
@@ -2352,7 +2354,9 @@ function submitCode(){var v=$('#cd-i').value.trim();if(!v){$('#cd-f').classList.
  S.st='active';S.method='code';S.started=Date.now();S.cancel=null;save();closeModal();applyLanding();openCabinet('home');toast('Підписку активовано за кодом')}
 /* ---------- Кабінет: сторінки ---------- */
 function row(go,t,d,amt,used){return '<button class="fl-row" type="button" data-go="'+go+'"><span class="fl-grow"><span class="fl-t">'+t+'</span><span class="fl-d">'+d+'</span></span><span class="fl-r"><b>'+amt+'</b><span>'+used+'</span></span>'+ic('r',20)+'</button>'}
-function svcRow(i){var s=SVC[i];return '<button class="fl-row" type="button" data-svc="'+i+'" style="padding-top:0;border-top:0"><span class="fl-tile">'+s[0][0]+'</span><span class="fl-grow"><span class="fl-t">'+esc(s[0])+'</span><span class="fl-d">'+esc(s[1])+'</span></span>'+ic('r',20)+'</button>'}
+var LOGO={'SweetTV':'sweettv','Gramaro':'gramaro','VPN Unlimited':'vpn','Librarius':'librarius','OnlineFitness':'onlinefitness','CleanMyPhone':'cleanmyphone','Reface':'reface'},MONO={'CleanMyMac':['CM','#3b82f6','#8b5cf6'],'NanoHabits':['NH','#fb923c','#f59e0b'],'Kroha':['K','#fb7185','#38bdf8'],'ChatMind':['Ch','#34d399','#7c3aed']};
+function tile(n,lg){var c='fl-tile fl-tile--logo'+(lg?' fl-tile--lg':'');if(LOGO[n])return '<span class="'+c+'"><img src="assets/ic-'+LOGO[n]+'.png" alt="" width="52" height="52"></span>';var m=MONO[n];if(m)return '<span class="'+c+' fl-tile--mono" style="--m1:'+m[1]+';--m2:'+m[2]+'">'+m[0]+'</span>';return '<span class="'+c.replace(' fl-tile--logo','')+'">'+n[0]+'</span>'}
+function svcRow(i){var s=SVC[i];return '<button class="fl-row" type="button" data-svc="'+i+'" style="padding-top:0;border-top:0">'+tile(s[0])+'<span class="fl-grow"><span class="fl-t">'+esc(s[0])+'</span><span class="fl-d">'+esc(s[1])+'</span></span>'+ic('r',20)+'</button>'}
 function svcList(){var h='';for(var i=0;i<SVC.length;i++)h+=svcRow(i);return h}
 var P={};
 P.home=function(){return '<section class="fl-card"><h2 class="fl-h">Вигода від ComfyPlus</h2><div class="fl-total"><b>Вигоди від підписки</b><span>13'+NB+'900'+NB+'₴</span></div>'+
@@ -2423,7 +2427,7 @@ function repairForm(a){
  else if(a==='go'){var n=$('#rf-m').value.trim(),d=$('#rf-d').value.trim();if(!n||!d)return;S.reqs=[{id:Date.now(),name:n,date:new Date().toISOString().slice(0,10),st:'new',desc:d}].concat(S.reqs);save();mState.repairForm=false;render();toast('Заявку подано')}}
 function svcModal(name,desc,letter,azs){
  modal({title:azs?'Знижка на АЗС':esc(name),sub:azs?'Партнерська пропозиція':esc(desc),focus:false,
-  body:'<div class="fm-svc"><span class="fl-tile fl-tile--lg">'+letter+'</span><b>'+esc(name)+'</b></div><div class="fm-sec"><h4>Опис</h4><p>'+esc(desc)+'</p></div>'+
+  body:'<div class="fm-svc">'+(azs?'<span class="fl-tile fl-tile--lg">'+letter+'</span>':tile(name,true))+'<b>'+esc(name)+'</b></div><div class="fm-sec"><h4>Опис</h4><p>'+esc(desc)+'</p></div>'+
    (azs?'':'<div class="fm-sec"><h4>Як отримати доступ</h4><ol><li>Натисніть кнопку «Отримати доступ» нижче.</li><li>Перейдіть у застосунок або на сайт сервісу.</li><li>Пройдіть реєстрацію чи вхід за вашим номером телефону.</li><li>Дотримуйтесь підказок у флоу активації сервісу.</li><li>Підписка активується автоматично — жодних додаткових дій не потрібно.</li></ol></div>'),
   actions:azs?'<button class="btn btn--primary btn--40" type="button" data-act="close">Зрозуміло</button>':'<button class="btn btn--primary btn--40" type="button" data-act="svc-go">Отримати доступ</button>'})}
 function reqModal(r){var s=STAT[r.st];
