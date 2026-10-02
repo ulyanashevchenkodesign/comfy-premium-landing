@@ -776,6 +776,139 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 }
 
 @media (prefers-reduced-motion:reduce){.btn,.btn svg,.nav-pill{transition:none}}
+/*FLOW-CSS-START*/
+/* ===== Флоу покупки та кабінет (макети: Figma «Флоу покупки та кабінет»). Токени й компоненти — ❖ Comfy UI ===== */
+html.cab-open{overflow:hidden}
+.ic{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.btn--32{height:32px;padding:6px 12px;gap:4px;font-size:14px;line-height:20px}
+.btn--danger{background:#f04438;color:#fff}.btn--danger:hover{background:#d92d20}
+.btn--danger:focus-visible{box-shadow:0 0 0 2px #f04438}
+.btn--link-gray{background:transparent;color:var(--text-2);padding-left:0;padding-right:0}.btn--link-gray:hover{color:var(--text);text-decoration:underline}
+.btn--tertiary-brand{background:transparent;color:var(--brand-700)}.btn--tertiary-brand:hover{background:var(--brand-50)}
+.btn[disabled],.btn.is-disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
+.btn.is-loading{pointer-events:none}.btn.is-loading::before{content:"";width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:flspin .7s linear infinite;margin-right:8px}
+@keyframes flspin{to{transform:rotate(360deg)}}
+.btn--block{width:100%}
+/* hero: «У мене є код активації» */
+.hero-cta{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.hero-code{border:0;background:none;padding:8px 0;font:500 16px/22px var(--font);color:var(--text-2);cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(10,10,10,.3)}
+.hero-code:hover{color:var(--text)}
+html[data-sub="on"] .hero-code,html[data-sub="on"] a[href="#code"]{display:none}
+@media (max-width:699px){.hero-cta{flex-direction:column;align-items:stretch;gap:4px}.hero-code{text-align:center}}
+
+/* ---------- Кабінет ---------- */
+.cab{position:fixed;inset:0;z-index:900;overflow-y:auto;overscroll-behavior:contain;background:#f5f5f5;font-family:var(--font);color:var(--text)}
+.cab[hidden]{display:none}
+.cab-col{display:flex;flex-direction:column;min-height:100%;max-width:560px;margin:0 auto;background:#f5f5f5}
+@media (min-width:700px){.cab{background:#ececec}.cab-col{min-height:100%;box-shadow:0 0 0 1px #e5e5e5}}
+.cab-head{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:12px;height:56px;padding:0 16px;background:#fff;box-shadow:inset 0 -1px 0 #e5e5e5}
+.cab-head h1{flex:1;margin:0;font:600 16px/24px var(--font);color:var(--text)}
+.cab-head--home h1{font:800 24px/32px var(--font);letter-spacing:-.01em}
+.cab-ib{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;margin:0 -4px;border:0;border-radius:8px;background:none;color:var(--text);cursor:pointer}
+.cab-ib:hover{background:var(--fill-hover)}.cab-ib:focus-visible{outline:none;box-shadow:0 0 0 2px var(--brand)}
+.cab-main{flex:1;padding:16px;display:flex;flex-direction:column;gap:16px}
+.cab-nav{position:sticky;bottom:0;z-index:3;display:flex;height:64px;background:#fff;box-shadow:inset 0 1px 0 #e5e5e5;padding-bottom:env(safe-area-inset-bottom)}
+.cab-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;background:none;color:var(--text-3);font:400 12px/16px var(--font);cursor:pointer}
+.cab-tab:hover{color:var(--text)}.cab-tab:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--brand)}
+.cab-tab.is-on{color:var(--brand-700);font-weight:500}
+.cab-tab.is-on .ic{color:var(--brand)}
+.fl-card{background:#fff;border-radius:16px;box-shadow:inset 0 0 0 1px #e5e5e5;padding:16px;display:flex;flex-direction:column;gap:12px}
+.fl-h{margin:0;font:600 20px/28px var(--font);letter-spacing:-.01em}
+.fl-p{margin:0;font:400 14px/20px var(--font);color:var(--text-2)}
+.fl-total{display:flex;align-items:center;gap:8px}
+.fl-total b{flex:1;font:600 16px/24px var(--font)}
+.fl-total span{font:800 28px/36px var(--font);color:var(--brand);letter-spacing:-.02em;white-space:nowrap}
+.fl-row{display:flex;align-items:center;gap:12px;width:100%;padding:12px 0 0;border:0;border-top:1px solid #e5e5e5;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.fl-row:hover .fl-t{text-decoration:underline}
+.fl-row:focus-visible{outline:none;box-shadow:0 0 0 2px var(--brand);border-radius:8px}
+.fl-row--static{cursor:default}.fl-row--static:hover .fl-t{text-decoration:none}
+.fl-row .fl-grow{flex:1;min-width:0}
+.fl-t{display:block;font:600 16px/24px var(--font);color:var(--text)}
+.fl-d{display:block;margin-top:2px;font:400 12px/16px var(--font);color:var(--text-2)}
+.fl-r{text-align:right;flex-shrink:0}
+.fl-r b{display:block;font:600 16px/24px var(--font);white-space:nowrap}
+.fl-r span{display:block;font:400 12px/16px var(--font);color:var(--text-2);white-space:nowrap}
+.fl-row>.ic{color:var(--text-2)}
+.fl-tile{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:40px;height:40px;border-radius:12px;background:var(--brand-50);color:var(--brand-700);font:600 20px/28px var(--font)}
+.fl-tile--lg{width:48px;height:48px}
+.fl-list{display:flex;flex-direction:column;gap:12px}
+.fl-list .fl-row{padding-top:0;border-top:0}
+.fl-azs{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border:0;border-radius:12px;background:var(--brand-50);box-shadow:inset 0 0 0 1px #bef4b3;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.fl-azs:hover{box-shadow:inset 0 0 0 1px var(--brand)}
+.fl-azs .fl-tile{background:#fff;color:var(--text)}
+.fl-azs>.ic{color:var(--text-2)}
+.fl-bar{height:8px;border-radius:999px;background:#e5e5e5;overflow:hidden}.fl-bar i{display:block;height:100%;border-radius:inherit;background:var(--brand)}
+.fl-stats{display:flex;gap:12px}.fl-stats>div{flex:1}.fl-stats small{display:block;font:400 12px/16px var(--font);color:var(--text-2)}.fl-stats b{display:block;margin-top:4px;font:600 20px/28px var(--font)}
+.fl-bul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.fl-bul li{position:relative;padding-left:16px;font:400 14px/20px var(--font);color:var(--text-2)}
+.fl-bul li::before{content:"";position:absolute;left:3px;top:8px;width:4px;height:4px;border-radius:50%;background:var(--text-3)}
+.fl-head{display:flex;align-items:center;gap:8px}.fl-head .fl-h{flex:1}.fl-head b{font:600 16px/24px var(--font);color:var(--text-2)}
+.fl-kv{display:flex;align-items:center;gap:12px;font:400 14px/20px var(--font);color:var(--text-2)}.fl-kv>span:first-child{flex:1}.fl-kv b{font:600 16px/24px var(--font);color:var(--text);text-align:right}
+.fl-pm{display:flex;align-items:center;gap:8px}.fl-pm>span:first-child{font:400 14px/20px var(--font);color:var(--text-2);margin-right:auto}.fl-pm b{font:600 16px/24px var(--font)}
+.pm-mark{display:inline-flex;align-items:center;justify-content:center;width:34px;height:24px;border-radius:4px;background:#fff;box-shadow:inset 0 0 0 1px #e5e5e5;font:700 10px/1 var(--font);color:var(--text)}
+.pm-mark--lg{width:44px;height:32px;font-size:12px;border-radius:6px}
+.fl-badge{display:inline-flex;align-items:center;height:24px;padding:2px 10px;border-radius:999px;font:500 12px/16px var(--font);letter-spacing:.02em;white-space:nowrap;background:#f5f5f5;color:var(--text-2);box-shadow:inset 0 0 0 1px #e5e5e5}
+.fl-badge--warn{background:#fffaeb;box-shadow:inset 0 0 0 1px #fedf89;color:#b54708}
+.fl-badge--ok{background:#effdec;box-shadow:inset 0 0 0 1px #bef4b3;color:#1c7d0d}
+.fl-badge--err{background:#fef3f2;box-shadow:inset 0 0 0 1px #fecdca;color:#b42318}
+.fl-badge--info{background:#eff8ff;box-shadow:inset 0 0 0 1px #b2ddff;color:#175cd3}
+.fl-req{display:flex;align-items:center;gap:12px;width:100%;padding:12px 0 0;border:0;border-top:1px solid #e5e5e5;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.fl-req:hover .fl-t{text-decoration:underline}.fl-req:focus-visible{outline:none;box-shadow:0 0 0 2px var(--brand);border-radius:8px}
+.fl-req .fl-r{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.fl-alert{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:12px;background:#fef3f2;box-shadow:inset 0 0 0 1px #fda29b}
+.fl-alert h2{display:flex;align-items:center;gap:8px;margin:0;font:600 16px/24px var(--font);color:#b42318}
+.fl-alert p{margin:0;font:400 14px/20px var(--font);color:var(--text)}
+.fl-field{display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:56px;padding:6px 12px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px #d4d4d4;cursor:text;transition:box-shadow .15s}
+.fl-field:hover{box-shadow:inset 0 0 0 1px var(--line-hover)}
+.fl-field:focus-within{box-shadow:inset 0 0 0 1px var(--brand),0 0 0 2px var(--brand)}
+.fl-field.is-err{box-shadow:inset 0 0 0 1px #f04438}
+.fl-field span{font:400 12px/16px var(--font);color:rgba(10,10,10,.5)}
+.fl-field input,.fl-field textarea{width:100%;border:0;outline:0;padding:0;background:none;font:400 16px/22px var(--font);color:var(--text);resize:none}
+.fl-field input::placeholder,.fl-field textarea::placeholder{color:rgba(10,10,10,.37)}
+.fl-field textarea{min-height:96px}
+.fl-err{margin:4px 0 0;font:400 14px/20px var(--font);color:#b42318}
+.fl-actions{display:flex;gap:12px}.fl-actions .btn{flex:1}
+.fl-faq{display:flex;flex-direction:column}
+.fl-q{display:flex;align-items:center;gap:12px;width:100%;padding:12px 0;border:0;border-top:1px solid #e5e5e5;background:none;text-align:left;font:500 16px/24px var(--font);color:var(--text);cursor:pointer}
+.fl-faq .fl-q:first-child{border-top:0}
+.fl-q span{flex:1}.fl-q .ic{transition:transform .25s}.fl-q[aria-expanded="true"] .ic{transform:rotate(180deg)}
+.fl-q:focus-visible{outline:none;box-shadow:0 0 0 2px var(--brand);border-radius:8px}
+.fl-a{display:none;padding:0 0 12px;font:400 14px/20px var(--font);color:var(--text-2)}.fl-a.is-open{display:block}
+/* ---------- Модалка (❖ Comfy UI Modal view) ---------- */
+dialog.fl-modal{width:min(400px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:12px;background:#fff;color:var(--text);font-family:var(--font);box-shadow:0 20px 24px -4px rgba(10,10,10,.08),0 8px 8px -4px rgba(10,10,10,.03);overflow:hidden}
+dialog.fl-modal::backdrop{background:rgba(10,10,10,.5)}
+dialog.fl-modal[open]{display:flex;flex-direction:column;animation:flin .25s cubic-bezier(.2,.8,.2,1)}
+@keyframes flin{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.fm-head{display:flex;align-items:flex-start;gap:12px;padding:16px 16px 12px}
+.fm-head>div{flex:1;min-width:0}
+.fm-title{margin:0;font:600 18px/28px var(--font)}
+.fm-sub{margin:2px 0 0;font:400 14px/20px var(--font);color:var(--text-2)}
+.fm-x{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;margin:-4px -4px 0 0;border:0;border-radius:8px;background:none;color:var(--text-3);cursor:pointer}
+.fm-x:hover{background:var(--fill-hover);color:var(--text)}.fm-x:focus-visible{outline:none;box-shadow:0 0 0 2px var(--brand)}
+.fm-body{padding:4px 16px 16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.fm-actions{display:flex;gap:12px;padding:16px;box-shadow:inset 0 1px 0 #e5e5e5}
+.fm-actions .btn{flex:1;min-width:0}
+@media (max-width:480px){.fm-actions{flex-direction:column-reverse}}
+.fm-method{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border:0;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px #e5e5e5;text-align:left;font:inherit;color:inherit;cursor:pointer;transition:box-shadow .15s}
+.fm-method:hover{box-shadow:inset 0 0 0 1px var(--line-hover)}.fm-method:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--brand),0 0 0 2px var(--brand)}
+.fm-method .fl-grow{flex:1}.fm-method>.ic{color:var(--text-3)}
+.fm-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fm-opt{display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+.fm-opt input{position:absolute;opacity:0;pointer-events:none}
+.fm-opt i{flex-shrink:0;width:20px;height:20px;margin-top:2px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px #d4d4d4;transition:box-shadow .15s}
+.fm-opt input:checked+i{box-shadow:inset 0 0 0 6px var(--brand)}
+.fm-opt input:focus-visible+i{outline:2px solid var(--brand);outline-offset:2px}
+.fm-opt b{display:block;font:500 16px/24px var(--font)}.fm-opt small{display:block;font:400 14px/20px var(--font);color:var(--text-2)}
+.fm-sec{display:flex;flex-direction:column;gap:8px}.fm-sec h4{margin:0;font:600 16px/24px var(--font)}.fm-sec p{margin:0;font:400 14px/20px var(--font);color:var(--text-2)}
+.fm-sec ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;counter-reset:s}
+.fm-sec li{counter-increment:s;display:flex;gap:10px;font:400 14px/20px var(--font);color:var(--text-2)}
+.fm-sec li::before{content:counter(s);flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--brand-50);color:var(--brand-700);font:600 12px/20px var(--font);text-align:center}
+.fm-svc{display:flex;align-items:center;gap:12px}.fm-svc b{font:600 18px/28px var(--font)}
+.fm-sum{font:500 14px/20px var(--font);color:var(--text-3);letter-spacing:.04em}
+.fl-toast{position:fixed;left:50%;bottom:88px;z-index:2000;max-width:calc(100vw - 32px);padding:12px 16px;border-radius:12px;background:rgba(10,10,10,.92);color:#fff;font:500 14px/20px var(--font);opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:opacity .25s,transform .25s}
+.fl-toast.is-on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){dialog.fl-modal[open]{animation:none}.fl-toast{transition:none}}
+/*FLOW-CSS-END*/
 </style>
 </head>
 <body>
@@ -805,7 +938,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
           <span class="line"><span class="w"><span class="wi">та</span></span> <span class="w"><span class="wi">підвищені</span></span> <span class="w"><span class="wi">бонуси</span></span></span>
         </h1>
         <p class="hero-sub">Перший місяць коштує 1&nbsp;₴, далі 199&nbsp;₴ на місяць.<br class="br-d"> Скасувати можна будь-коли в особистому кабінеті.</p>
-        <div class="hero-cta"><a class="btn btn--primary btn--56" href="#try">Спробувати за 1&nbsp;₴</a></div>
+        <div class="hero-cta"><a class="btn btn--primary btn--56" href="#try">Спробувати за 1&nbsp;₴</a><a class="hero-code" href="#code">У мене є код активації</a></div>
         <!-- TODO копірайт: цифри з макета й поточного лендінгу, перевірити. «5 сервісів у підписці» не збігається з 11 сервісами нижче -->
         <ul class="hero-stats hero-stats--desk" aria-label="Підписка в цифрах">
           <li class="glass glass--orange hero-stat"><b>35&nbsp;000+</b><span>₴ вигоди на рік</span></li>
@@ -1265,7 +1398,7 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
   /* ---------- Плавний скрол ---------- */
   var lenis=null;
   if(!reduce && typeof Lenis!=='undefined'){
-    lenis=new Lenis({lerp:.1,smoothWheel:true});
+    lenis=new Lenis({lerp:.1,smoothWheel:true});window.__lenis=lenis;
     lenis.on('scroll',ScrollTrigger.update);
     gsap.ticker.add(function(t){lenis.raf(t*1000)});
     gsap.ticker.lagSmoothing(0);
@@ -2096,5 +2229,218 @@ html.intro-pending .hero-tag,html.intro-pending .hero-title,html.intro-pending .
 
 })();
 </script>
+<!--FLOW-HTML-START-->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+<symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></symbol>
+<symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2M15 18H9M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+<symbol id="i-l" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+<symbol id="i-r" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-d" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.65 4.36A9 9 0 0 0 20.5 15"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="m10.29 3.86-8.47 14.14A2 2 0 0 0 3.53 21h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+</defs></svg>
+<div class="cab" id="cab" hidden data-lenis-prevent>
+  <div class="cab-col">
+    <header class="cab-head" id="cab-head"></header>
+    <main class="cab-main" id="cab-main"></main>
+    <nav class="cab-nav" id="cab-nav" aria-label="Розділи кабінету"></nav>
+  </div>
+</div>
+<dialog class="fl-modal" id="fl-modal" aria-labelledby="fm-title" data-lenis-prevent></dialog>
+<div class="fl-toast" id="fl-toast" role="status" aria-live="polite"></div>
+<!--FLOW-HTML-END-->
+<!--FLOW-JS-START-->
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var KEY='cp_flow_v1',NB=' ';
+var MONTHS=['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+function fmt(d){d=new Date(d);return d.getDate()+' '+MONTHS[d.getMonth()]+' '+d.getFullYear()+' р.'}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function ic(n,s){s=s||24;return '<svg class="ic" width="'+s+'" height="'+s+'" aria-hidden="true"><use href="#i-'+n+'"/></svg>'}
+var DEF_REQ=[
+ {id:1,name:'Пральна машина Bosch WAN28270',date:'2026-08-20',st:'work',desc:'Не зливає воду після прання, з’являється помилка на дисплеї.'},
+ {id:2,name:'Холодильник LG GA-B509',date:'2026-07-14',st:'done',sum:3200,desc:'Гучно шумить компресор, погано тримає температуру в морозильній камері.'},
+ {id:3,name:'Телевізор Samsung UE55',date:'2026-06-02',st:'no',desc:'Не вмикається, індикатор блимає червоним.'}];
+var S={st:'guest',started:null,method:'google_pay',last4:null,cancel:null,reqs:DEF_REQ};
+function load(){try{var s=localStorage.getItem(KEY);if(s){var o=JSON.parse(s);for(var k in o)S[k]=o[k]}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+load();
+function nextDate(){var d=new Date(S.started||Date.now());d.setMonth(d.getMonth()+1);return fmt(d)}
+var SVC=[['SweetTV','Стрімінг українських та світових фільмів і серіалів'],['Gramaro','Англійська граматика та інтерактивна практика'],['VPN Unlimited','Безпечний VPN, висока швидкість та приватність'],['Librarius','бібліотека книжок та аудіокниг у кишені'],['OnlineFitness','твій шлях до ідеального тіла'],['CleanMyPhone','Очищення пам\'яті iPhone та впорядкування фото'],['Reface','AI-генерація, заміна облич та вірусний контент'],['CleanMyMac','Оптимізація, очищення та захист вашого Mac'],['NanoHabits','Формування корисних звичок та досягнення цілей'],['Kroha','Батьківський контроль та безпека дитини в інтернеті'],['ChatMind','Компактні міні-курси для розвитку життевих навичок']];
+var AZS='Знижка до 4 грн/л на всі види палива на заправках мережі АЗС «УкрНафта». Діє на кожній заправці по всій Україні, без обмежень за кількістю візитів.';
+var STAT={work:['У РЕМОНТІ','warn','Майстер вже працює над технікою — про завершення повідомимо окремо.'],done:['ВИКОНАНО','ok','Ремонт завершено, сума списана з вашого місячного ліміту.'],no:['ВІДХИЛЕНО','err','Заявку відхилено: техніка не підпадає під умови підписки.'],new:['НА РОЗГЛЯДІ','info','Заявку отримано. Розгляд — до 3 робочих днів з моменту подання.']};
+function money(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,NB)+NB+'₴'}
+function pmName(){return S.method==='apple_pay'?'Apple Pay':S.method==='card'?'Картка •• '+(S.last4||'0000'):'Google Pay'}
+function pmMark(lg){var t=S.method==='apple_pay'?'Pay':S.method==='card'?'':'G Pay';var m=S.method==='card'?ic('card',lg?20:16):t;return '<span class="pm-mark'+(lg?' pm-mark--lg':'')+'">'+m+'</span>'}
+
+/* ---------- Лендінг: гість / підписник ---------- */
+function isSub(){return S.st==='active'||S.st==='cancelled'}
+function setCta(a,t){var n=a.firstChild;while(n&&n.nodeType!==3)n=n.nextSibling;if(!n){a.insertBefore(document.createTextNode(t),a.firstChild);return}if(a.dataset.t0===undefined)a.dataset.t0=n.nodeValue;n.nodeValue=t}
+function applyLanding(){
+ var on=isSub();document.documentElement.setAttribute('data-sub',on?'on':'off');
+ $$('a[href="#try"]').forEach(function(a){
+  var big=a.closest('.nav-pill')||a.closest('.final-cta');
+  var first=a.firstChild;if(a.dataset.t0===undefined){var n=a.firstChild;while(n&&n.nodeType!==3)n=n.nextSibling;a.dataset.t0=n?n.nodeValue:'Спробувати за 1 ₴'}
+  var txt=on?(a.closest('.nav-pill')||a.closest('.final-cta')||a.classList.contains('sheet-cta')?'Мій кабінет':'Перейти в кабінет'):a.dataset.t0;
+  var n2=a.firstChild;while(n2&&n2.nodeType!==3)n2=n2.nextSibling;if(n2)n2.nodeValue=txt;
+ });
+ var stats=on?['17'+NB+'240+','5%','2']:['128+','0%','0'];
+ $$('.hero-stats').forEach(function(ul){$$('.hero-stat b',ul).forEach(function(b,i){if(b.dataset.t0===undefined)b.dataset.t0=b.innerHTML;b.innerHTML=on?stats[i]:(i===0?'128+':i===1?'0%':'0')})});
+}
+/* ---------- Тости ---------- */
+var tt;function toast(m){var t=$('#fl-toast');t.textContent=m;t.classList.add('is-on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('is-on')},3200)}
+/* ---------- Модалка ---------- */
+var M=$('#fl-modal'),mState={};
+function closeBtn(){return '<button class="fm-x" type="button" data-act="close" aria-label="Закрити">'+ic('x',20)+'</button>'}
+function modal(o){
+ mState=o;
+ M.innerHTML='<div class="fm-head"><div><h3 class="fm-title" id="fm-title">'+o.title+'</h3>'+(o.sub?'<p class="fm-sub">'+o.sub+'</p>':'')+'</div>'+closeBtn()+'</div><div class="fm-body">'+(o.body||'')+'</div>'+(o.actions?'<div class="fm-actions">'+o.actions+'</div>':'');
+ if(!M.open)M.showModal();
+ var f=$('input:not([type=radio]),textarea',M);if(f&&o.focus!==false)setTimeout(function(){try{f.focus({preventScroll:true})}catch(e){}},60);
+ if(o.after)o.after();
+}
+function closeModal(){if(M.open)M.close()}
+M.addEventListener('click',function(e){if(e.target===M){closeModal();return}var a=e.target.closest('[data-act]');if(!a)return;var act=a.dataset.act;
+ if(act==='close')closeModal();else if(act==='back'){openMethod(mState.change)}else if(act==='pm'){pickMethod(a.dataset.m)}else if(act==='pay')payCard();else if(act==='code-go')submitCode();else if(act==='keep')closeModal();else if(act==='cancel-go')cancelGo();else if(act==='svc-go'){closeModal();toast('Демо: перехід до сервісу поки не підключено')}});
+M.addEventListener('close',function(){if(!$('#cab').hidden)return;});
+/* --- вибір способу оплати --- */
+function methodRows(){
+ function r(m,t,d,mark){return '<button class="fm-method" type="button" data-act="pm" data-m="'+m+'">'+mark+'<span class="fl-grow"><span class="fl-t">'+t+'</span><span class="fl-d">'+d+'</span></span>'+ic('r',20)+'</button>'}
+ return r('card','Банківська картка','Visa, Mastercard','<span class="pm-mark pm-mark--lg">'+ic('card',20)+'</span>')+r('google_pay','Google Pay','Швидка оплата','<span class="pm-mark pm-mark--lg">G Pay</span>')+r('apple_pay','Apple Pay','Touch ID / Face ID','<span class="pm-mark pm-mark--lg">Pay</span>');
+}
+function openMethod(change){modal({change:change,title:change?'Змінити спосіб оплати':'Оберіть спосіб оплати',sub:change?'Нова картка буде використана при наступному списанні':'Перший місяць — <b style="color:var(--brand-700)">1 грн</b>, потім 199 грн/місяць',body:methodRows(),focus:false})}
+function pickMethod(m){
+ if(m==='card'){openCard(mState.change);return}
+ if(mState.change){S.method=m;S.last4=null;save();closeModal();toast('Спосіб оплати змінено');render();return}
+ processing(m);
+}
+function fmtCard(v){return v.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim()}
+function openCard(change){
+ modal({change:change,title:change?'Нова картка':'Дані картки',sub:change?'Буде використана при наступному списанні':'Буде списано <b style="color:var(--brand-700)">1 грн</b>',
+  body:'<label class="fl-field"><span>Номер картки</span><input id="cc-n" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" maxlength="19"></label><div class="fm-grid"><label class="fl-field"><span>Термін дії</span><input id="cc-e" inputmode="numeric" autocomplete="off" placeholder="MM/YY" maxlength="5"></label><label class="fl-field"><span>CVC</span><input id="cc-c" inputmode="numeric" autocomplete="off" placeholder="123" maxlength="3"></label></div>',
+  actions:'<button class="btn btn--secondary-gray btn--40" type="button" data-act="back">Назад</button><button class="btn btn--primary btn--40" id="cc-go" type="button" data-act="pay" disabled>'+(change?'Зберегти картку':'Оплатити 1'+NB+'грн')+'</button>',
+  after:function(){var n=$('#cc-n'),e=$('#cc-e'),c=$('#cc-c'),go=$('#cc-go');
+   function chk(){var ok=n.value.replace(/\D/g,'').length===16&&/^(0[1-9]|1[0-2])\/\d\d$/.test(e.value)&&/^\d{3}$/.test(c.value);go.disabled=!ok;return ok}
+   n.addEventListener('input',function(){n.value=fmtCard(n.value);chk()});
+   e.addEventListener('input',function(){var d=e.value.replace(/\D/g,'').slice(0,4);e.value=d.length>2?d.slice(0,2)+'/'+d.slice(2):d;chk()});
+   c.addEventListener('input',function(){c.value=c.value.replace(/\D/g,'').slice(0,3);chk()});
+   M.onkeydown=function(ev){if(ev.key==='Enter'&&chk())payCard()}}});
+}
+function payCard(){var n=$('#cc-n');if(!n)return;var last=n.value.replace(/\D/g,'').slice(-4);
+ if(mState.change){S.method='card';S.last4=last;save();closeModal();toast('Картку змінено');render();return}
+ S.last4=last;processing('card')}
+function processing(m){
+ modal({title:'Обробляємо оплату',sub:'Це займе кілька секунд — потім відкриємо ваш кабінет',body:'<button class="btn btn--primary btn--48 btn--block is-loading" type="button" tabindex="-1">Обробка оплати…</button>',focus:false});
+ setTimeout(function(){S.st='active';S.method=m;S.started=Date.now();S.cancel=null;save();closeModal();applyLanding();openCabinet('home');toast('Підписку активовано')},1700);
+}
+function openCode(){
+ modal({title:'Активація за кодом',sub:'Введіть код активації — підписку буде активовано одразу, без оплати карткою.',
+  body:'<label class="fl-field" id="cd-f"><span>Код активації</span><input id="cd-i" autocomplete="off" autocapitalize="characters" placeholder="Наприклад, COMFY-2026"></label><p class="fl-err" id="cd-e" hidden>Введіть код активації</p>',
+  actions:'<button class="btn btn--primary btn--40" type="button" data-act="code-go">Активувати</button>',
+  after:function(){M.onkeydown=function(ev){if(ev.key==='Enter')submitCode()}}});
+}
+function submitCode(){var v=$('#cd-i').value.trim();if(!v){$('#cd-f').classList.add('is-err');$('#cd-e').hidden=false;return}
+ S.st='active';S.method='code';S.started=Date.now();S.cancel=null;save();closeModal();applyLanding();openCabinet('home');toast('Підписку активовано за кодом')}
+/* ---------- Кабінет: сторінки ---------- */
+function row(go,t,d,amt,used){return '<button class="fl-row" type="button" data-go="'+go+'"><span class="fl-grow"><span class="fl-t">'+t+'</span><span class="fl-d">'+d+'</span></span><span class="fl-r"><b>'+amt+'</b><span>'+used+'</span></span>'+ic('r',20)+'</button>'}
+function svcRow(i){var s=SVC[i];return '<button class="fl-row" type="button" data-svc="'+i+'" style="padding-top:0;border-top:0"><span class="fl-tile">'+s[0][0]+'</span><span class="fl-grow"><span class="fl-t">'+esc(s[0])+'</span><span class="fl-d">'+esc(s[1])+'</span></span>'+ic('r',20)+'</button>'}
+function svcList(){var h='';for(var i=0;i<SVC.length;i++)h+=svcRow(i);return h}
+var P={};
+P.home=function(){return '<section class="fl-card"><h2 class="fl-h">Вигода від ComfyPlus</h2><div class="fl-total"><b>Вигоди від підписки</b><span>13'+NB+'900'+NB+'₴</span></div>'+
+ row('delivery','Безкоштовна доставка','До 7 доставок на місяць',money(700),'300'+NB+'₴ використано')+
+ row('repair','Безкоштовний ремонт техніки','Ліміт 10'+NB+'000'+NB+'₴ цього місяця',money(10000),'3'+NB+'200'+NB+'₴ використано')+
+ row('subs','Вигода від сервісів','11 сервісів у підписці',money(3200),'0'+NB+'₴ активовано')+'</section>'+
+ '<section class="fl-card"><h2 class="fl-h">Знижка на АЗС</h2><button class="fl-azs" type="button" data-azs><span class="fl-tile">У</span><span class="fl-grow"><span class="fl-t">Паливо у мережі АЗС «УкрНафта»</span><span class="fl-d">Знижка до 4 грн/л на всі види палива</span></span>'+ic('r',20)+'</button></section>'+
+ '<section class="fl-card"><div class="fl-head"><h2 class="fl-h">Доступні вам підписки</h2><b>0/11</b></div><div class="fl-list">'+svcList()+'</div></section>'};
+P.delivery=function(){var c=[['Нова Пошта',2],['Укрпошта',1],['Meest',0]];var h='<section class="fl-card"><h2 class="fl-h">Безкоштовна доставка</h2><p class="fl-p">Використано 3/7 доставок цього місяця</p><div class="fl-bar" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="7"><i style="width:'+(3/7*100).toFixed(1)+'%"></i></div></section><section class="fl-card">';
+ c.forEach(function(x,i){h+='<div class="fl-row fl-row--static"'+(i===0?' style="padding-top:0;border-top:0"':'')+'><span class="fl-grow"><span class="fl-t">'+x[0]+'</span><span class="fl-d">Ліміт: 2/міс</span></span><span class="fl-r"><b>Факт: '+x[1]+'</b></span></div>'});
+ return h+'</section><section class="fl-card"><h2 class="fl-h">Умови користування</h2><ul class="fl-bul"><li>Безкоштовна доставка діє в межах зазначеного ліміту на місяць.</li><li>Невикористані доставки не переносяться на наступний місяць.</li><li>Умова діє для замовлень від 300'+NB+'₴.</li><li>Кур’єрська доставка можлива лише за адресами в межах населеного пункту.</li></ul></section>'};
+function reqRows(){var h='';S.reqs.forEach(function(r,i){var s=STAT[r.st];h+='<button class="fl-req" type="button" data-req="'+i+'"'+(i===0?' style="padding-top:0;border-top:0"':'')+'><span class="fl-grow"><span class="fl-t">'+esc(r.name)+'</span><span class="fl-d">'+fmt(r.date)+'</span></span><span class="fl-r"><span class="fl-badge fl-badge--'+s[1]+'">'+s[0]+'</span>'+(r.sum?'<b>'+money(r.sum)+'</b>':'')+'</span></button>'});return h}
+P.repair=function(){var form=mState.repairForm;
+ var cta=form?'<section class="fl-card" id="rf"><h2 class="fl-h">Заявка на ремонт</h2><label class="fl-field"><span>Модель техніки</span><input id="rf-m" autocomplete="off" placeholder="Наприклад, пральна машина Bosch WAN..."></label><label class="fl-field"><span>Опис несправності</span><textarea id="rf-d" placeholder="Опишіть, що сталося..."></textarea></label><div class="fl-actions"><button class="btn btn--secondary-gray btn--48" type="button" data-rf="cancel">Скасувати</button><button class="btn btn--primary btn--48" type="button" id="rf-go" data-rf="go" disabled>Подати заявку</button></div></section>'
+  :'<section class="fl-card"><h2 class="fl-h">Зареєструвати техніку</h2><p class="fl-p">Якщо техніка зламалась, подайте заявку на безкоштовний ремонт у межах ліміту вашої підписки.</p><button class="btn btn--primary btn--48 btn--block" type="button" data-rf="open">Зареєструвати техніку</button></section>';
+ return '<section class="fl-card"><h2 class="fl-h">Безкоштовний ремонт техніки</h2><p class="fl-p">Ліміт 10'+NB+'000'+NB+'₴ цього місяця</p><div class="fl-bar" role="progressbar" aria-valuenow="3200" aria-valuemin="0" aria-valuemax="10000"><i style="width:32%"></i></div><div class="fl-stats"><div><small>Використано</small><b>3'+NB+'200'+NB+'₴</b></div><div><small>Доступно</small><b>6'+NB+'800'+NB+'₴</b></div></div></section>'+
+ '<section class="fl-card"><h2 class="fl-h">Умови користування</h2><ul class="fl-bul"><li>Безкоштовний ремонт діє для техніки, придбаної в мережі Comfy.</li><li>Ліміт збільшується на 2'+NB+'000'+NB+'₴ щомісяця протягом дії підписки.</li><li>Невикористаний ліміт не переноситься на наступний місяць.</li><li>Розгляд заявки — до 3 робочих днів з моменту подання.</li><li>Техніка, придбана поза мережею Comfy, не покривається умовами підписки.</li></ul></section>'+cta+
+ '<section class="fl-card"><h2 class="fl-h">Мої заявки</h2><div class="fl-list">'+reqRows()+'</div></section>'};
+P.subs=function(){return '<section class="fl-card"><div class="fl-head"><h2 class="fl-h">Доступні вам підписки</h2><b>0/11</b></div><div class="fl-list">'+svcList()+'</div></section>'};
+var FAQ=[['Як скасувати підписку?','Перейдіть в розділ "Скасування підписки" нижче на цій сторінці. Ви можете скасувати м\'яко (підписка діє до кінця оплаченого періоду) або миттєво.'],['Коли відбудеться наступне списання?','Наступне списання відбудеться через місяць після активації. Точну дату ви бачите в розділі "Підписка" на цій сторінці.'],['Чи можна змінити спосіб оплати?','Так, натисніть "Змінити" поруч зі способом оплати. Нова картка буде використана при наступному списанні.'],['Що відбувається з бонусними балами при скасуванні?','При м\'якому скасуванні бали залишаються активними до кінця оплаченого місяця. При миттєвому скасуванні бали анулюються.']];
+P.account=function(){var can=S.st==='cancelled';var h='';
+ if(can)h+='<div class="fl-alert" role="status"><h2>'+ic('alert',20)+'Підписку скасовано</h2><p>Доступ до переваг зберігається до '+nextDate()+'</p><button class="btn btn--primary btn--48 btn--block" type="button" data-restore>'+ic('refresh',20)+'Відновити підписку</button></div>';
+ h+='<section class="fl-card"><h2 class="fl-h">Підписка</h2><div class="fl-kv"><span>Тариф</span><b>ComfyPlus Premium</b></div><div class="fl-kv"><span>Вартість</span><b>199'+NB+'грн/місяць</b></div><div class="fl-kv"><span>Наступне списання</span><b>'+(can?'—':nextDate())+'</b></div><div class="fl-pm"><span>Спосіб оплати</span>'+pmMark()+'<b>'+pmName()+'</b><button class="btn btn--tertiary-brand btn--32" type="button" data-change>Змінити</button></div></section>';
+ if(!can)h+='<section class="fl-card"><h2 class="fl-h">Скасування підписки</h2><p class="fl-p">Ви можете скасувати підписку м\'яко (залишиться активною до '+nextDate()+') або миттєво.</p><button class="btn btn--secondary-gray btn--48 btn--block" type="button" data-cancel>Скасувати підписку</button></section>';
+ h+='<section class="fl-card"><h2 class="fl-h">Підтримка</h2><button class="btn btn--secondary-gray btn--48 btn--block" type="button" data-chat>'+ic('chat',20)+'Написати в чат підтримки</button><button class="btn btn--link-gray btn--40" type="button" data-terms>Умови використання</button></section>';
+ h+='<section class="fl-card"><h2 class="fl-h">Часті питання</h2><div class="fl-faq">';
+ FAQ.forEach(function(q,i){h+='<button class="fl-q" type="button" aria-expanded="false" aria-controls="fa'+i+'" data-faq="'+i+'"><span>'+q[0]+'</span>'+ic('d',20)+'</button><div class="fl-a" id="fa'+i+'">'+q[1]+'</div>'});
+ return h+'</div></section>'};
+/* ---------- Каркас кабінету ---------- */
+var TITLES={home:'Дім',repair:'Ремонт техніки',delivery:'Доставка',subs:'Підписки',account:'Акаунт'};
+var cur='home',cab=$('#cab');
+function renderHead(){var h=$('#cab-head');
+ if(cur==='home'){h.className='cab-head cab-head--home';h.innerHTML='<button class="cab-ib" type="button" data-act2="exit" aria-label="На лендінг">'+ic('l')+'</button><h1>'+TITLES.home+'</h1><button class="cab-ib" type="button" data-go="account" aria-label="Акаунт">'+ic('gear')+'</button>'}
+ else{h.className='cab-head';h.innerHTML='<button class="cab-ib" type="button" data-go="home" aria-label="Назад">'+ic('l')+'</button><h1>'+TITLES[cur]+'</h1>'}}
+function renderNav(){var t=[['home','Дім','home'],['repair','Ремонт','tool'],['delivery','Доставка','truck'],['subs','Підписки','grid']];$('#cab-nav').innerHTML=t.map(function(x){var on=cur===x[0];return '<button class="cab-tab'+(on?' is-on':'')+'" type="button" data-go="'+x[0]+'"'+(on?' aria-current="page"':'')+'>'+ic(x[2])+x[1]+'</button>'}).join('')}
+function render(){renderHead();$('#cab-main').innerHTML=P[cur]();renderNav();}
+function openCabinet(p){if(!isSub()){openMethod();return}location.hash='#/cabinet/'+(p||'home');route()}
+function route(){var m=/^#\/cabinet\/?(\w*)/.exec(location.hash);
+ if(m&&isSub()){cur=P[m[1]]?m[1]:'home';mState={};if(cab.hidden){cab.hidden=false;document.documentElement.classList.add('cab-open');if(window.__lenis)window.__lenis.stop()}render();cab.scrollTop=0;document.title='Кабінет · Comfy Premium'}
+ else{if(m&&!isSub()){history.replaceState(null,'',location.pathname+location.search)}
+  if(!cab.hidden){cab.hidden=true;document.documentElement.classList.remove('cab-open');if(window.__lenis)window.__lenis.start()}document.title=document.title.replace(/^Кабінет · /,'')}}
+window.addEventListener('hashchange',route);
+/* ---------- Події ---------- */
+document.addEventListener('click',function(e){
+ var a=e.target.closest('a[href="#try"],a[href="#code"]');
+ if(a&&!a.closest('#cab')){e.preventDefault();e.stopImmediatePropagation();var sh=$('#sheet');if(sh&&sh.open)sh.close();
+  if(a.getAttribute('href')==='#code')openCode();else if(isSub())openCabinet('home');else openMethod();return}
+},true);
+cab.addEventListener('click',function(e){
+ var t=e.target.closest('[data-go],[data-act2],[data-svc],[data-azs],[data-req],[data-rf],[data-restore],[data-change],[data-cancel],[data-chat],[data-terms],[data-faq]');if(!t)return;var d=t.dataset;
+ if(d.go){location.hash='#/cabinet/'+d.go}
+ else if(d.act2==='exit'){history.replaceState(null,'',location.pathname+location.search);route()}
+ else if(d.svc!==undefined){var s=SVC[+d.svc];svcModal(s[0],s[1],s[0][0],false)}
+ else if(d.azs!==undefined){svcModal('Паливо у мережі АЗС «УкрНафта»',AZS,'У',true)}
+ else if(d.req!==undefined){reqModal(S.reqs[+d.req])}
+ else if(d.rf){repairForm(d.rf)}
+ else if(d.restore!==undefined){S.st='active';S.cancel=null;save();applyLanding();render();toast('Підписку відновлено')}
+ else if(d.change!==undefined){openMethod(true)}
+ else if(d.cancel!==undefined){openCancel()}
+ else if(d.chat!==undefined){toast('Демо: чат підтримки поки не підключено')}
+ else if(d.terms!==undefined){}
+ else if(d.faq!==undefined){var q=t.getAttribute('aria-expanded')==='true';t.setAttribute('aria-expanded',q?'false':'true');$('#fa'+d.faq).classList.toggle('is-open',!q)}
+});
+cab.addEventListener('input',function(e){if(e.target.id==='rf-m'||e.target.id==='rf-d'){$('#rf-go').disabled=!($('#rf-m').value.trim()&&$('#rf-d').value.trim())}});
+function repairForm(a){
+ if(a==='open'){mState.repairForm=true;render();var m=$('#rf-m');if(m)m.focus({preventScroll:false});var rf=$('#rf');if(rf)rf.scrollIntoView({block:'center',behavior:'smooth'})}
+ else if(a==='cancel'){mState.repairForm=false;render()}
+ else if(a==='go'){var n=$('#rf-m').value.trim(),d=$('#rf-d').value.trim();if(!n||!d)return;S.reqs=[{id:Date.now(),name:n,date:new Date().toISOString().slice(0,10),st:'new',desc:d}].concat(S.reqs);save();mState.repairForm=false;render();toast('Заявку подано')}}
+function svcModal(name,desc,letter,azs){
+ modal({title:azs?'Знижка на АЗС':esc(name),sub:azs?'Партнерська пропозиція':esc(desc),focus:false,
+  body:'<div class="fm-svc"><span class="fl-tile fl-tile--lg">'+letter+'</span><b>'+esc(name)+'</b></div><div class="fm-sec"><h4>Опис</h4><p>'+esc(desc)+'</p></div>'+
+   (azs?'':'<div class="fm-sec"><h4>Як отримати доступ</h4><ol><li>Натисніть кнопку «Отримати доступ» нижче.</li><li>Перейдіть у застосунок або на сайт сервісу.</li><li>Пройдіть реєстрацію чи вхід за вашим номером телефону.</li><li>Дотримуйтесь підказок у флоу активації сервісу.</li><li>Підписка активується автоматично — жодних додаткових дій не потрібно.</li></ol></div>'),
+  actions:azs?'<button class="btn btn--primary btn--40" type="button" data-act="close">Зрозуміло</button>':'<button class="btn btn--primary btn--40" type="button" data-act="svc-go">Отримати доступ</button>'})}
+function reqModal(r){var s=STAT[r.st];
+ modal({title:esc(r.name),focus:false,body:'<div><span class="fl-badge fl-badge--'+s[1]+'">'+s[0]+'</span></div><p class="fl-p">'+s[2]+'</p><div class="fl-kv"><span>Дата подання:</span><b>'+fmt(r.date)+'</b></div>'+(r.sum?'<div class="fl-kv"><span>Списано з ліміту:</span><b>'+money(r.sum)+'</b></div>':'')+'<div class="fm-sec"><span class="fm-sum">ОПИС НЕСПРАВНОСТІ</span><p style="color:var(--text)">'+esc(r.desc)+'</p></div>'})}
+function openCancel(){
+ modal({title:'Скасувати підписку?',sub:'Оберіть спосіб скасування:',focus:false,
+  body:'<div><span class="fl-badge fl-badge--warn">DEMO-ONLY КОНТРОЛЬ</span></div><label class="fm-opt"><input type="radio" name="ct" value="soft" checked><i></i><span><b>М\'яке скасування</b><small>Діє до '+nextDate()+'</small></span></label><label class="fm-opt"><input type="radio" name="ct" value="now"><i></i><span><b>Миттєве скасування</b><small>Підписка припиняється негайно</small></span></label>',
+  actions:'<button class="btn btn--secondary-gray btn--40" type="button" data-act="keep">Залишити підписку</button><button class="btn btn--danger btn--40" id="ct-go" type="button" data-act="cancel-go">Скасувати</button>',
+  after:function(){$$('input[name=ct]',M).forEach(function(r){r.addEventListener('change',function(){$('#ct-go').textContent=r.value==='soft'?'Скасувати':'Скасувати зараз'})})}})}
+function cancelGo(){var v=($('input[name=ct]:checked',M)||{}).value;closeModal();
+ if(v==='now'){S.st='guest';S.started=null;S.cancel='now';save();applyLanding();history.replaceState(null,'',location.pathname+location.search);route();toast('Підписку скасовано. Доступ завершено')}
+ else{S.st='cancelled';S.cancel='soft';save();applyLanding();render();toast('Підписку скасовано')}}
+/* ---------- Старт ---------- */
+applyLanding();route();
+window.addEventListener('pagehide',function(){});
+})();
+</script>
+<!--FLOW-JS-END-->
 </body>
 </html>
